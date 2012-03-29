@@ -1,0 +1,31 @@
+TODO
+Anpassung für ältere CMSimple_XH (http://www.cmsimpleforum.com/viewtopic.php?f=12&t=4052#p24350)
+Editor-Integration für ältere XHs ?
+update CodeMirror
+code snippets! (definable)
+
+Version 1beta2 - released TODO
+cmb	updated to CodeMirror 2.22
+
+Version 1beta1 - released 2012-01-13
+cmb	updated to CodeMirror 2.2
+cmb	switched from implicit requirements check to explicit system check
+cmb	added several config options
+cmb	rewritten without need for jQuery
+cmb	implemented editor interface for CMSimple_XH 1.5+
+cmb	added default.php for CMSimple_XH 1.5+
+cmb	added manual
+cmb	cleaned up code
+cmb	added warning when leaving page with unsaved modifications (doesn't work in Opera)
+
+Version 1dev1 - released 2011-08-21
+cmb	tag()ged <link>s
+cmb	added config option: enabled (suggested by Gert)
+cmb	fixed: highlighting fails after save
+cmb	added fullscreen mode (suggested by Gert)
+
+Version 0.0.2 - released 2011-07-18
+cmb	removed console.log() (reported by Gert)
+
+Version 0.0.1 - released 2011-07-18
+cmb	initial release

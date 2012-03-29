@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<!-- utf-8-marker: äöüß -->
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html;charset=utf-8">
+<meta name="content-language" content="de">
+<title>Codeeditor_XH - Manual</title>
+<link rel="stylesheet" type="text/css" href="./stylesheet.css">
+</head>
+
+<body>
+<h1>Codeeditor_XH - a CMSimple_XH Plugin</h1>
+
+<img src="../codeeditor.png" style="display: block; float:left">
+<p>Codeeditor_XH provides a replacement for the simple textarea in CMSimple_XH's
+back-end to edit the template, the stylesheet and the plugin stylesheets.
+Furthermore it implements the editor interface of CMSimple_XH 1.5 (and up),
+so it can be used to edit the content of the website.</p>
+<p>Instead of being a WYSIWYG or WYSIWYM editor,
+it allows to edit the source code directly, and currently offers
+syntax highlighting, line numbering, code indenting, bracket matching
+and optional line wrapping.</p>
+
+<ul id="nav" style="clear:both">
+<li><a href="#notice">Important Notice</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#installation">Installation</a></li>
+<li><a href="#settings">Settings</a></li>
+<li><a href="#usage">Usage</a></li>
+<!--<li><a href="#limitations">Limitations</a></li>-->
+<li><a href="#license">License</a></li>
+<li><a href="#credits">Credits</a></li>
+</ul>
+
+<div id="body">
+
+<p><strong>Please do read this documentation! Support might not be given otherwise.
+It's generally a good idea to read the documentation,
+<em>before</em> you encounter any problems!</strong></p>
+
+<h2><a name="notice">Important Notice</a></h2>
+<p><strong>The current version of Codeeditor_XH is BETA software. Use with caution!</strong></p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2><a name="requirements">Requirements</a></h2>
+<p>Codeeditor_XH is a plugin for CMSimple_XH. It requires an UTF-8 encoded version.</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2><a name="installation">Installation</a></h2>
+<p>The installation is done as with many other CMSimple_XH plugins.
+See the <a href="http://www.cmsimple-xh.com/wiki/doku.php/manuals:users_manual:plugins:installation">
+CMSimple_XH wiki</a> for further details.</p>
+<ol>
+<li><strong>Backup the data on your server.</strong></li>
+<li>Unzip the distribution on your computer.</li>
+<li>Upload the whole directory codeeditor/ to your server into CMSimple_XH's plugin directory.</li>
+<li>Set write permissions to the subdirectories config/, css/ and languages/.</li>
+<li><strong>Switch to "Codeeditor" in the back-end to check if all requirements are fulfilled.</strong></li>
+</ol>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2><a name="settings">Settings</a></h2>
+<p>The plugin's configuration is done as with many other
+CMSimple_XH plugins in the website's back-end.
+Select "Codeeditor" from "Plugins".</p>
+<p>You can change the default settings of Codeeditor_XH in "Plugin Config".
+Hints for the options will be displayed
+when hovering over the help icons with your mouse.</p>
+<p>Localization is done in "Plugin Language".
+You can translate the character strings to your own language,
+or customize them according to your needs.</p>
+<p>The style of Codeeditor_XH can be customized in "Plugin Stylesheet".</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+
+<h2><a name="usage">Usage</a></h2>
+<p>To use Codeeditor_XH as external editor for CMSimple_XH 1.5 (and up)
+go to Settings → CMS → Editor → External and enter "codeeditor".
+The usage of the editor is pretty much self-explaining, but one thing to note:
+pressing "Esc" while the cursor is in an editor instance toggles <strong>fullscreen mode</strong>.</p>
+<!-- TODO: explain usage for plugin developers -->
+<div class="toplink"><a href="#">back to top</a></div>
+
+<!--<h2><a name="limitations">Limitations</a></h2>-->
+<!--<div class="toplink"><a href="#">back to top</a></div>-->
+
+<h2><a name="license">License</a></h2>
+<p>Codeeditor_XH is licensed under
+<a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.</p>
+<p>&copy; 2012 Christoph M. Becker</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+<h2><a name="credits">Credits</a></h2>
+<p>Codeeditor_XH is powered by <a href="http://codemirror.net/">CodeMirror</a>.
+Many thanks to Marijn Haverbeke for developing this great piece of software
+and releasing it under MIT license.</p>
+<p>The plugin icon was taken from the <a href="http://www.oxygen-icons.org/">Oxygen Icons</a>.
+Many thanks for offering these icons under GPL.</p>
+<p>This plugin uses free applications icons from <a href="http://www.aha-soft.com/">Aha-Soft</a>.
+Many thanks for making these icons freely available.</p>
+<p>Many thanks to the community at the <a href="http://www.cmsimpleforum.com">CMSimple forum</a>
+for tips, suggestions and testing.
+Particularly I want to thank Gert, who contributed the ge theme.</p>
+<p>And many thanks to all developers of <a href="http://www.cmsimple-xh.com">
+CMSimple_XH</a> without whom this amazing CMS wouldn't exist.</p>
+<div class="toplink"><a href="#">back to top</a></div>
+
+</div>
+
+</body>
+
+</html>
