@@ -207,14 +207,7 @@ function include_codeeditor() {
  * @return string
  */
 function codeeditor_replace($id, $config = '') {
-    return <<<SCRIPT
-<script type="text/javascript">
-/* <![CDATA[ */
-CODEEDITOR.instantiate('$id', {'.$config.'}, true);
-/* ]]> */
-</script>
-
-SCRIPT;
+    return 'CODEEDITOR.instantiate(\''.$id.'\', '.codeeditor_config('htmlmixed').', true);';
 }
 
 
