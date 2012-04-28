@@ -13,7 +13,7 @@ $plugin_tx['codeeditor']['confirm_leave']="Your modifications will be lost!";
 $plugin_tx['codeeditor']['no_changes']="No modifications have been made!";
 
 $plugin_tx['codeeditor']['cf_utf-8-marker']="Internal usage. <strong>Do not change!</strong>";
-$plugin_tx['codeeditor']['cf_enabled']="Wether Codeeditor_XH is enabled for editing of template and stylesheets: \"1\" (yes) or \"0\" (no)";
+$plugin_tx['codeeditor']['cf_enabled']="Whether Codeeditor_XH is enabled for editing of template and stylesheets: \"1\" (yes) or \"0\" (no)";
 $plugin_tx['codeeditor']['cf_theme']="The syntax highlighting theme: \"default\", \"cobalt\", \"eclipse\", \"elegant\", \"ge\", \"monokai\", \"neat\", \"night\" or \"rubyblue\". Leave blank to disable syntax highlighting.";
 $plugin_tx['codeeditor']['cf_indent_unit']="How many spaces a block (whatever that means in the edited language) should be indented.";
 $plugin_tx['codeeditor']['cf_tab_size']="The width of a tab character.";
