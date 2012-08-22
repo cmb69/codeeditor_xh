@@ -125,24 +125,18 @@ function codeeditor_filebrowser() {
 	}
     } else {
 	$_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
-	$prefix = $sl == $cf['language']['default'] ? './' : '../';
-	$url =  $pth['folder']['plugins'].'filebrowser/editorbrowser.php?editor=codeeditor&prefix='.$prefix.'&type=';
+	//$prefix = $sl == $cf['language']['default'] ? './' : '../';
+	$url =  $pth['folder']['plugins'].'filebrowser/editorbrowser.php?editor=codeeditor&prefix='.CMSIMPLE_BASE.'&base=./&type=';
 	//$script = file_get_contents(dirname(__FILE__).'/filebrowser.js');
 	//$script = str_replace('%URL%', $url, $script);
-	$script = <<<SCRIPT
-CODEEDITOR.filebrowser = function(type) {
+	$script = <<<EOS
+/* <![CDATA[ */
+codeeditor.filebrowser = function(type) {
     var browser = window.open('$url' + type, 'popWhizz',
 	    'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=640,height=480,top=100');
-    browser.setLink = function(url) {
-	switch (type) {
-	    case 'images': CODEEDITOR.insertImage(url); break;
-	    case 'downloads': CODEEDITOR.insertLink(url); break;
-	}
-	browser.close();
-    }
 }
-
-SCRIPT;
+/* ]]> */
+EOS;
     }
     return $script;
 
@@ -189,12 +183,12 @@ function include_codeeditor() {
     }
     $hjs .= '<script type="text/javascript" src="'.$dir.'codeeditor.js"></script>'."\n"
 	    .'<script type="text/javascript">'."\n".'/* <![CDATA[ */'."\n"
-	    .'CODEEDITOR.text = {'."\n"
+	    .'codeeditor.text = {'."\n"
 	    .'    save: \''.addcslashes(ucfirst($tx['action']['save']), "\0'\"\\\f\n\r\t\v").'\','."\n"
 	    .'    confirmLeave: \''.addcslashes($ptx['confirm_leave'], "\0'\"\\\f\n\r\t\v").'\','."\n"
 	    .'    noChanges: \''.addcslashes($ptx['no_changes'], "\0'\"\\\f\n\r\t\v").'\''."\n"
 	    .'}'."\n"
-	    .'CODEEDITOR.xhtml = '.($cf['xhtml']['endtags'] == 'true' ? 'true' : 'false').';'."\n"
+	    .'codeeditor.xhtml = '.($cf['xhtml']['endtags'] == 'true' ? 'true' : 'false').';'."\n"
 	    .'/* ]]> */'."\n".'</script>'."\n";
 }
 
@@ -207,7 +201,7 @@ function include_codeeditor() {
  * @return string
  */
 function codeeditor_replace($id, $config = '') {
-    return 'CODEEDITOR.instantiate(\''.$id.'\', '.codeeditor_config('htmlmixed').', true);';
+    return 'codeeditor.instantiate(\''.$id.'\', '.codeeditor_config('htmlmixed').', true);';
 }
 
 
@@ -228,7 +222,7 @@ function init_codeeditor($classes = array(), $init = FALSE) {
     $classes = implode('|', $classes);
     //$config = '{mode: \'htmlmixed\', '.codeeditor_config().'}';
     $config = codeeditor_config('htmlmixed');
-    $onload .= 'CODEEDITOR.instantiateByClasses(\''.$classes.'\', '.$config.', true);';
+    $onload .= 'codeeditor.instantiateByClasses(\''.$classes.'\', '.$config.', true);';
 }
 
 
