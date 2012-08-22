@@ -8,6 +8,8 @@ code snippets! (definable)
 
 Version 1beta2 - released TODO
 cmb	updated to CodeMirror 2.22
+        implemented additional functionality (through keys)
+        switched to init.js file
 
 Version 1beta1 - released 2012-01-13
 cmb	updated to CodeMirror 2.2

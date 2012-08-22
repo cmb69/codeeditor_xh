@@ -8,9 +8,9 @@
     electricChars: true,
     extraKeys: {
         'Esc': 'toggleFullscreen',
-        'Ctrl-Q': function(cm) {CODEEDITOR.foldFunc(cm, cm.getCursor().line);},
-        'Ctrl-I': function(cm) {CODEEDITOR.filebrowser('images')},
-        'Ctrl-L': function(cm) {CODEEDITOR.filebrowser('downloads')},
+        'Ctrl-Q': function(cm) {codeeditor.foldFunc(cm, cm.getCursor().line);},
+        'Ctrl-I': function(cm) {codeeditor.filebrowser('images')},
+        'Ctrl-L': function(cm) {codeeditor.filebrowser('downloads')},
         'Alt-W': function(cm) {cm.setOption('lineWrapping', !cm.getOption('lineWrapping'))}
     },
     lineWrapping: true,
@@ -19,6 +19,6 @@
     matchBrackets: true,
     workTime: 200,
     workDelay: 300,
-    onFocus: CODEEDITOR.onFocus,
+    onFocus: codeeditor.onFocus,
     undoDepth: 40
 }

@@ -8,7 +8,7 @@
 // utf-8-marker: äöüß
 
 
-var CODEEDITOR = {
+var codeeditor = {
 
     instances: new Array(),
 
@@ -18,7 +18,7 @@ var CODEEDITOR = {
 
 
     onFocus: function(editor) {
-	CODEEDITOR.current = editor;
+	codeeditor.current = editor;
     },
 
 
@@ -82,7 +82,7 @@ var CODEEDITOR = {
         var cm = CodeMirror.fromTextArea(ta, config);
 	cm.getScrollerElement().style.height = h + 'px';
 	cm.refresh();
-	CODEEDITOR.instances.push(cm);
+	codeeditor.instances.push(cm);
 	//ta.form.onsubmit = function() {return CODEEDITOR.onSave(cm)};
 	this.addUnloadHandler();
 
@@ -130,21 +130,21 @@ var CODEEDITOR = {
 //    },
 
     addUnloadHandler: function() {
-	if (!CODEEDITOR.unloadHandlerAdded) {
+	if (!codeeditor.unloadHandlerAdded) {
 	    if (window.addEventListener) {
 		window.addEventListener('beforeunload', this.beforeUnload, false);
 	    } else {
 		window.attachEvent('onbeforeunload', this.beforeUnload);
 	    }
-	    CODEEDITOR.unloadHandlerAdded = true;
+	    codeeditor.unloadHandlerAdded = true;
 	}
     },
 
 
     beforeUnload: function(e) {
-	for (var i = 0; i < CODEEDITOR.instances.length; i++) {
-	    if (CODEEDITOR.instances[i].historySize().undo > 0) {
-		return e.returnValue = CODEEDITOR.text.confirmLeave;
+	for (var i = 0; i < codeeditor.instances.length; i++) {
+	    if (codeeditor.instances[i].historySize().undo > 0) {
+		return e.returnValue = codeeditor.text.confirmLeave;
 	    }
 	}
     },
@@ -185,6 +185,11 @@ var CODEEDITOR = {
 	this.current.replaceSelection('<a href="' + url + '">' + this.current.getSelection() + '</a>');
 	this.current.focus();
     },
+    
+    insertURI: function(url) {
+	this.current.replaceSelection(url);
+	this.current.focus();
+    },
 
 //    onCursorActivity: function(cm) {
 //	var pos = cm.coordsChar(cm.cursorCoords(true));
@@ -211,13 +216,13 @@ CodeMirror.commands.toggleFullscreen = function(cm) {
 CodeMirror.commands.save = function(cm) {
     function onSave(cm) {
 	if (cm.historySize().undo == 0) {
-	    alert(CODEEDITOR.text.noChanges);
+	    alert(codeeditor.text.noChanges);
 	    return false;
 	} else {
 	    if (window.addEventListener) {
-		window.removeEventListener('beforeunload', CODEEDITOR.beforeUnload, false);
+		window.removeEventListener('beforeunload', codeeditor.beforeUnload, false);
 	    } else {
-		window.detachEvent('onbeforeunload', CODEEDITOR.beforeUnload);
+		window.detachEvent('onbeforeunload', codeeditor.beforeUnload);
 	    }
 	    return true;
 	}
