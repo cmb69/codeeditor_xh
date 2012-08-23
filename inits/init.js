@@ -1,6 +1,6 @@
 {
     mode: '%MODE%',
-    theme: 'default',
+    theme: '%THEME%',
     indentUnit: 4,
     tabSize: 8,
     indentWithTabs: true,

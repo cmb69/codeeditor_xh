@@ -24,8 +24,9 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  */
 function codeeditor_config($mode, $config)
 {
-    global $pth;
+    global $pth, $plugin_cf;
 
+    $pcf = $plugin_cf['codeeditor'];
     $config = trim($config);
     if (empty($config) || $config[0] !== '{') {
         $std = in_array($config,
@@ -36,7 +37,8 @@ function codeeditor_config($mode, $config)
         $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
     }
     $config = str_replace(array(' ', "\t", "\r", "\n"), '', $config);
-    $config = str_replace('%MODE%', $mode, $config);
+    $config = strtr($config,
+                    array('%MODE%' => $mode, '%THEME%' => $pcf['theme']));
     return $config;
 }
 
