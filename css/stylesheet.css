@@ -1,26 +1,4 @@
-/* utf-8-marker: äöüß */
-
-
-/**
- *
- */
-div.codeeditor_toolbar {
-    padding: 8px;
-    background: #eee;
-    border: 1px solid #888;
-}
-
-
-div.codeeditor_statusbar {
-    /*padding: 8px;*/
-    background: #eee;
-    border: 1px solid #888;
-    font-size: x-small;
-    text-align: right;
-}
-
-
-/**
+/*
  * General style of all Codeeditor instances.
  */
 div.CodeMirror {
@@ -31,7 +9,7 @@ div.CodeMirror {
 }
 
 
-/**
+/*
  * Styling of the fullscreen mode.
  * Probably the only style that might need adjustment is background.
  */
