@@ -58,7 +58,7 @@ var codeeditor = {
 	cm.getScrollerElement().style.height = h + 'px';
 	cm.refresh();
 	codeeditor.instances.push(cm);
-	//ta.form.onsubmit = function() {return CODEEDITOR.onSave(cm)};
+	ta.form.onsubmit = function() {return CodeMirror.commands.save(cm)};
 	this.addUnloadHandler();
     },
 
