@@ -106,17 +106,12 @@ CodeMirror.commands.toggleFullscreen = function(cm) {
 
 CodeMirror.commands.save = function(cm) {
     function onSave(cm) {
-	if (cm.historySize().undo == 0) {
-	    alert(codeeditor.text.noChanges);
-	    return false;
+	if (window.addEventListener) {
+	    window.removeEventListener('beforeunload', codeeditor.beforeUnload, false);
 	} else {
-	    if (window.addEventListener) {
-		window.removeEventListener('beforeunload', codeeditor.beforeUnload, false);
-	    } else {
-		window.detachEvent('onbeforeunload', codeeditor.beforeUnload);
-	    }
-	    return true;
+	    window.detachEvent('onbeforeunload', codeeditor.beforeUnload);
 	}
+	return true;
     }
     function getForm() {
 	var n = cm.getWrapperElement();
