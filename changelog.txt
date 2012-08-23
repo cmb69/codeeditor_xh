@@ -1,5 +1,4 @@
 TODO
-Update for XH 1.5.2 (changed interface)!!!!!
 
 Anpassung für ältere CMSimple_XH (http://www.cmsimpleforum.com/viewtopic.php?f=12&t=4052#p24350)
 Editor-Integration für ältere XHs ?
@@ -7,9 +6,10 @@ update CodeMirror
 code snippets! (definable)
 
 Version 1beta2 - released TODO
-cmb	updated to CodeMirror 2.22
-        implemented additional functionality (through keyboard shortcuts)
         switched to init.js file
+        implemented additional functionality (through keyboard shortcuts)
+cmb	updated to CodeMirror 2.22
+        allowed to save without modifications (suggested by svasti)
 
 Version 1beta1 - released 2012-01-13
 cmb	updated to CodeMirror 2.2
