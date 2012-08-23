@@ -11,6 +11,8 @@
         'Ctrl-Q': function(cm) {codeeditor.foldFunc(cm, cm.getCursor().line);},
         'Ctrl-I': function(cm) {codeeditor.filebrowser('images')},
         'Ctrl-L': function(cm) {codeeditor.filebrowser('downloads')},
+        'Ctrl-M': function(cm) {codeeditor.filebrowser('media')},
+        'Ctrl-U': function(cm) {codeeditor.filebrowser('userfiles')},
         'Alt-W': function(cm) {cm.setOption('lineWrapping', !cm.getOption('lineWrapping'))}
     },
     lineWrapping: true,
