@@ -5,9 +5,6 @@
  */
 
 
-// utf-8-marker: äöüß
-
-
 var codeeditor = {
 
     instances: new Array(),
@@ -16,30 +13,11 @@ var codeeditor = {
 
     unloadHandlerAdded: false,
 
-
     onFocus: function(editor) {
 	codeeditor.current = editor;
     },
 
-
     foldFunc: CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder),
-
-
-//    toggleFullscreen: function() {
-//	var ce = CODEEDITOR.current;
-//	var scroller = ce.getScrollerElement();
-//	var html = document.getElementsByTagName('html')[0];
-//	if (scroller.className.search(/fullscreen/) < 0) {
-//	    scroller.className += ' fullscreen';
-//	    html.style.oldOverflow = html.style.overflow;
-//	    html.style.overflow = 'hidden';
-//	} else {
-//	    scroller.className = scroller.className.replace(/fullscreen/, '');
-//	    html.style.overflow = html.style.oldOverflow;
-//	}
-//	ce.refresh();
-//    },
-
 
     getTextareasByClass: function(name) {
         var textareas = document.getElementsByTagName('textarea');
@@ -53,14 +31,12 @@ var codeeditor = {
         return res;
     },
 
-
     uniqueId: function() {
         var id = 'codeeditor';
         var i = 0;
         while (document.getElementById(id + i) !== null) {i++}
         return id + i;
     },
-
 
     instantiateByClasses: function(classes, config, addSave) {
         classes = classes.split('|');
@@ -75,7 +51,6 @@ var codeeditor = {
         }
     },
 
-
     instantiate: function(id, config, addSave) {
         var ta = document.getElementById(id);
 	var h = ta.offsetHeight;
@@ -85,49 +60,7 @@ var codeeditor = {
 	codeeditor.instances.push(cm);
 	//ta.form.onsubmit = function() {return CODEEDITOR.onSave(cm)};
 	this.addUnloadHandler();
-
-	//// toolbar
-	//var tb = document.getElementById('codeeditor_toolbar').cloneNode(true);
-	//tb.id = tb.id + '1'; // TODO: unique ID
-	//tb.style.display = 'block';
-	//var wrapper = cm.getWrapperElement();
-	//wrapper.parentNode.insertBefore(tb, wrapper);
-	//
-	//// statusbar
-	//var sb = document.getElementById('codeeditor_statusbar').cloneNode(true);
-	//sb.id = sb.id + '1'; // TODO unique ID
-	//sb.style.display = 'block';
-	//if (wrapper.nextSibling) {
-	//    wrapper.parentNode.insertBefore(sb, wrapper.nextSibling);
-	//} else {
-	//    wrapper.parentNode.appendChild(sb);
-	//}
-
-
-	//if (addSave) {
-	//    var wrapper = cm.getWrapperElement();
-	//    var save = document.createElement('input');
-	//    with (save) {
-	//	setAttribute('type', 'submit');
-	//	setAttribute('class', 'submit');
-	//	setAttribute('value', CODEEDITOR.text.save);
-	//	style.marginTop = '1em';
-	//    }
-	//    if (wrapper.nextSibling) {
-	//	wrapper.parentNode.insertBefore(save, wrapper.nextSibling);
-	//    } else {
-	//	wrapper.parentNode.appendChild(save);
-	//    }
-	//}
-
     },
-
-
-//    getForm: function() {
-//	var n = this.current.getWrapperElement();
-//	while (n.nodeName != 'FORM') {n = n.parentNode};
-//	return n;
-//    },
 
     addUnloadHandler: function() {
 	if (!codeeditor.unloadHandlerAdded) {
@@ -140,62 +73,20 @@ var codeeditor = {
 	}
     },
 
-
     beforeUnload: function(e) {
 	for (var i = 0; i < codeeditor.instances.length; i++) {
 	    if (codeeditor.instances[i].historySize().undo > 0) {
 		return e.returnValue = codeeditor.text.confirmLeave;
 	    }
 	}
+	return null;
     },
 
-
-//    onSave: function(editor) {
-//	if (editor.historySize().undo == 0) {
-//	    alert(CODEEDITOR.text.noChanges);
-//	    return false;
-//	} else {
-//	    if (window.addEventListener) {
-//		window.removeEventListener('beforeunload', this.beforeUnload, false);
-//	    } else {
-//		window.detachEvent('onbeforeunload', this.beforeUnload);
-//	    }
-//	    return true;
-//	}
-//    },
-
-
-//    undo: function() {
-//	CODEEDITOR.current.undo();
-//    },
-//
-//
-//    redo: function() {
-//	CODEEDITOR.current.redo();
-//    },
-
-
-    insertImage: function(url) {
-	this.current.replaceSelection('<img src="' + url + '" alt=""'
-		+ (this.xhtml ? ' />' : '>'));
-	this.current.focus();
-    },
-
-    insertLink: function(url) {
-	this.current.replaceSelection('<a href="' + url + '">' + this.current.getSelection() + '</a>');
-	this.current.focus();
-    },
-    
     insertURI: function(url) {
 	this.current.replaceSelection(url);
 	this.current.focus();
     },
 
-//    onCursorActivity: function(cm) {
-//	var pos = cm.coordsChar(cm.cursorCoords(true));
-//	var txt = 'Line: ' + pos.line + ' Col: ' + pos.ch;
-//	cm.getWrapperElement().nextSibling.innerHTML = txt;
-//    }
 }
 
 CodeMirror.commands.toggleFullscreen = function(cm) {
