@@ -17,17 +17,30 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 
 
 /**
- * Returns the configuration in JSON.
+ * Returns the configuration in JSON format.
  *
- * @return string
+ * @param   string $mode  The highlighting mode.
+ * @param   string $config  'full', 'medium', 'minimal', 'sidebar' or '' for the
+ *                          default init.js, a filename or a JSON object
+ * @return  string
  */
-function codeeditor_config($mode) {
+function codeeditor_config($mode, $config) {
     global $pth;
 
-    $config = file_get_contents($pth['folder']['plugins'].'codeeditor/inits/init.js');
-    $search = array("\r\n", "\r", "\n", '%MODE%');
-    $replace = array(' ', ' ', ' ', $mode);
-    $config = str_replace($search, $replace, $config);
+    $config = trim($config);
+    if (empty($config) || $config[0] !== '{') {
+        $std = in_array($config,
+                        array('full', 'medium', 'minimal', 'sidebar', ''));
+        $fn = $std
+            ? $pth['folder']['plugins'] . 'codeeditor/inits/init.js'
+            : $fn;
+        $config = file_get_contents($fn);
+        if ($config === false) {
+            $config = '{}';
+        }
+    }
+    $config = str_replace(array(' ', "\t", "\r", "\n"), '', $config);
+    $config = str_replace('%MODE%', $mode, $config);
     return $config;
 }
 //function codeeditor_config() {
@@ -110,25 +123,36 @@ function codeeditor_config($mode) {
 //}
 
 
-function codeeditor_filebrowser() {
-    global $cf, $pth, $sl;
+/**
+ * Returns the JS to activate the configured filebrowser.
+ *
+ * @return void
+ */
+function codeeditor_filebrowser()
+{
+    global $cf, $pth, $sl, $adm;
 
+    // no filebrowser, if editor is called from front-end
+    if (!$adm) {  
+        return '';
+    }
+    
     $script = '';
     if ($cf['filebrowser']['external']) {
-	$connector = $pth['folder']['plugins'].$cf['filebrowser']['external'].'/connectors/codeeditor/codeeditor.php';
+	$connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
+            . '/connectors/codeeditor/codeeditor.php';
 	if (is_readable($connector)) {
 	    include_once $connector;
-	    $init = $cf['filebrowser']['external'].'_codeeditor_init';
+	    $init = $cf['filebrowser']['external'] . '_codeeditor_init';
 	    if (function_exists($init)) {
 		$script = $init();
 	    }
 	}
     } else {
 	$_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
-	//$prefix = $sl == $cf['language']['default'] ? './' : '../';
-	$url =  $pth['folder']['plugins'].'filebrowser/editorbrowser.php?editor=codeeditor&prefix='.CMSIMPLE_BASE.'&base=./&type=';
-	//$script = file_get_contents(dirname(__FILE__).'/filebrowser.js');
-	//$script = str_replace('%URL%', $url, $script);
+	$url =  $pth['folder']['plugins']
+            . 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
+            . CMSIMPLE_BASE . '&base=./&type=';
 	$script = <<<EOS
 /* <![CDATA[ */
 codeeditor.filebrowser = function(type) {
@@ -139,28 +163,30 @@ codeeditor.filebrowser = function(type) {
 EOS;
     }
     return $script;
-
 }
 
 
 /**
- * Includes the editor's javascripts to the <head>.
+ * Writes the basic JS of the editor to $hjs. No editors are actually created.
+ * Multiple calls are allowed; all but the first should be ignored.
+ * This is called from init_EDITOR() automatically, but not from EDITOR_replace().
  *
  * @global string $hjs
  * @return void
  */
-function include_codeeditor() {
+function include_codeeditor()
+{
     global $hjs, $o, $pth, $cf, $tx, $plugin_cf, $plugin_tx;
-    static $again = FALSE;
+    static $again = false;
 
-    if ($again) {return;}
+    if ($again) {
+        return;
+    }
+    $again = true;
 
     $pcf = $plugin_cf['codeeditor'];
     $ptx = $plugin_tx['codeeditor'];
-    $dir = $pth['folder']['plugins'].'codeeditor/';
-
-    // TODO: add toolbar in this function??
-    //$o .= codeeditor_toolbar().codeeditor_statusbar();
+    $dir = $pth['folder']['plugins'] . 'codeeditor/';
 
     $hjs .= '<script type="text/javascript" src="'.$dir.'codemirror/lib/codemirror.js"></script>'."\n"
 	    .tag('link rel="stylesheet" type="text/css" href="'.$dir.'codemirror/lib/codemirror.css"')."\n"
@@ -177,11 +203,11 @@ function include_codeeditor() {
 	    .'<script type="text/javascript" src="'.$dir.'codemirror/lib/util/search.js"></script>'."\n"
 	    .'<script type="text/javascript" src="'.$dir.'codemirror/lib/util/foldcode.js"></script>'."\n";
 
-    $fn = $dir.'codemirror/theme/'.$pcf['theme'].'.css';
+    $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css'; // TODO: use theme in config.php?
     if (is_readable($fn)) {
 	$hjs .= tag('link rel="stylesheet" type="text/css" href="'.$fn.'"')."\n";
     }
-    $hjs .= '<script type="text/javascript" src="'.$dir.'codeeditor.js"></script>'."\n"
+    $hjs .= '<script type="text/javascript" src="' . $dir . 'codeeditor.js"></script>'."\n"
 	    .'<script type="text/javascript">'."\n".'/* <![CDATA[ */'."\n"
 	    .'codeeditor.text = {'."\n"
 	    .'    save: \''.addcslashes(ucfirst($tx['action']['save']), "\0'\"\\\f\n\r\t\v").'\','."\n"
@@ -190,39 +216,46 @@ function include_codeeditor() {
 	    .'}'."\n"
 	    .'codeeditor.xhtml = '.($cf['xhtml']['endtags'] == 'true' ? 'true' : 'false').';'."\n"
 	    .'/* ]]> */'."\n".'</script>'."\n";
+    $hjs .= '<script type="text/javascript">'.codeeditor_filebrowser().'</script>'."\n";
 }
 
 
 /**
- * Returns JS to replace a textarea with an editor instance.
+ * Returns the JS to actually instantiate a single editor on the textarea given by $element_id.
+ * $config can be 'full', 'medium', 'minimal', 'sidebar' or '' (which will use the users default configuration).
+ * Other values are editor dependent. Typically this will be a string in JSON format enclosed in { },
+ * that can contain %PLACEHOLDER%s, that will be substituted.
  *
- * @param string $id  The textarea's ID.
- * @param string $config  The editor's configuration in JSON.
- * @return string
+ * To actually create the editor, the caller has to write the the return value to the (X)HTML output,
+ * properly enclosed as <script>, after the according <textarea>, or execute the return value by other means.
+ *
+ * @param string $elementId  The id of the textarea that should become an editor instance.
+ * @param string $config  The configuration string.
+ * @return string  The JS to actually create the editor.
  */
-function codeeditor_replace($id, $config = '') {
-    return 'codeeditor.instantiate(\''.$id.'\', '.codeeditor_config('htmlmixed').', true);';
+function codeeditor_replace($elementId, $config = '') {
+    $config = codeeditor_config('htmlmixed', $config);
+    return "codeeditor.instantiate('$elementId', $config, true);";
 }
 
 
 /**
- * Replaces textareas with editor instances.
+ * Instantiates the editor(s) on the textarea(s) given by $element_classes.
+ * $config is exactly the same as for EDITOR_replace().
  *
- * @param array $classes  The classes of the textareas that should be replaced.
- * @param mixed $init  Ignored.
+ * @param string $element_classes  The classes of the textarea(s) that should become an editor instance. An empty array means .xh-editor.
+ * @param string $config  The configuration string.
  * @global string $onload
  * @return void
  */
-function init_codeeditor($classes = array(), $init = FALSE) {
+function init_codeeditor($classes = array(), $config = false) {
     global $hjs, $onload;
 
     include_codeeditor();
-    $hjs .= '<script type="text/javascript">'.codeeditor_filebrowser().'</script>'."\n";
     if (empty($classes)) {$classes = array('xh-editor');}
     $classes = implode('|', $classes);
-    //$config = '{mode: \'htmlmixed\', '.codeeditor_config().'}';
-    $config = codeeditor_config('htmlmixed');
-    $onload .= 'codeeditor.instantiateByClasses(\''.$classes.'\', '.$config.', true);';
+    $config = codeeditor_config('htmlmixed', $config);
+    $onload .= "codeeditor.instantiateByClasses('$classes', $config, true);";
 }
 
 
