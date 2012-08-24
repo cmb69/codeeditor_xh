@@ -1,4 +1,4 @@
-Version 1beta2 - released TODO
+Version 1beta2 - released 2012-08-24
 cmb	updated to CodeMirror 2.22
 cmb     implemented editor interface of CMSimple_XH 1.5.2+
 cmb     switched to init.js file instead of config options for more flexibility

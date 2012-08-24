@@ -53,7 +53,7 @@ function codeeditor_system_check() // RELEASE-TODO
 {
     global $pth, $tx, $plugin_tx, $plugin_cf;
 
-    define('CODEEDITOR_PHP_VERSION', '4.0.7');
+    define('CODEEDITOR_PHP_VERSION', '4.3.0');
     $ptx = $plugin_tx['codeeditor'];
     $imgdir = $pth['folder']['plugins'] . 'codeeditor/images/';
     $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
