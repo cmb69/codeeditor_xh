@@ -37,6 +37,20 @@ var codeeditor = {
         while (document.getElementById(id + i) !== null) {i++}
         return id + i;
     },
+    
+    setClass: function() {
+	var elts = document.getElementsByName('text'), i, elt = null;
+	for (i = 0; i < elts.length; i++) {
+	    if (elts[i].nodeName == 'TEXTAREA' && elts[i].className == '') {
+		elt = elts[i];
+		break;
+	    }
+	}
+	if (elt !== null) {
+	    elt.className = 'cmsimplecore_file_edit';
+	}
+	
+    },
 
     instantiateByClasses: function(classes, config, addSave) {
         classes = classes.split('|');

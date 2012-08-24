@@ -1,4 +1,2 @@
-Anpassung für ältere CMSimple_XH (http://www.cmsimpleforum.com/viewtopic.php?f=12&t=4052#p24350)
-Editor-Integration für ältere XHs ?
 update CodeMirror
-code snippets! (definable)
+code snippets? (definable)

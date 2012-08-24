@@ -1,9 +1,10 @@
 Version 1beta2 - released TODO
+cmb	updated to CodeMirror 2.22
 cmb     implemented editor interface of CMSimple_XH 1.5.2+
 cmb     switched to init.js file instead of config options for more flexibility
 cmb     implemented additional functionality (available through keyboard shortcuts)
 cmb     allowed to save without modifications (suggested by svasti)
-cmb	updated to CodeMirror 2.22
+cmb     fixed bug: codeeditor didn't work with CMSimple_XH before 1.3
 cmb     updated manual
 
 Version 1beta1 - released 2012-01-13

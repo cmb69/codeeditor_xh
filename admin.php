@@ -114,6 +114,9 @@ function codeeditor() {
 	include_once $pth['folder']['plugins'] . 'codeeditor/init.php';
 	include_codeeditor();
 	$config = codeeditor_config($mode, '');
+	if (CMSIMPLE_XH_BUILD < '2010112201') {
+	    $onload .= 'codeeditor.setClass();';
+	}
 	$onload .= "codeeditor.instantiateByClasses('$class', $config, false);";
     }
 }
