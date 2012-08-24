@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
     "http://www.w3.org/TR/html4/loose.dtd">
-<!-- utf-8-marker: äöüß -->
 <html>
 
 <head>
@@ -16,12 +15,12 @@
 <img src="../codeeditor.png" style="display: block; float:left">
 <p>Codeeditor_XH provides a replacement for the simple textarea in CMSimple_XH's
 back-end to edit the template, the stylesheet and the plugin stylesheets.
-Furthermore it implements the editor interface of CMSimple_XH 1.5 (and up),
+Furthermore it implements the editor interface of CMSimple_XH 1.5.2 (and up),
 so it can be used to edit the content of the website.</p>
 <p>Instead of being a WYSIWYG or WYSIWYM editor,
-it allows to edit the source code directly, and currently offers
-syntax highlighting, line numbering, code indenting, bracket matching
-and optional line wrapping.</p>
+it allows to edit the source code directly, and offers
+syntax highlighting, line numbering, code indenting and folding, bracket matching,
+optional line wrapping, filebrowser integration and search and replace.</p>
 
 <ul id="nav" style="clear:both">
 <li><a href="#notice">Important Notice</a></li>
@@ -29,15 +28,14 @@ and optional line wrapping.</p>
 <li><a href="#installation">Installation</a></li>
 <li><a href="#settings">Settings</a></li>
 <li><a href="#usage">Usage</a></li>
-<!--<li><a href="#limitations">Limitations</a></li>-->
+<li><a href="#limitations">Limitations</a></li>
 <li><a href="#license">License</a></li>
 <li><a href="#credits">Credits</a></li>
 </ul>
 
 <div id="body">
 
-<p><strong>Please do read this documentation! Support might not be given otherwise.
-It's generally a good idea to read the documentation,
+<p><strong>Please do read this documentation,
 <em>before</em> you encounter any problems!</strong></p>
 
 <h2><a name="notice">Important Notice</a></h2>
@@ -57,7 +55,7 @@ CMSimple_XH wiki</a> for further details.</p>
 <li>Unzip the distribution on your computer.</li>
 <li>Upload the whole directory codeeditor/ to your server into CMSimple_XH's plugin directory.</li>
 <li>Set write permissions to the subdirectories config/, css/ and languages/.</li>
-<li><strong>Switch to "Codeeditor" in the back-end to check if all requirements are fulfilled.</strong></li>
+<li><strong>Switch to "Plugins"&rarr;"Codeeditor" in the back-end to check if all requirements are fulfilled.</strong></li>
 </ol>
 <div class="toplink"><a href="#">back to top</a></div>
 
@@ -72,24 +70,45 @@ when hovering over the help icons with your mouse.</p>
 You can translate the character strings to your own language,
 or customize them according to your needs.</p>
 <p>The style of Codeeditor_XH can be customized in "Plugin Stylesheet".</p>
+<p>Further configuration can be done in plugins/codeeditor/inits/init.js.
+The options are explained in <a href="http://codemirror.net/doc/manual.html#config">CodeMirror's user manual</a>.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 
 <h2><a name="usage">Usage</a></h2>
 <p>To use Codeeditor_XH as external editor for CMSimple_XH 1.5 (and up)
-go to Settings → CMS → Editor → External and enter "codeeditor".
-The usage of the editor is pretty much self-explaining, but one thing to note:
-pressing "Esc" while the cursor is in an editor instance toggles <strong>fullscreen mode</strong>.</p>
+go to Settings → CMS → Editor → External and enter "codeeditor".</p>
+<p>The editor has no toolbar or context menu, but offers quite some features,
+that are triggered by keyboard shortcuts,
+most of them you'll be acquainted to from other editors on your platform.
+Some noteworthy ones:</p>
+<table border="1">
+    <tr><th>Function</th><th>Windows</th><th>Mac</th></tr>
+    <tr><td>save</td><td>Ctrl-S</td><td>Cmd-S</td></tr>
+    <tr><td>find</td><td>Ctrl-F</td><td>Cmd-F</td></tr>
+    <tr><td>find next</td><td>Ctrl-G</td><td>Cmd-G</td></tr>
+    <tr><td>find prev</td><td>Shift-Ctrl-G</td><td>Shift-Cmd-G</td></tr>
+    <tr><td>replace</td><td>Shift-Ctrl-F</td><td>Cmd-Alt-F</td></tr>
+    <tr><td>replace all</td><td>Shift-Ctrl-R</td><td>Shift-Cmd-Alt-F</td></tr>
+    <tr><td>toggle fullscreen</td><td>Esc</td><td>Esc</td></tr>
+    <tr><td>toggle folding</td><td>Ctrl-Q</td><td>Cmd-Q</td></tr>
+    <tr><td>browse images</td><td>Ctrl-I</td><td>Cmd-I</td></tr>
+    <tr><td>browse downloads</td><td>Ctrl-L</td><td>Cmd-L</td></tr>
+    <tr><td>browse media</td><td>Ctrl-M</td><td>Cmd-M</td></tr>
+    <tr><td>browse userfiles</td><td>Ctrl-U</td><td>Cmd-U</td></tr>
+    <tr><td>toggle line wrapping</td><td>Alt-W</td><td>Alt-W</td></tr>
+</table>
 <!-- TODO: explain usage for plugin developers -->
 <div class="toplink"><a href="#">back to top</a></div>
 
-<!--<h2><a name="limitations">Limitations</a></h2>-->
-<!--<div class="toplink"><a href="#">back to top</a></div>-->
+<h2><a name="limitations">Limitations</a></h2>
+The browse functions only supports the default filebrowser of CMSimple_XH for now.
+<div class="toplink"><a href="#">back to top</a></div>
 
 <h2><a name="license">License</a></h2>
 <p>Codeeditor_XH is licensed under
 <a href="http://www.gnu.org/licenses/gpl.html">GPLv3</a>.</p>
-<p>&copy; 2012 Christoph M. Becker</p>
+<p>&copy; 2011-2012 Christoph M. Becker</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 <h2><a name="credits">Credits</a></h2>
@@ -103,8 +122,9 @@ Many thanks for making these icons freely available.</p>
 <p>Many thanks to the community at the <a href="http://www.cmsimpleforum.com">CMSimple forum</a>
 for tips, suggestions and testing.
 Particularly I want to thank Gert, who contributed the ge theme.</p>
-<p>And many thanks to all developers of <a href="http://www.cmsimple-xh.com">
-CMSimple_XH</a> without whom this amazing CMS wouldn't exist.</p>
+<p>And many thanks to <a href="http://www.harteg.dk">Peter Harteg</a>, the "father" of CMSimple,
+and all developers of <a href="http://www.cmsimple-xh.com">CMSimple_XH</a>
+without whom this amazing CMS wouldn't exist.</p>
 <div class="toplink"><a href="#">back to top</a></div>
 
 </div>

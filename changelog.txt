@@ -6,10 +6,12 @@ update CodeMirror
 code snippets! (definable)
 
 Version 1beta2 - released TODO
-        switched to init.js file
-        implemented additional functionality (through keyboard shortcuts)
+cmb     implemented editor interface of CMSimple_XH 1.5.2+
+cmb     switched to init.js file instead of config options for more flexibility
+cmb     implemented additional functionality (available through keyboard shortcuts)
+cmb     allowed to save without modifications (suggested by svasti)
 cmb	updated to CodeMirror 2.22
-        allowed to save without modifications (suggested by svasti)
+cmb     updated manual
 
 Version 1beta1 - released 2012-01-13
 cmb	updated to CodeMirror 2.2
