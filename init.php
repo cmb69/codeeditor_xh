@@ -58,27 +58,35 @@ function codeeditor_filebrowser()
     }
     
     $script = '';
-    if ($cf['filebrowser']['external']) {
-	$connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
-            . '/connectors/codeeditor/codeeditor.php';
-	if (is_readable($connector)) {
-	    include_once $connector;
-	    $init = $cf['filebrowser']['external'] . '_codeeditor_init';
-	    if (function_exists($init)) {
-		$script = $init();
+    if (isset($cf['filebrowser']['external'])) {
+	if ($cf['filebrowser']['external']) {
+	    $connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
+		. '/connectors/codeeditor/codeeditor.php';
+	    if (is_readable($connector)) {
+		include_once $connector;
+		$init = $cf['filebrowser']['external'] . '_codeeditor_init';
+		if (function_exists($init)) {
+		    $script = $init();
+		}
 	    }
-	}
-    } else {
-	$_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
-	$url =  $pth['folder']['plugins']
-            . 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
-            . CMSIMPLE_BASE . '&base=./&type=';
-	$script = <<<EOS
+	} else {
+	    $_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
+	    $url =  $pth['folder']['plugins']
+		. 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
+		. CMSIMPLE_BASE . '&base=./&type=';
+	    $script = <<<EOS
 /* <![CDATA[ */
 codeeditor.filebrowser = function(type) {
     window.open('$url' + type, 'popWhizz',
         'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=640,height=480,top=100');
 }
+/* ]]> */
+EOS;
+        }
+    } else {
+	$script = <<<EOS
+/* <![CDATA[ */
+codeeditor.filebrowser = function() {}
 /* ]]> */
 EOS;
     }
