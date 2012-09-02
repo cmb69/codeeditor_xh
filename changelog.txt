@@ -1,3 +1,6 @@
+Version 1beta3 - released 2012-09-02
+cmb     fixed bug where external config files were not recognized (reported by svasti)
+
 Version 1beta2 - released 2012-08-24
 cmb	updated to CodeMirror 2.22
 cmb     implemented editor interface of CMSimple_XH 1.5.2+

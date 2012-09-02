@@ -33,7 +33,7 @@ function codeeditor_config($mode, $config)
                         array('full', 'medium', 'minimal', 'sidebar', ''));
         $fn = $std
             ? $pth['folder']['plugins'] . 'codeeditor/inits/init.js'
-            : $fn;
+            : $config;
         $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
     }
     $config = str_replace(array(' ', "\t", "\r", "\n"), '', $config);
