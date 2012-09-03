@@ -38,7 +38,7 @@
           case '(': level--; break;
           default: break;
           }
-        } while (level > 0)
+        } while (level > 0);
         tprop = getToken(editor, {line: cur.line, ch: tprop.start});
 				if (tprop.className == 'variable')
 					tprop.className = 'function';
@@ -55,7 +55,7 @@
   CodeMirror.javascriptHint = function(editor) {
     return scriptHint(editor, javascriptKeywords,
                       function (e, cur) {return e.getTokenAt(cur);});
-  }
+  };
 
   function getCoffeeScriptToken(editor, cur) {
   // This getToken, it is for coffeescript, imitates the behavior of
@@ -77,7 +77,7 @@
 
   CodeMirror.coffeescriptHint = function(editor) {
     return scriptHint(editor, coffeescriptKeywords, getCoffeeScriptToken);
-  }
+  };
 
   var stringProps = ("charAt charCodeAt indexOf lastIndexOf substring substr slice trim trimLeft trimRight " +
                      "toUpperCase toLowerCase split concat match replace search").split(" ");
@@ -113,8 +113,10 @@
         base = 1;
       else if (obj.className == "function") {
         if (window.jQuery != null && (obj.string == '$' || obj.string == 'jQuery') &&
-            (typeof jQuery == 'function')) base = jQuery();
-        else if (window._ != null && (obj.string == '_') && (typeof _ == 'function')) base = _();
+            (typeof window.jQuery == 'function'))
+          base = window.jQuery();
+        else if (window._ != null && (obj.string == '_') && (typeof window._ == 'function'))
+          base = window._();
       }
       while (base != null && context.length)
         base = base[context.pop().string];
