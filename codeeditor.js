@@ -37,7 +37,7 @@ var codeeditor = {
         while (document.getElementById(id + i) !== null) {i++}
         return id + i;
     },
-    
+
     setClass: function() {
 	var elts = document.getElementsByName('text'), i, elt = null;
 	for (i = 0; i < elts.length; i++) {
@@ -49,7 +49,7 @@ var codeeditor = {
 	if (elt !== null) {
 	    elt.className = 'cmsimplecore_file_edit';
 	}
-	
+
     },
 
     instantiateByClasses: function(classes, config, addSave) {
@@ -72,7 +72,7 @@ var codeeditor = {
 	cm.getScrollerElement().style.height = h + 'px';
 	cm.refresh();
 	codeeditor.instances.push(cm);
-	ta.form.onsubmit = function() {return CodeMirror.commands.save(cm)};
+	ta.form.addEventListener("submit", function() {CodeMirror.commands.save(cm)}, false);
 	this.addUnloadHandler();
     },
 
@@ -101,6 +101,20 @@ var codeeditor = {
 	this.current.focus();
     },
 
+
+    hasSubmit: function(form) {
+	var elts, i, elt;
+
+	elts = form.elements;
+	for (i = 0; i < elts.length; i++) {
+	    elt = elts[i];
+	    if (elt.type == "submit") {
+		return true;
+	    }
+	}
+	return false;
+    }
+
 }
 
 CodeMirror.commands.toggleFullscreen = function(cm) {
@@ -119,20 +133,24 @@ CodeMirror.commands.toggleFullscreen = function(cm) {
 
 
 CodeMirror.commands.save = function(cm) {
+    var form;
+
     function onSave(cm) {
 	if (window.addEventListener) {
 	    window.removeEventListener('beforeunload', codeeditor.beforeUnload, false);
 	} else {
 	    window.detachEvent('onbeforeunload', codeeditor.beforeUnload);
 	}
-	return true;
     }
     function getForm() {
 	var n = cm.getWrapperElement();
 	while (n.nodeName != 'FORM') {n = n.parentNode};
 	return n;
     }
-    if (onSave(cm)) {
-	getForm().submit();
+
+    onSave(cm);
+    form = getForm();
+    if (!codeeditor.hasSubmit(form)) {
+	form.submit();
     }
 }
