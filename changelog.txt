@@ -1,5 +1,6 @@
 Version 1beta5 - internally released 2012-12-24
 cmb     implemented possibility to use a Codeeditor with an own submit button
+cmb     fixed bug, where Codeeditor misbehaved on IE
 
 Version 1beta4 - released 2012-09-03
 cmb     updated to CodeMirror 2.33
