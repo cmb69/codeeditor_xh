@@ -14,7 +14,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('CODEEDITOR_VERSION', '1beta4');
+define('CODEEDITOR_VERSION', '1beta5');
 
 
 /**
