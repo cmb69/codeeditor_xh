@@ -72,17 +72,13 @@ var codeeditor = {
 	cm.getScrollerElement().style.height = h + 'px';
 	cm.refresh();
 	codeeditor.instances.push(cm);
-	ta.form.addEventListener("submit", function() {CodeMirror.commands.save(cm)}, false);
+	codeeditor.addEventListener(ta.form, "submit", function() {CodeMirror.commands.save(cm)});
 	this.addUnloadHandler();
     },
 
     addUnloadHandler: function() {
 	if (!codeeditor.unloadHandlerAdded) {
-	    if (window.addEventListener) {
-		window.addEventListener('beforeunload', this.beforeUnload, false);
-	    } else {
-		window.attachEvent('onbeforeunload', this.beforeUnload);
-	    }
+	    codeeditor.addEventListener(window, "beforeunload", this.beforeUnload);
 	    codeeditor.unloadHandlerAdded = true;
 	}
     },
@@ -113,6 +109,14 @@ var codeeditor = {
 	    }
 	}
 	return false;
+    },
+
+    addEventListener: function(obj, event, handler) {
+	if (obj.addEventListener) {
+	    obj.addEventListener(event, handler, false);
+	} else {
+	    obj.attachEvent("on" + event, handler);
+	}
     }
 
 }
@@ -149,6 +153,7 @@ CodeMirror.commands.save = function(cm) {
     }
 
     onSave(cm);
+    cm.save();
     form = getForm();
     if (!codeeditor.hasSubmit(form)) {
 	form.submit();
