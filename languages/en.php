@@ -10,6 +10,6 @@ $plugin_tx['codeeditor']['syscheck_writable']="Folder '%s' writable";
 $plugin_tx['codeeditor']['confirm_leave']="Your modifications will be lost!";
 
 $plugin_tx['codeeditor']['cf_enabled']="Whether Codeeditor_XH is enabled for editing of template and stylesheets: \"1\" (yes) or \"0\" (no)";
-$plugin_tx['codeeditor']['cf_theme']="The syntax highlighting theme: \"default\", \"cobalt\", \"eclipse\", \"elegant\", \"ge\", \"monokai\", \"neat\", \"night\" or \"rubyblue\".";
+$plugin_tx['codeeditor']['cf_theme']="The syntax highlighting theme: \"default\", \"ambiance\", \"ambiance-mobile\", \"blackboard\", \"cobalt\", \"eclipse\", \"elegant\", \"erlang-dark\", \"ge\", \"lesser-dark\", \"monokai\", \"neat\", \"night\", \"rubyblue\", \"twilight\", \"vibrant-ink\" or \"xq-dark\".";
 
 ?>
