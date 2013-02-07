@@ -3,7 +3,7 @@
 /**
  * Back-end of Codeeditor_XH.
  *
- * Copyright (c) 2011-2012 Christoph M. Becker (see license.txt)
+ * Copyright (c) 2011-2013 Christoph M. Becker (see license.txt)
  */
 
 
@@ -29,7 +29,7 @@ function codeeditor_version()
 	. '<p><a href="http://3-magi.net/?CMSimple_XH/Codeeditor_XH">Codeeditor_XH</a> is powered by '
 	. '<a href="http://codemirror.net/" target="_blank">'
 	. 'CodeMirror</a>.</p>'
-	. '<p>Copyright &copy; 2011-2012 <a href="http://3-magi.net">Christoph M. Becker</a></p>'
+	. '<p>Copyright &copy; 2011-2013 <a href="http://3-magi.net">Christoph M. Becker</a></p>'
 	. '<p style="text-align:justify">This program is free software: you can redistribute it and/or modify'
 	. ' it under the terms of the GNU General Public License as published by'
 	. ' the Free Software Foundation, either version 3 of the License, or'

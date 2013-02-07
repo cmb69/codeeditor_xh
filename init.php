@@ -3,7 +3,7 @@
 /**
  * General editor interface of Codeeditor_XH.
  *
- * Copyright (c) 2011-2012 Christoph M. Becker (see license.txt)
+ * Copyright (c) 2011-2013 Christoph M. Becker (see license.txt)
  */
 
 
@@ -53,10 +53,10 @@ function codeeditor_filebrowser()
     global $cf, $pth, $sl, $adm;
 
     // no filebrowser, if editor is called from front-end
-    if (!$adm) {  
+    if (!$adm) {
         return '';
     }
-    
+
     $script = '';
     if (isset($cf['filebrowser']['external'])) {
 	if ($cf['filebrowser']['external']) {
@@ -126,7 +126,7 @@ function include_codeeditor()
         : '';
     $text['confirm_leave'] = addcslashes($ptx['confirm_leave'], "\0..\37\'\\");
     $filebrowser = codeeditor_filebrowser();
-    
+
     $hjs .= <<<EOS
 <script type="text/javascript" src="{$dir}codemirror/lib/codemirror.js"></script>
 $css1
