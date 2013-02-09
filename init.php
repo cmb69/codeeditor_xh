@@ -138,7 +138,7 @@ function include_codeeditor()
     $filebrowser = codeeditor_filebrowser();
 
     $hjs .= <<<EOS
-<script type="text/javascript" src="{$dir}codemirror/lib/codemirror.js"></script>
+<script type="text/javascript" src="{$dir}codemirror/lib/codemirror.min.js"></script>
 $css1
 <script type="text/javascript" src="{$dir}codemirror/mode/modes.min.js"></script>
 $css2
