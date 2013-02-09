@@ -178,59 +178,110 @@ codeeditor.removeEventListener = function(target, type, listener) {
 }
 
 
+/**
+ * Toggles full screen mode.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
 CodeMirror.commands.toggleFullscreen = function(cm) {
     var scroller = cm.getScrollerElement();
-    var html = document.getElementsByTagName('html')[0];
-    if (scroller.className.search(/fullscreen/) < 0) {
-	scroller.className += ' fullscreen';
-	html.style.oldOverflow = html.style.overflow;
-	html.style.overflow = 'hidden';
+    var body = document.body;
+    if (scroller.className.indexOf("fullscreen") < 0) {
+	scroller.className += " fullscreen";
+	cm.cmbOldOverflow = body.style.overflow;
+	body.style.overflow = "hidden";
     } else {
-	scroller.className = scroller.className.replace(/fullscreen/, '');
-	html.style.overflow = html.style.oldOverflow;
+	scroller.className = scroller.className.replace(/fullscreen/, "");
+	body.style.overflow = cm.cmbOldOverflow;
     }
     cm.refresh();
 }
 
 
+/**
+ * Triggers the submission of the `form' which contains the CodeMirror instance.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
 CodeMirror.commands.save = function(cm) {
-    var form;
-
-    function getForm() {
-	var n = cm.getWrapperElement();
-	while (n.nodeName != 'FORM') {n = n.parentNode};
-	return n;
-    }
+    var node;
 
     codeeditor.removeEventListener(window, "beforeunload",
 				   codeeditor.beforeUnload);
     cm.save();
-    form = getForm();
-    if (!codeeditor.hasSubmit(form)) {
-	form.submit();
+    node = cm.getWrapperElement();
+    while (node.nodeName != 'FORM') {
+	node = node.parentNode;
+    }
+    if (!codeeditor.hasSubmit(node)) {
+	node.submit();
     }
 }
 
+
+/**
+ * Opens the filebrowser for the image folder.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
 CodeMirror.commands.browseImages = function(cm) {
     codeeditor.filebrowser('images');
 }
 
+
+/**
+ * Opens the filebrowser for the downloads folder.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
 CodeMirror.commands.browseDownloads = function(cm) {
     codeeditor.filebrowser('downloads');
 }
 
+
+/**
+ * Opens the filebrowser for the media folder.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
 CodeMirror.commands.browseMedia = function(cm) {
     codeeditor.filebrowser('media');
 }
 
+
+/**
+ * Opens the filebrowser for the userfiles folder.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
 CodeMirror.commands.browseUserfiles = function(cm) {
     codeeditor.filebrowser('userfiles');
 }
 
-CodeMirror.commands.foldCode = function(cm) {
+
+/**
+ * Toggles the folding of the code.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
+CodeMirror.commands.toggleFolding = function(cm) {
     codeeditor.foldFunc(cm, cm.getCursor().line);
 }
 
+
+/**
+ * Toggles the line wrapping.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
 CodeMirror.commands.toogleLineWrapping = function(cm) {
     cm.setOption('lineWrapping', !cm.getOption('lineWrapping'));
 }

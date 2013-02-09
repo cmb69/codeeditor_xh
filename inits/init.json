@@ -6,8 +6,8 @@
     "electricChars": true,
     "extraKeys": {
         "Esc": "toggleFullscreen",
-        "Ctrl-Q": "foldCode",
-        "Cmd-Q": "foldCode",
+        "Ctrl-Q": "toggleFolding",
+        "Cmd-Q": "toggleFolding",
         "Ctrl-I": "browseImages",
         "Cmd-I": "browseImages",
         "Ctrl-L": "browseDownloads",
