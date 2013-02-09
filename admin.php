@@ -3,10 +3,17 @@
 /**
  * Back-end of Codeeditor_XH.
  *
- * Copyright (c) 2011-2013 Christoph M. Becker (see license.txt)
+ * @package	Codeeditor
+ * @copyright	Copyright (c) 2011-2013 Christoph M. Becker <http://3-magi.net/>
+ * @license	http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version     $Id$
+ * @link	http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
 
 
+/*
+ * Prevent direct access.
+ */
 if (!defined('CMSIMPLE_XH_VERSION')) {
     header('HTTP/1.0 403 Forbidden');
     header('Content-Type: text/plain; charset=utf-8');
@@ -14,7 +21,10 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
-define('CODEEDITOR_VERSION', '1beta5');
+/**
+ * The version number.
+ */
+define('CODEEDITOR_VERSION', '1beta6');
 
 
 /**
@@ -123,7 +133,7 @@ function codeeditor() {
 
 
 /*
- * Handle plugin administration.
+ * Handle the plugin administration.
  */
 if (isset($codeeditor) && $codeeditor == 'true') {
     $o .= print_plugin_admin('off');
