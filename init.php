@@ -26,7 +26,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  *
  * @param   string $mode  The highlighting mode.
  * @param   string $config  'full', 'medium', 'minimal', 'sidebar' or '' for the
- *                          default init.js, a filename or a JSON object
+ *                          default init.json, a filename or a JSON object
  * @return  string
  */
 function codeeditor_config($mode, $config)
@@ -39,13 +39,16 @@ function codeeditor_config($mode, $config)
         $std = in_array($config,
                         array('full', 'medium', 'minimal', 'sidebar', ''));
         $fn = $std
-            ? $pth['folder']['plugins'] . 'codeeditor/inits/init.js'
+            ? $pth['folder']['plugins'] . 'codeeditor/inits/init.json'
             : $config;
         $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
     }
-    $config = str_replace(array(' ', "\t", "\r", "\n"), '', $config);
-    $config = strtr($config,
-                    array('%MODE%' => $mode, '%THEME%' => $pcf['theme']));
+    $config = json_decode($config, true);
+    $config['mode'] = $mode;
+    if (!isset($config['theme'])) {
+	$config['theme'] = $pcf['theme'];
+    }
+    $config = json_encode($config);
     return $config;
 }
 
@@ -204,7 +207,8 @@ function init_codeeditor($classes = array(), $config = false)
     }
     $classes = implode('|', $classes);
     $config = codeeditor_config('htmlmixed', $config);
-    $onload .= "codeeditor.instantiateByClasses('$classes', $config, true);";
+    $onload .= "codeeditor.instantiateByClasses('$classes', "
+	. htmlspecialchars($config, ENT_QUOTES, 'UTF-8') . ", true);";
 }
 
 
