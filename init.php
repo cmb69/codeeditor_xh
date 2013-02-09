@@ -142,10 +142,7 @@ function include_codeeditor()
 $css1
 <script type="text/javascript" src="{$dir}codemirror/mode/modes.min.js"></script>
 $css2
-<script type="text/javascript" src="{$dir}codemirror/lib/util/dialog.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/lib/util/searchcursor.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/lib/util/search.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/lib/util/foldcode.js"></script>
+<script type="text/javascript" src="{$dir}codemirror/lib/utils.min.js"></script>
 $css3
 <script type="text/javascript" src="{$dir}codeeditor.js"></script>
 <script type="text/javascript">
