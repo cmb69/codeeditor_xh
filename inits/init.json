@@ -16,7 +16,7 @@
         "Cmd-M": "browseMedia",
         "Ctrl-U": "browseUserfiles",
         "Cmd-U": "browseUserfiles",
-        "Alt-W": "toggleLineWrapping"
+        "Alt-W": "toogleLineWrapping"
     },
     "lineWrapping": true,
     "lineNumbers": true,

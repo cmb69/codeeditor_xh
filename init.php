@@ -205,10 +205,11 @@ function init_codeeditor($classes = array(), $config = false)
     if (empty($classes)) {
         $classes = array('xh-editor');
     }
-    $classes = implode('|', $classes);
+    $classes = json_encode($classes);
+    $classes = htmlspecialchars($classes, ENT_QUOTES, 'UTF-8');
     $config = codeeditor_config('htmlmixed', $config);
-    $onload .= "codeeditor.instantiateByClasses('$classes', "
-	. htmlspecialchars($config, ENT_QUOTES, 'UTF-8') . ", true);";
+    $config = htmlspecialchars($config, ENT_QUOTES, 'UTF-8');
+    $onload .= "codeeditor.instantiateByClasses($classes, $config);";
 }
 
 

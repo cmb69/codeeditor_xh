@@ -124,10 +124,13 @@ function codeeditor() {
 	include_once $pth['folder']['plugins'] . 'codeeditor/init.php';
 	include_codeeditor();
 	$config = codeeditor_config($mode, '');
-	if (CMSIMPLE_XH_BUILD < '2010112201') {
-	    $onload .= 'codeeditor.setClass();';
+	if (CMSIMPLE_XH_BUILD < '2010112201') { // TODO: should we always fix the missing class?
+	    $onload .= 'codeeditor.fixMissingClass();';
 	}
-	$onload .= "codeeditor.instantiateByClasses('$class', $config, false);";
+	$classes = json_encode(array($class));
+	$classes = htmlspecialchars($classes, ENT_QUOTES, 'UTF-8');
+	$config = htmlspecialchars($config, ENT_QUOTES, 'UTF-8');
+	$onload .= "codeeditor.instantiateByClasses($classes, $config);";
     }
 }
 

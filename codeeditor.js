@@ -27,123 +27,6 @@ codeeditor.current = null;
 
 
 /**
- * Whether the unload handler was already added to window.
- */
-codeeditor.unloadHandlerAdded = false;
-
-
-/**
- *
- * @param {CodeMirror} editor
- */
-codeeditor.onFocus = function(editor) {
-    codeeditor.current = editor;
-}
-
-
-/**
- *
- */
-codeeditor.foldFunc = CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder);
-
-
-/**
- * Returns
- */
-codeeditor.getTextareasByClass = function(name) {
-    var textareas = document.getElementsByTagName('textarea');
-    var pattern = new RegExp('(^|\\s)' + name + '(\\s|$)');
-    var res = new Array();
-    for (var i = 0, j = 0; i < textareas.length; i++) {
-	if (pattern.test(textareas[i].className)) {
-	    res[j++] = textareas[i];
-	}
-    }
-    return res;
-}
-
-codeeditor.uniqueId = function() {
-    var id = 'codeeditor';
-    var i = 0;
-    while (document.getElementById(id + i) !== null) {i++}
-    return id + i;
-}
-
-codeeditor.setClass = function() {
-    var elts = document.getElementsByName('text'), i, elt = null;
-    for (i = 0; i < elts.length; i++) {
-	if (elts[i].nodeName == 'TEXTAREA' && elts[i].className == '') {
-	    elt = elts[i];
-	    break;
-	}
-    }
-    if (elt !== null) {
-	elt.className = 'cmsimplecore_file_edit';
-    }
-
-}
-
-codeeditor.instantiateByClasses = function(classes, config, addSave) {
-    classes = classes.split('|');
-    for (var i = 0; i < classes.length; i++) {
-	var textareas = this.getTextareasByClass(classes[i]);
-	for (var j = 0; j < textareas.length; j++) {
-	    if (!textareas[j].getAttribute('id')) {
-		textareas[j].setAttribute('id', this.uniqueId());
-	    }
-	    this.instantiate(textareas[j].getAttribute('id'), config, addSave);
-	}
-    }
-}
-
-codeeditor.instantiate = function(id, config, addSave) {
-    var ta = document.getElementById(id);
-    var h = ta.offsetHeight;
-    var cm = CodeMirror.fromTextArea(ta, config);
-    cm.getScrollerElement().style.height = h + 'px';
-    cm.setOption("onFocus", codeeditor.onFocus);
-    cm.refresh();
-    codeeditor.instances.push(cm);
-    codeeditor.addEventListener(ta.form, "submit", function() {CodeMirror.commands.save(cm)});
-    this.addUnloadHandler();
-}
-
-codeeditor.addUnloadHandler = function() {
-    if (!codeeditor.unloadHandlerAdded) {
-	codeeditor.addEventListener(window, "beforeunload", this.beforeUnload);
-	codeeditor.unloadHandlerAdded = true;
-    }
-}
-
-codeeditor.beforeUnload = function(e) {
-    for (var i = 0; i < codeeditor.instances.length; i++) {
-	if (codeeditor.instances[i].historySize().undo > 0) {
-	    return e.returnValue = codeeditor.text.confirmLeave;
-	}
-    }
-    return null;
-}
-
-codeeditor.insertURI = function(url) {
-    this.current.replaceSelection(url);
-    this.current.focus();
-}
-
-
-codeeditor.hasSubmit = function(form) {
-    var elts, i, elt;
-
-    elts = form.elements;
-    for (i = 0; i < elts.length; i++) {
-	elt = elts[i];
-	if (elt.type == "submit") {
-	    return true;
-	}
-    }
-    return false;
-}
-
-/**
  * Register an event listener in a portable way.
  *
  * @param {EventTarget} target
@@ -179,23 +62,165 @@ codeeditor.removeEventListener = function(target, type, listener) {
 
 
 /**
- * Toggles full screen mode.
+ * Toggles the folding of the code.
+ */
+codeeditor.fold = CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder);
+
+
+/**
+ * Returns all `textarea' elements with a certain class.
  *
- * @param {CodeMirror} cm
+ * @returns {Array}
+ */
+codeeditor.getTextareasByClass = function(name) {
+    var textareas = document.getElementsByTagName('textarea'),
+	pattern = new RegExp('(^|\\s)' + name + '(\\s|$)'),
+    	result = [], length, i;
+
+    for (i = 0, length = textareas.length; i < length; i++) {
+	textarea = textareas[i];
+	if (pattern.test(textarea.className)) {
+	    result.push(textarea);
+	}
+    }
+    return result;
+}
+
+
+/**
+ * Returns an id, which is not used in the document already.
+ *
+ * @returns {String}
+ */
+codeeditor.uniqueId = function() {
+    var prefix = 'codeeditor', i;
+
+    while (document.getElementById(prefix + i) !== null) {
+	i++;
+    }
+    return prefix + i;
+}
+
+
+/**
+ * Sets the class of textarea[name=text] to cmsimplecore_file_edit
+ * for compatibility with CMSimple_XH < 1.4(?)
+ *
  * @returns {undefined}
  */
-CodeMirror.commands.toggleFullscreen = function(cm) {
-    var scroller = cm.getScrollerElement();
-    var body = document.body;
-    if (scroller.className.indexOf("fullscreen") < 0) {
-	scroller.className += " fullscreen";
-	cm.cmbOldOverflow = body.style.overflow;
-	body.style.overflow = "hidden";
-    } else {
-	scroller.className = scroller.className.replace(/fullscreen/, "");
-	body.style.overflow = cm.cmbOldOverflow;
+codeeditor.fixMissingClass = function() {
+    var elements = document.getElementsByName('text'), i, length, element = null;
+
+    for (i = 0, length = elements.length; i < length; i++) {
+	element = elements[i];
+	if (element.nodeName == 'TEXTAREA' && element.className == '') {
+	    element.className = 'cmsimplecore_file_edit';
+	}
     }
+}
+
+
+/**
+ * Returns whether the `form' element has an element for submitting.
+ *
+ * @param {HTMLFormElement} form
+ * @returns {Boolean}
+ */
+codeeditor.hasSubmit = function(form) {
+    var elements, count, i, element;
+
+    elements = form.elements;
+    for (i = 0, count = elements.length; i < count; i++) {
+	element = elements[i];
+	if (element.type == "submit") {
+	    return true;
+	}
+    }
+    return false;
+}
+
+
+/**
+ * Asks to stay on the page, when modifications were made.
+ *
+ * @param {Event} e
+ * @returns {mixed}
+ */
+codeeditor.beforeUnload = function(e) {
+    var i, count;
+
+    for (i = 0, count = codeeditor.instances.length; i < count; i++) {
+	if (codeeditor.instances[i].historySize().undo > 0) {
+	    return e.returnValue = codeeditor.text.confirmLeave;
+	}
+    }
+    return null;
+}
+
+
+/**
+ * Inserts an URL to the current codemirror.
+ *
+ * To be called from the filebrowser.
+ *
+ * @param {String} url
+ * @returns {undefined}
+ */
+codeeditor.insertURI = function(url) {
+    var cm = codeeditor.current;
+
+    cm.replaceSelection(url);
+    cm.focus();
+}
+
+
+/**
+ * Makes all `textarea' elements with certain classes to CodeMirrors.
+ *
+ * @param {Array} classes
+ * @param {Object} config
+ * @returns {undefined}
+ */
+codeeditor.instantiateByClasses = function(classes, config) {
+    var classCount, i, textareas, textareaCount, j, textarea;
+
+    for (i = 0, classCount = classes.length; i < classCount; i++) {
+	textareas = codeeditor.getTextareasByClass(classes[i]);
+	for (j = 0, textareaCount = textareas.length; j < textareaCount; j++) {
+	    textarea = textareas[i];
+	    if (!textarea.id) {
+		textarea.id = codeeditor.uniqueId();
+	    }
+	    codeeditor.instantiate(textarea.id, config);
+	}
+    }
+}
+
+
+/**
+ * Makes a `textarea' element to a CodeMirror.
+ *
+ * @param {String} id
+ * @param {Object} config
+ * @returns {undefined}
+ */
+codeeditor.instantiate = function(id, config) {
+    var textarea = document.getElementById(id),
+    	height = textarea.offsetHeight,
+    	cm = CodeMirror.fromTextArea(textarea, config);
+
+    cm.getScrollerElement().style.height = height + "px";
+    cm.setOption("onFocus", function(editor) {
+	codeeditor.current = editor;
+    });
     cm.refresh();
+    codeeditor.instances.push(cm);
+    codeeditor.addEventListener(textarea.form, "submit", function() {
+	CodeMirror.commands.save(cm)
+    });
+    codeeditor.addEventListener(window, "beforeunload",
+				codeeditor.beforeUnload);
+
 }
 
 
@@ -218,6 +243,49 @@ CodeMirror.commands.save = function(cm) {
     if (!codeeditor.hasSubmit(node)) {
 	node.submit();
     }
+}
+
+
+/**
+ * Toggles full screen mode.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
+CodeMirror.commands.toggleFullscreen = function(cm) {
+    var scroller = cm.getScrollerElement();
+    var body = document.body;
+    if (scroller.className.indexOf("fullscreen") < 0) {
+	scroller.className += " fullscreen";
+	cm.cmbOldOverflow = body.style.overflow;
+	body.style.overflow = "hidden";
+    } else {
+	scroller.className = scroller.className.replace(/fullscreen/, "");
+	body.style.overflow = cm.cmbOldOverflow;
+    }
+    cm.refresh();
+}
+
+
+/**
+ * Toggles the folding of the code.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
+CodeMirror.commands.toggleFolding = function(cm) {
+    codeeditor.fold(cm, cm.getCursor().line);
+}
+
+
+/**
+ * Toggles the line wrapping.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
+CodeMirror.commands.toogleLineWrapping = function(cm) {
+    cm.setOption('lineWrapping', !cm.getOption('lineWrapping'));
 }
 
 
@@ -262,26 +330,4 @@ CodeMirror.commands.browseMedia = function(cm) {
  */
 CodeMirror.commands.browseUserfiles = function(cm) {
     codeeditor.filebrowser('userfiles');
-}
-
-
-/**
- * Toggles the folding of the code.
- *
- * @param {CodeMirror} cm
- * @returns {undefined}
- */
-CodeMirror.commands.toggleFolding = function(cm) {
-    codeeditor.foldFunc(cm, cm.getCursor().line);
-}
-
-
-/**
- * Toggles the line wrapping.
- *
- * @param {CodeMirror} cm
- * @returns {undefined}
- */
-CodeMirror.commands.toogleLineWrapping = function(cm) {
-    cm.setOption('lineWrapping', !cm.getOption('lineWrapping'));
 }
