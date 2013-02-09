@@ -140,12 +140,7 @@ function include_codeeditor()
     $hjs .= <<<EOS
 <script type="text/javascript" src="{$dir}codemirror/lib/codemirror.js"></script>
 $css1
-<script type="text/javascript" src="{$dir}codemirror/mode/css/css.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/mode/xml/xml.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/mode/javascript/javascript.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/mode/php/php.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/mode/clike/clike.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/mode/htmlmixed/htmlmixed.js"></script>
+<script type="text/javascript" src="{$dir}codemirror/mode/modes.min.js"></script>
 $css2
 <script type="text/javascript" src="{$dir}codemirror/lib/util/dialog.js"></script>
 <script type="text/javascript" src="{$dir}codemirror/lib/util/searchcursor.js"></script>
