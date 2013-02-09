@@ -143,13 +143,40 @@ codeeditor.hasSubmit = function(form) {
     return false;
 }
 
-codeeditor.addEventListener = function(obj, event, handler) {
-    if (obj.addEventListener) {
-	obj.addEventListener(event, handler, false);
-    } else {
-	obj.attachEvent("on" + event, handler);
+/**
+ * Register an event listener in a portable way.
+ *
+ * @param {EventTarget} target
+ * @param {DOMString} type
+ * @param {EventListener} listener
+ * @returns {void}
+ */
+codeeditor.addEventListener = function(target, type, listener) {
+    if (typeof target.addEventListener !== "undefined") {
+        target.addEventListener(type, listener, false);
+    } else if (typeof target.attachEvent !== "undefined") {
+        target.detachEvent("on" + type, listener);
+        target.attachEvent("on" + type, listener);
     }
 }
+
+
+/**
+ * Unregisters an event listener in a portable way.
+ *
+ * @param {EventTarget} target
+ * @param {DOMString} type
+ * @param {EventListener} listener
+ * @returns {void}
+ */
+codeeditor.removeEventListener = function(target, type, listener) {
+    if (typeof target.removeEventListener !== "undefined") {
+        target.removeEventListener(type, listener, false);
+    } else if (typeof target.detachEvent !== "undefined") {
+        target.detachEvent("on" + type, listener);
+    }
+}
+
 
 CodeMirror.commands.toggleFullscreen = function(cm) {
     var scroller = cm.getScrollerElement();
@@ -169,20 +196,14 @@ CodeMirror.commands.toggleFullscreen = function(cm) {
 CodeMirror.commands.save = function(cm) {
     var form;
 
-    function onSave(cm) {
-	if (window.addEventListener) {
-	    window.removeEventListener('beforeunload', codeeditor.beforeUnload, false);
-	} else {
-	    window.detachEvent('onbeforeunload', codeeditor.beforeUnload);
-	}
-    }
     function getForm() {
 	var n = cm.getWrapperElement();
 	while (n.nodeName != 'FORM') {n = n.parentNode};
 	return n;
     }
 
-    onSave(cm);
+    codeeditor.removeEventListener(window, "beforeunload",
+				   codeeditor.beforeUnload);
     cm.save();
     form = getForm();
     if (!codeeditor.hasSubmit(form)) {
