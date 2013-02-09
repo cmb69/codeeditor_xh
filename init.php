@@ -217,10 +217,10 @@ function init_codeeditor($classes = array(), $config = false)
  */
 global $sl; // TODO: is that necessary?
 if (!isset($cf['codeeditor'])) {
-    include_once $pth['folder']['plugins'] . 'codeeditor/config/config.php';
+    include $pth['folder']['plugins'] . 'codeeditor/config/config.php';
 }
 if (!isset($tx['codeeditor'])) {
-    include_once $pth['folder']['plugins'] . 'codeeditor/languages/' . $sl . '.php';
+    include $pth['folder']['plugins'] . 'codeeditor/languages/' . $sl . '.php';
 }
 
 ?>
