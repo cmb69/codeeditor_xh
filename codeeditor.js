@@ -101,6 +101,7 @@ codeeditor.instantiate = function(id, config, addSave) {
     var h = ta.offsetHeight;
     var cm = CodeMirror.fromTextArea(ta, config);
     cm.getScrollerElement().style.height = h + 'px';
+    cm.setOption("onFocus", codeeditor.onFocus);
     cm.refresh();
     codeeditor.instances.push(cm);
     codeeditor.addEventListener(ta.form, "submit", function() {CodeMirror.commands.save(cm)});

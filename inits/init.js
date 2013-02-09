@@ -26,6 +26,5 @@
     matchBrackets: true,
     workTime: 200,
     workDelay: 300,
-    onFocus: codeeditor.onFocus,
     undoDepth: 40
 }
