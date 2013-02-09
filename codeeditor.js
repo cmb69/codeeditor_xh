@@ -188,3 +188,27 @@ CodeMirror.commands.save = function(cm) {
 	form.submit();
     }
 }
+
+CodeMirror.commands.browseImages = function(cm) {
+    codeeditor.filebrowser('images');
+}
+
+CodeMirror.commands.browseDownloads = function(cm) {
+    codeeditor.filebrowser('downloads');
+}
+
+CodeMirror.commands.browseMedia = function(cm) {
+    codeeditor.filebrowser('media');
+}
+
+CodeMirror.commands.browseUserfiles = function(cm) {
+    codeeditor.filebrowser('userfiles');
+}
+
+CodeMirror.commands.foldCode = function(cm) {
+    codeeditor.foldFunc(cm, cm.getCursor().line);
+}
+
+CodeMirror.commands.toogleLineWrapping = function(cm) {
+    cm.setOption('lineWrapping', !cm.getOption('lineWrapping'));
+}
