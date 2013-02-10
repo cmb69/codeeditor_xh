@@ -71,24 +71,24 @@ function codeeditor_systemCheck() // RELEASE-TODO
 {
     global $pth, $tx, $plugin_tx;
 
-    define('CODEEDITOR_PHP_VERSION', '4.3.0');
+    $phpVersion = '4.3.0';
     $ptx = $plugin_tx['codeeditor'];
     $imgdir = $pth['folder']['plugins'] . 'codeeditor/images/';
     $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
     $warn = tag('img src="' . $imgdir . 'warn.png" alt="warning"');
     $fail = tag('img src="' . $imgdir . 'fail.png" alt="failure"');
-    $o = tag('hr') . '<h4>' . $ptx['syscheck_title'] . '</h4>'
-	. (version_compare(PHP_VERSION, CODEEDITOR_PHP_VERSION) >= 0 ? $ok : $fail)
-	. '&nbsp;&nbsp;' . sprintf($ptx['syscheck_phpversion'], CODEEDITOR_PHP_VERSION)
-	. tag('br') . tag('br');
-    foreach (array() as $ext) {
+    $o = '<h4>' . $ptx['syscheck_title'] . '</h4>'
+	. (version_compare(PHP_VERSION, $phpVersion) >= 0 ? $ok : $fail)
+	. '&nbsp;&nbsp;' . sprintf($ptx['syscheck_phpversion'], $phpVersion)
+	. tag('br');
+    foreach (array('pcre') as $ext) {
 	$o .= (extension_loaded($ext) ? $ok : $fail)
 	    . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_extension'], $ext) . tag('br');
     }
-    $o .= (strtoupper($tx['meta']['codepage']) == 'UTF-8' ? $ok : $warn)
-	. '&nbsp;&nbsp;' . $ptx['syscheck_encoding'] . tag('br');
     $o .= (!get_magic_quotes_runtime() ? $ok : $warn)
 	. '&nbsp;&nbsp;' . $ptx['syscheck_magic_quotes'] . tag('br') . tag('br');
+    $o .= (strtoupper($tx['meta']['codepage']) == 'UTF-8' ? $ok : $warn)
+	. '&nbsp;&nbsp;' . $ptx['syscheck_encoding'] . tag('br');
     foreach (array('config/', 'css/', 'languages/') as $folder) {
 	$folders[] = $pth['folder']['plugins'].'codeeditor/' . $folder;
     }
@@ -170,7 +170,7 @@ if (isset($codeeditor) && $codeeditor == 'true') {
 
     switch ($admin) {
     case '':
-	$o .= codeeditor_version() . codeeditor_systemCheck();
+	$o .= codeeditor_version() . tag('hr') . codeeditor_systemCheck();
 	break;
     default:
 	$o .= plugin_admin_common($action, $admin, $plugin);
