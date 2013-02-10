@@ -98,7 +98,8 @@ function codeeditor_system_check() // RELEASE-TODO
  * @global string $onload
  * @return void
  */
-function codeeditor() {
+function codeeditor()
+{
     global $pth, $onload, $admin, $action, $file;
 
     // TODO: is this necessary? (it doesn't hurt though)

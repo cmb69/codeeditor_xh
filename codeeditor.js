@@ -268,6 +268,41 @@ CodeMirror.commands.toggleFullscreen = function(cm) {
 
 
 /**
+ * Toggles the preview.
+ *
+ * @param {CodeMirror} cm
+ * @returns {undefined}
+ */
+CodeMirror.commands.togglePreview = function(cm) {
+    var wrapper = cm.getWrapperElement(), preview;
+
+    if (wrapper.previousSibling
+	&& wrapper.previousSibling.className.indexOf("codeeditor_preview") >= 0)
+    {
+	preview = wrapper.previousSibling;
+	preview.parentNode.removeChild(preview);
+	cm.setOption("onBlur", null);
+	if (cm.cmbFullscreen) {
+	    delete cm.cmbFullscreen;
+	    CodeMirror.commands.toggleFullscreen(cm);
+	}
+    } else {
+	if (cm.getScrollerElement().className.indexOf("fullscreen") >= 0) {
+	    CodeMirror.commands.toggleFullscreen(cm);
+	    cm.cmbFullscreen = true;
+	}
+	preview = document.createElement("div");
+	preview.className = "codeeditor_preview";
+        preview.innerHTML = cm.getValue();
+	wrapper.parentNode.insertBefore(preview, wrapper);
+	cm.setOption("onBlur", function() {
+	    CodeMirror.commands.togglePreview(cm);
+	});
+    }
+}
+
+
+/**
  * Toggles the folding of the code.
  *
  * @param {CodeMirror} cm

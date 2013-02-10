@@ -8,6 +8,8 @@
         "Esc": "toggleFullscreen",
         "Ctrl-Q": "toggleFolding",
         "Cmd-Q": "toggleFolding",
+        "Alt-W": "toogleLineWrapping",
+        "Alt-P": "togglePreview",
         "Ctrl-I": "browseImages",
         "Cmd-I": "browseImages",
         "Ctrl-L": "browseDownloads",
@@ -15,8 +17,7 @@
         "Ctrl-M": "browseMedia",
         "Cmd-M": "browseMedia",
         "Ctrl-U": "browseUserfiles",
-        "Cmd-U": "browseUserfiles",
-        "Alt-W": "toogleLineWrapping"
+        "Cmd-U": "browseUserfiles"
     },
     "lineWrapping": true,
     "lineNumbers": true,
