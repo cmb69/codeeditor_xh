@@ -209,7 +209,7 @@ codeeditor.instantiate = function(id, config) {
     	height = textarea.offsetHeight,
     	cm = CodeMirror.fromTextArea(textarea, config);
 
-    cm.getScrollerElement().style.height = height + "px";
+    cm.setSize(null, height);
     cm.setOption("onFocus", function(editor) {
 	codeeditor.current = editor;
     });
