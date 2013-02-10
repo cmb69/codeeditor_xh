@@ -1,7 +1,7 @@
 <?php
 
 $plugin_tx['codeeditor']['syscheck_title']="System check";
-$plugin_tx['codeeditor']['syscheck_phpversion']="PHP version ≥ %s";
+$plugin_tx['codeeditor']['syscheck_phpversion']="PHP version &ge; %s";
 $plugin_tx['codeeditor']['syscheck_extension']="Extension '%s' loaded";
 $plugin_tx['codeeditor']['syscheck_encoding']="Encoding 'UTF-8' configured";
 $plugin_tx['codeeditor']['syscheck_magic_quotes']="magic_quotes_runtime off";
