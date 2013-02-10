@@ -221,7 +221,6 @@ codeeditor.instantiate = function(id, config, mayPreview) {
     });
     codeeditor.addEventListener(window, "beforeunload",
 				codeeditor.beforeUnload);
-
 }
 
 

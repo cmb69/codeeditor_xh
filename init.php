@@ -21,6 +21,26 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 }
 
 
+/*
+ * Provide JSON handling, if not already there.
+ */
+if (!function_exists('json_encode')) {
+    if (!class_exists('CMB_JSON')) {
+	include_once $pth['folder']['plugins'] . 'codeditor/JSON.php';
+    }
+    function json_encode($value)
+    {
+	$json = CMB_JSON::instance();
+	return $json->encode($value);
+    }
+    function json_decode($string)
+    {
+	$json = CMB_JSON::instance();
+	return $json->decode($string);
+    }
+}
+
+
 /**
  * Returns the configuration in JSON format.
  *
