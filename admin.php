@@ -30,13 +30,18 @@ define('CODEEDITOR_VERSION', '1beta6');
 /**
  * Returns the plugin version information view.
  *
+ * @global array  The paths of system files and folders.
  * @return string  The (X)HTML.
  */
 function codeeditor_version()
 {
-    return '<h1>Codeeditor_XH</h1>'
+    global $pth;
+
+    return '<h1><a href="http://3-magi.net/?CMSimple_XH/Codeeditor_XH">Codeeditor_XH</a></h1>'
+	. tag('img src="' . $pth['folder']['plugins'] . 'codeeditor/codeeditor.png"'
+	      . 'alt="Plugin Icon" style="float: left"')
 	. '<p>Version: '.CODEEDITOR_VERSION.'</p>'
-	. '<p><a href="http://3-magi.net/?CMSimple_XH/Codeeditor_XH">Codeeditor_XH</a> is powered by '
+	. '<p>Codeeditor_XH is powered by '
 	. '<a href="http://codemirror.net/" target="_blank">'
 	. 'CodeMirror</a>.</p>'
 	. '<p>Copyright &copy; 2011-2013 <a href="http://3-magi.net">Christoph M. Becker</a></p>'
