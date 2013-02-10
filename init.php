@@ -130,25 +130,23 @@ function include_codeeditor()
     $ptx = $plugin_tx['codeeditor'];
     $dir = $pth['folder']['plugins'] . 'codeeditor/';
 
-    $css1 = tag('link rel="stylesheet" type="text/css" href="' . $dir
-               . 'codemirror/lib/codemirror.css"');
-    $css2 = tag('link rel="stylesheet" type="text/css" href="' . $dir
-                . 'codemirror/lib/util/dialog.css"');
+    $css = tag('link rel="stylesheet" type="text/css" href="' . $dir
+               . 'codemirror/lib/codemirror.css"') . "\n";
+    $css .= tag('link rel="stylesheet" type="text/css" href="' . $dir
+                . 'codemirror/lib/util/dialog.css"') . "\n";
     $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css';
-    $css3 = file_exists($fn)
-        ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
+    $css .= file_exists($fn)
+        ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"') . "\n"
         : '';
     $text = array('confirm_leave' => $ptx['confirm_leave']);
     $text = json_encode($text);
     $filebrowser = codeeditor_filebrowser();
 
     $hjs .= <<<EOS
+$css
 <script type="text/javascript" src="{$dir}codemirror/lib/codemirror.min.js"></script>
-$css1
 <script type="text/javascript" src="{$dir}codemirror/mode/modes.min.js"></script>
-$css2
 <script type="text/javascript" src="{$dir}codemirror/lib/utils.min.js"></script>
-$css3
 <script type="text/javascript" src="{$dir}codeeditor.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */

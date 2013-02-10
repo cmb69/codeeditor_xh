@@ -7,9 +7,9 @@
     "extraKeys": {
         "Esc": "toggleFullscreen",
         "Ctrl-Q": "toggleFolding",
-        "Cmd-Q": "toggleFolding",
         "Alt-W": "toogleLineWrapping",
-        "Alt-P": "togglePreview",
+        "Ctrl-P": "togglePreview",
+        "Cmd-P": "togglePreview",
         "Ctrl-I": "browseImages",
         "Cmd-I": "browseImages",
         "Ctrl-L": "browseDownloads",
