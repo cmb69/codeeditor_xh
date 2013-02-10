@@ -40,7 +40,7 @@ function codeeditor_version()
     return '<h1><a href="http://3-magi.net/?CMSimple_XH/Codeeditor_XH">Codeeditor_XH</a></h1>'
 	. tag('img src="' . $pth['folder']['plugins'] . 'codeeditor/codeeditor.png"'
 	      . 'alt="Plugin Icon" style="float: left"')
-	. '<p>Version: '.CODEEDITOR_VERSION.'</p>'
+	. '<p>Version: ' . CODEEDITOR_VERSION . '</p>'
 	. '<p>Codeeditor_XH is powered by '
 	. '<a href="http://codemirror.net/" target="_blank">'
 	. 'CodeMirror</a>.</p>'
@@ -62,11 +62,14 @@ function codeeditor_version()
 /**
  * Returns requirements information view.
  *
+ * @global array  The paths of systems files and folders.
+ * @global array  The localization of the core.
+ * @global array  The localization of the plugins.
  * @return string  The (X)HTML.
  */
-function codeeditor_system_check() // RELEASE-TODO
+function codeeditor_systemCheck() // RELEASE-TODO
 {
-    global $pth, $tx, $plugin_tx, $plugin_cf;
+    global $pth, $tx, $plugin_tx;
 
     define('CODEEDITOR_PHP_VERSION', '4.3.0');
     $ptx = $plugin_tx['codeeditor'];
@@ -100,12 +103,18 @@ function codeeditor_system_check() // RELEASE-TODO
 /**
  * Initializes CodeMirror for template and (plugin) stylesheets.
  *
- * @global string $onload
+ * @global array  The paths of system files and folders.
+ * @global string  (X)HTML to be inserted in the `head' element.
+ * @global string  (X)HTML to be inserted at the bottom of the `body' element.
+ * @global string  The value of the `onload' attribute of the `body' element.
+ * @global string  The value of the `admin' parameter.
+ * @global string  The value of the `action' parameter.
+ * @global string  The value of the `file' parameter.
  * @return void
  */
 function codeeditor()
 {
-    global $pth, $onload, $admin, $action, $file;
+    global $pth, $hjs, $bjs, $onload, $admin, $action, $file;
 
     // TODO: is this necessary? (it doesn't hurt though)
     initvar('admin');
@@ -134,9 +143,21 @@ function codeeditor()
 	    $onload .= 'codeeditor.fixMissingClass();';
 	}
 	$classes = json_encode(array($class));
-	$classes = htmlspecialchars($classes, ENT_QUOTES, 'UTF-8');
-	$config = htmlspecialchars($config, ENT_QUOTES, 'UTF-8');
-	$onload .= "codeeditor.instantiateByClasses($classes, $config);";
+	$script = <<<EOS
+<script type="text/javascript">
+/* <![CDATA[ */
+codeeditor.addEventListener(window, "load", function() {
+    codeeditor.instantiateByClasses($classes, $config);
+})
+/* ]]> */
+</script>
+
+EOS;
+	if (isset($bjs)) {
+	    $bjs .= $script;
+	} else {
+	    $hjs .= $script;
+	}
     }
 }
 
@@ -149,7 +170,7 @@ if (isset($codeeditor) && $codeeditor == 'true') {
 
     switch ($admin) {
     case '':
-	$o .= codeeditor_version() . codeeditor_system_check();
+	$o .= codeeditor_version() . codeeditor_systemCheck();
 	break;
     default:
 	$o .= plugin_admin_common($action, $admin, $plugin);

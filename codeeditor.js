@@ -331,7 +331,9 @@ CodeMirror.commands.toogleLineWrapping = function(cm) {
  * @returns {undefined}
  */
 CodeMirror.commands.browseImages = function(cm) {
-    codeeditor.filebrowser('images');
+    if (typeof codeeditor.filebrowser == 'function') {
+	codeeditor.filebrowser('images');
+    }
 }
 
 
@@ -342,7 +344,9 @@ CodeMirror.commands.browseImages = function(cm) {
  * @returns {undefined}
  */
 CodeMirror.commands.browseDownloads = function(cm) {
-    codeeditor.filebrowser('downloads');
+    if (typeof codeeditor.filebrowser == 'function') {
+        codeeditor.filebrowser('downloads');
+    }
 }
 
 
@@ -353,7 +357,9 @@ CodeMirror.commands.browseDownloads = function(cm) {
  * @returns {undefined}
  */
 CodeMirror.commands.browseMedia = function(cm) {
-    codeeditor.filebrowser('media');
+    if (typeof codeeditor.filebrowser == 'function') {
+        codeeditor.filebrowser('media');
+    }
 }
 
 
@@ -364,5 +370,7 @@ CodeMirror.commands.browseMedia = function(cm) {
  * @returns {undefined}
  */
 CodeMirror.commands.browseUserfiles = function(cm) {
-    codeeditor.filebrowser('userfiles');
+    if (typeof codeeditor.filebrowser == 'function') {
+        codeeditor.filebrowser('userfiles');
+    }
 }

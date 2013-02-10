@@ -24,9 +24,14 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 /**
  * Returns the configuration in JSON format.
  *
- * @param   string $mode  The highlighting mode.
- * @param   string $config  'full', 'medium', 'minimal', 'sidebar' or '' for the
- *                          default init.json, a filename or a JSON object
+ * The configuration string can be `full', `medium', `minimal', `sidebar'
+ * or `' (which will use the users default configuration).
+ * Other values are taken as file name or as JSON configuration object.
+ *
+ * @global array  The paths of system files and folders.
+ * @global array  The configuration of the plugins.
+ * @param   string $mode  The syntax mode.
+ * @param   string $config  The configuration string.
  * @return  string
  */
 function codeeditor_config($mode, $config)
@@ -35,7 +40,7 @@ function codeeditor_config($mode, $config)
 
     $pcf = $plugin_cf['codeeditor'];
     $config = trim($config);
-    if (empty($config) || $config[0] !== '{') {
+    if (empty($config) || $config[0] != '{') {
         $std = in_array($config,
                         array('full', 'medium', 'minimal', 'sidebar', ''));
         $fn = $std
@@ -54,13 +59,16 @@ function codeeditor_config($mode, $config)
 
 
 /**
- * Returns the JS to activate the configured filebrowser.
+ * Returns the JavaScript to activate the configured filebrowser.
  *
+ * @global bool  Whether the user is logged in as admin.
+ * @global array  The paths of system files and folders.
+ * @global array  The configuration of the core.
  * @return void
  */
 function codeeditor_filebrowser()
 {
-    global $cf, $pth, $sl, $adm;
+    global $adm, $pth, $cf;
 
     // no filebrowser, if editor is called from front-end
     if (!$adm) {
@@ -68,35 +76,28 @@ function codeeditor_filebrowser()
     }
 
     $script = '';
-    if (isset($cf['filebrowser']['external'])) {
-	if ($cf['filebrowser']['external']) {
-	    $connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
-		. '/connectors/codeeditor/codeeditor.php';
-	    if (is_readable($connector)) {
-		include_once $connector;
-		$init = $cf['filebrowser']['external'] . '_codeeditor_init';
-		if (function_exists($init)) {
-		    $script = $init();
-		}
+    if (!empty($cf['filebrowser']['external'])) {
+	$connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
+	    . '/connectors/codeeditor/codeeditor.php';
+	if (is_readable($connector)) {
+	    include_once $connector;
+	    $init = $cf['filebrowser']['external'] . '_codeeditor_init';
+	    if (function_exists($init)) {
+		$script = call_user_func($init);
 	    }
-	} else {
-	    $_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
-	    $url =  $pth['folder']['plugins']
-		. 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
-		. CMSIMPLE_BASE . '&base=./&type=';
-	    $script = <<<EOS
-/* <![CDATA[ */
-codeeditor.filebrowser = function(type) {
-    window.open('$url' + type, 'popWhizz',
-        'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=640,height=480,top=100');
-}
-/* ]]> */
-EOS;
-        }
+	}
     } else {
+	$_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
+	$url =  $pth['folder']['plugins']
+	    . 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
+	    . CMSIMPLE_BASE . '&base=./&type=';
 	$script = <<<EOS
 /* <![CDATA[ */
-codeeditor.filebrowser = function() {}
+codeeditor.filebrowser = function(type) {
+    window.open("$url" + type, "codeeditor_filebrowser",
+		"toolbar=no,location=no,status=no,menubar=no,"
+		+ "scrollbars=yes,resizable=yes,width=640,height=480");
+}
 /* ]]> */
 EOS;
     }
@@ -105,16 +106,19 @@ EOS;
 
 
 /**
- * Writes the basic JS of the editor to $hjs. No editors are actually created.
- * Multiple calls are allowed; all but the first should be ignored.
+ * Writes the basic JavaScript of the editor to the `head' element.
+ * No editors are actually created. Multiple calls are allowed.
  * This is called from init_EDITOR() automatically, but not from EDITOR_replace().
  *
- * @global string $hjs
+ * global string  (X)HTML to insert in the `head' element.
+ * global array  The paths of system files and folders.
+ * @global array  The configuration of the plugins.
+ * @global array  The localization of the plugins.
  * @return void
  */
 function include_codeeditor()
 {
-    global $hjs, $o, $pth, $cf, $tx, $plugin_cf, $plugin_tx;
+    global $hjs, $pth, $plugin_cf, $plugin_tx;
     static $again = false;
 
     if ($again) {
@@ -134,7 +138,8 @@ function include_codeeditor()
     $css3 = file_exists($fn)
         ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
         : '';
-    $text['confirm_leave'] = addcslashes($ptx['confirm_leave'], "\0..\37\'\\");
+    $text = array('confirm_leave' => $ptx['confirm_leave']);
+    $text = json_encode($text);
     $filebrowser = codeeditor_filebrowser();
 
     $hjs .= <<<EOS
@@ -147,12 +152,8 @@ $css3
 <script type="text/javascript" src="{$dir}codeeditor.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
-codeeditor.text = {
-    confirmLeave: '$text[confirm_leave]'
-}
+codeeditor.text = $text;
 /* ]]> */
-</script>
-<script type="text/javascript">
 $filebrowser
 </script>
 
@@ -161,54 +162,67 @@ EOS;
 
 
 /**
- * Returns the JS to actually instantiate a single editor on the textarea given by $element_id.
- * $config can be 'full', 'medium', 'minimal', 'sidebar' or '' (which will use the users default configuration).
- * Other values are taken as file name or as JSON configuration object enclosed in { },
- * that can contain %PLACEHOLDER%s, that will be substituted.
+ * Returns the JavaScript to actually instantiate a single editor a
+ * `textarea' element.
  *
- * To actually create the editor, the caller has to write the the return value to the (X)HTML output,
- * properly enclosed as <script>, after the according <textarea>, or execute the return value by other means.
+ * To actually create the editor, the caller has to write the the return value
+ * to the (X)HTML output, properly enclosed as `script' element,
+ * after the according `textarea' element,
+ * or execute the return value by other means.
  *
- * @param   string $elementId  The id of the textarea that should become an editor instance.
+ * @param   string $elementId  The id of the `textarea' element that should become an editor instance.
  * @param   string $config  The configuration string.
- * @return  string  The JS to actually create the editor.
+ * @return  string  The JavaScript to actually create the editor.
  */
 function codeeditor_replace($elementId, $config = '')
 {
     $config = codeeditor_config('htmlmixed', $config);
-    return "codeeditor.instantiate('$elementId', $config, true);";
+    return "codeeditor.instantiate('$elementId', $config);";
 }
 
 
 /**
- * Instantiates the editor(s) on the textarea(s) given by $element_classes.
+ * Instantiates the editor(s) on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param string $element_classes  The classes of the textarea(s) that should become an editor instance. An empty array means .xh-editor.
+ * global string  (X)HTML to insert in the `head' element.
+ * global string  (X)HTML to insert at the bottom of the `body' element.
+ * @param string $classes  The classes of the textarea(s) that should become an editor instance.
  * @param string $config  The configuration string.
- * @global string $onload
  * @return void
  */
 function init_codeeditor($classes = array(), $config = false)
 {
-    global $hjs, $onload;
+    global $hjs, $bjs;
 
     include_codeeditor();
     if (empty($classes)) {
         $classes = array('xh-editor');
     }
     $classes = json_encode($classes);
-    $classes = htmlspecialchars($classes, ENT_QUOTES, 'UTF-8');
     $config = codeeditor_config('htmlmixed', $config);
-    $config = htmlspecialchars($config, ENT_QUOTES, 'UTF-8');
-    $onload .= "codeeditor.instantiateByClasses($classes, $config);";
+    $script = <<<EOS
+<script type="text/javascript">
+/* <![CDATA[ */
+codeeditor.addEventListener(window, "load", function() {
+    codeeditor.instantiateByClasses($classes, $config);
+})
+/* ]]> */
+</script>
+
+EOS;
+    if (isset($bjs)) {
+	$bjs .= $script;
+    } else {
+	$hjs .= $script;
+    }
 }
 
 
 /*
  * Include config and language file, if not yet done.
  */
-global $sl; // TODO: is that necessary?
+global $sl; // file can be included from within a function
 if (!isset($cf['codeeditor'])) {
     include $pth['folder']['plugins'] . 'codeeditor/config/config.php';
 }
