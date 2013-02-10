@@ -181,7 +181,7 @@ codeeditor.insertURI = function(url) {
  * @param {Object} config
  * @returns {undefined}
  */
-codeeditor.instantiateByClasses = function(classes, config) {
+codeeditor.instantiateByClasses = function(classes, config, mayPreview) {
     var classCount, i, textareas, textareaCount, j, textarea;
 
     for (i = 0, classCount = classes.length; i < classCount; i++) {
@@ -191,7 +191,7 @@ codeeditor.instantiateByClasses = function(classes, config) {
 	    if (!textarea.id) {
 		textarea.id = codeeditor.uniqueId();
 	    }
-	    codeeditor.instantiate(textarea.id, config);
+	    codeeditor.instantiate(textarea.id, config, mayPreview);
 	}
     }
 }
@@ -204,11 +204,12 @@ codeeditor.instantiateByClasses = function(classes, config) {
  * @param {Object} config
  * @returns {undefined}
  */
-codeeditor.instantiate = function(id, config) {
+codeeditor.instantiate = function(id, config, mayPreview) {
     var textarea = document.getElementById(id),
     	height = textarea.offsetHeight,
     	cm = CodeMirror.fromTextArea(textarea, config);
 
+    cm.cmbMayPreview = mayPreview || false;
     cm.setSize(null, height);
     cm.setOption("onFocus", function(editor) {
 	codeeditor.current = editor;
@@ -275,7 +276,7 @@ CodeMirror.commands.toggleFullscreen = function(cm) {
  */
 CodeMirror.commands.togglePreview = function(cm) {
     var wrapper = cm.getWrapperElement(), preview;
-
+if (!cm.cmbMayPreview) {return}
     if (wrapper.previousSibling
 	&& wrapper.previousSibling.className.indexOf("codeeditor_preview") >= 0)
     {

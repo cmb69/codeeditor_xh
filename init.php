@@ -175,7 +175,7 @@ EOS;
 function codeeditor_replace($elementId, $config = '')
 {
     $config = codeeditor_config('htmlmixed', $config);
-    return "codeeditor.instantiate('$elementId', $config);";
+    return "codeeditor.instantiate('$elementId', $config, true);";
 }
 
 
@@ -203,7 +203,7 @@ function init_codeeditor($classes = array(), $config = false)
 <script type="text/javascript">
 /* <![CDATA[ */
 codeeditor.addEventListener(window, "load", function() {
-    codeeditor.instantiateByClasses($classes, $config);
+    codeeditor.instantiateByClasses($classes, $config, true);
 })
 /* ]]> */
 </script>
