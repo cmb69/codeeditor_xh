@@ -1,3 +1,12 @@
+Version 1rc1 - released 2012-02-11
+cmb     updated to CodeMirror 2.38
+cmb     changed configuration to be proper JSON
+cmb     implemented preview mode (for content editor only)
+cmb     added Czech and Slovak localization (contributed by oldnema resp. Tata)
+cmb     added German localization and user manual
+cmb     cleaned up and improved code
+cmb     merged and/or minified JavaScript and CSS files
+
 Version 1beta5 - internally released 2012-12-24
 cmb     implemented possibility to use a Codeeditor with an own submit button
 cmb     fixed bug, where Codeeditor misbehaved on IE
