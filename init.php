@@ -69,8 +69,10 @@ function codeeditor_config($mode, $config)
         $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
     }
     $config = json_decode($config, true);
-    $config['mode'] = $mode;
-    if (!isset($config['theme'])) {
+    if (!isset($config['mode']) || $config['mode'] == '%MODE%') {
+	$config['mode'] = $mode;
+    }
+    if (!isset($config['theme']) || $config['theme'] == '%THEME%') {
 	$config['theme'] = $pcf['theme'];
     }
     $config = json_encode($config);
