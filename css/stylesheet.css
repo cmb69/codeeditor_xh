@@ -13,7 +13,7 @@ div.CodeMirror {
  * Styling of the fullscreen mode.
  * Probably the only style that might need adjustment is background.
  */
-div.CodeMirror .fullscreen {
+div.CodeMirror div.codeeditor_fullscreen {
     background: white !important;
     display: block !important;
     position: fixed !important;
