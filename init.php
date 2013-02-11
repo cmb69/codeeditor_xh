@@ -49,16 +49,19 @@ if (!function_exists('json_encode')) {
  * Other values are taken as file name or as JSON configuration object.
  *
  * @global array  The paths of system files and folders.
+ * @global string  Error messages as (X)HTML `li' elements.
  * @global array  The configuration of the plugins.
+ * @global array  The localization of the plugins.
  * @param   string $mode  The syntax mode.
  * @param   string $config  The configuration string.
  * @return  string
  */
 function codeeditor_config($mode, $config)
 {
-    global $pth, $plugin_cf;
+    global $pth, $e, $plugin_cf, $plugin_tx;
 
     $pcf = $plugin_cf['codeeditor'];
+    $ptx = $plugin_tx['codeeditor'];
     $config = trim($config);
     if (empty($config) || $config[0] != '{') {
         $std = in_array($config,
@@ -68,7 +71,13 @@ function codeeditor_config($mode, $config)
             : $config;
         $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
     }
-    $config = json_decode($config, true);
+    $parsedConfig = json_decode($config, true);
+    if (!is_array($parsedConfig)) {
+	$e .= '<li><b>' . $ptx['error_json'] . '</b>' . tag('br')
+	    . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8')) . '</li>';
+	return null;
+    }
+    $config = $parsedConfig;
     if (!isset($config['mode']) || $config['mode'] == '%MODE%') {
 	$config['mode'] = $mode;
     }
