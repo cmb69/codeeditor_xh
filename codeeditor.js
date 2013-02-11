@@ -255,12 +255,12 @@ CodeMirror.commands.save = function(cm) {
 CodeMirror.commands.toggleFullscreen = function(cm) {
     var scroller = cm.getScrollerElement();
     var body = document.body;
-    if (scroller.className.indexOf("fullscreen") < 0) {
-	scroller.className += " fullscreen";
+    if (scroller.className.indexOf("codeeditor_fullscreen") < 0) {
+	scroller.className += " codeeditor_fullscreen";
 	cm.cmbOldOverflow = body.style.overflow;
 	body.style.overflow = "hidden";
     } else {
-	scroller.className = scroller.className.replace(/fullscreen/, "");
+	scroller.className = scroller.className.replace(/codeeditor_fullscreen/, "");
 	body.style.overflow = cm.cmbOldOverflow;
     }
     cm.refresh();
@@ -287,7 +287,7 @@ if (!cm.cmbMayPreview) {return}
 	    CodeMirror.commands.toggleFullscreen(cm);
 	}
     } else {
-	if (cm.getScrollerElement().className.indexOf("fullscreen") >= 0) {
+	if (cm.getScrollerElement().className.indexOf("codeeditor_fullscreen") >= 0) {
 	    CodeMirror.commands.toggleFullscreen(cm);
 	    cm.cmbFullscreen = true;
 	}

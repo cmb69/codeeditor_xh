@@ -178,7 +178,7 @@ $css
 <script type="text/javascript" src="{$dir}codemirror/lib/codemirror.min.js"></script>
 <script type="text/javascript" src="{$dir}codemirror/mode/modes.min.js"></script>
 <script type="text/javascript" src="{$dir}codemirror/lib/utils.min.js"></script>
-<script type="text/javascript" src="{$dir}codeeditor.js"></script>
+<script type="text/javascript" src="{$dir}codeeditor.min.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
 codeeditor.text = $text;
