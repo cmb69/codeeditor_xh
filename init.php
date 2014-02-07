@@ -3,13 +3,16 @@
 /**
  * General editor interface of Codeeditor_XH.
  *
- * @package	Codeeditor
- * @copyright	Copyright (c) 2011-2013 Christoph M. Becker <http://3-magi.net/>
- * @license	http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @version     $Id$
- * @link	http://3-magi.net/?CMSimple_XH/Codeeditor_XH
+ * PHP versions 4 and 5
+ *
+ * @category  CMSimple_XH
+ * @package   Codeeditor
+ * @author    Christoph M. Becker <cmbecker69@gmx.de>
+ * @copyright 2011-2013 Christoph M. Becker <http://3-magi.net/>
+ * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
+ * @version   SVN: $Id$
+ * @link      http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
-
 
 /*
  * Prevent direct access.
@@ -20,26 +23,42 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
     exit('Access forbidden');
 }
 
-
 /*
  * Provide JSON handling, if not already there.
  */
 if (!function_exists('json_encode')) {
     if (!class_exists('CMB_JSON')) {
-	include_once $pth['folder']['plugins'] . 'codeditor/JSON.php';
+        include_once $pth['folder']['plugins'] . 'codeditor/JSON.php';
     }
+    /**
+     * Returns the JSON representation of a value.
+     *
+     * @param mixed $value A value.
+     *
+     * @return string
+     *
+     * @todo Don't inject json_encode().
+     */
     function json_encode($value)
     {
-	$json = CMB_JSON::instance();
-	return $json->encode($value);
+        $json = CMB_JSON::instance();
+        return $json->encode($value);
     }
+    /**
+     * Decodes a JSON string.
+     *
+     * @param string $string A JSON string.
+     *
+     * @return mixed
+     *
+     * @todo Don't inject json_decode().
+     */
     function json_decode($string)
     {
-	$json = CMB_JSON::instance();
-	return $json->decode($string);
+        $json = CMB_JSON::instance();
+        return $json->decode($string);
     }
 }
-
 
 /**
  * Returns the configuration in JSON format.
@@ -48,15 +67,17 @@ if (!function_exists('json_encode')) {
  * or `' (which will use the users default configuration).
  * Other values are taken as file name or as JSON configuration object.
  *
+ * @param string $mode   The syntax mode.
+ * @param string $config The configuration string.
+ *
+ * @return string
+ *
  * @global array  The paths of system files and folders.
- * @global string  Error messages as (X)HTML `li' elements.
+ * @global string Error messages as (X)HTML `li' elements.
  * @global array  The configuration of the plugins.
  * @global array  The localization of the plugins.
- * @param   string $mode  The syntax mode.
- * @param   string $config  The configuration string.
- * @return  string
  */
-function codeeditor_config($mode, $config)
+function Codeeditor_config($mode, $config)
 {
     global $pth, $e, $plugin_cf, $plugin_tx;
 
@@ -64,8 +85,9 @@ function codeeditor_config($mode, $config)
     $ptx = $plugin_tx['codeeditor'];
     $config = trim($config);
     if (empty($config) || $config[0] != '{') {
-        $std = in_array($config,
-                        array('full', 'medium', 'minimal', 'sidebar', ''));
+        $std = in_array(
+            $config, array('full', 'medium', 'minimal', 'sidebar', '')
+        );
         $fn = $std
             ? $pth['folder']['plugins'] . 'codeeditor/inits/init.json'
             : $config;
@@ -73,31 +95,32 @@ function codeeditor_config($mode, $config)
     }
     $parsedConfig = json_decode($config, true);
     if (!is_array($parsedConfig)) {
-	$e .= '<li><b>' . $ptx['error_json'] . '</b>' . tag('br')
-	    . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8')) . '</li>';
-	return null;
+        $e .= '<li><b>' . $ptx['error_json'] . '</b>' . tag('br')
+            . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8'))
+            . '</li>';
+        return null;
     }
     $config = $parsedConfig;
     if (!isset($config['mode']) || $config['mode'] == '%MODE%') {
-	$config['mode'] = $mode;
+        $config['mode'] = $mode;
     }
     if (!isset($config['theme']) || $config['theme'] == '%THEME%') {
-	$config['theme'] = $pcf['theme'];
+        $config['theme'] = $pcf['theme'];
     }
     $config = json_encode($config);
     return $config;
 }
 
-
 /**
  * Returns the JavaScript to activate the configured filebrowser.
  *
- * @global bool  Whether the user is logged in as admin.
- * @global array  The paths of system files and folders.
- * @global array  The configuration of the core.
  * @return void
+ *
+ * @global bool  Whether the user is logged in as admin.
+ * @global array The paths of system files and folders.
+ * @global array The configuration of the core.
  */
-function codeeditor_filebrowser()
+function Codeeditor_filebrowser()
 {
     global $adm, $pth, $cf;
 
@@ -108,26 +131,26 @@ function codeeditor_filebrowser()
 
     $script = '';
     if (!empty($cf['filebrowser']['external'])) {
-	$connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
-	    . '/connectors/codeeditor/codeeditor.php';
-	if (is_readable($connector)) {
-	    include_once $connector;
-	    $init = $cf['filebrowser']['external'] . '_codeeditor_init';
-	    if (function_exists($init)) {
-		$script = call_user_func($init);
-	    }
-	}
+        $connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
+            . '/connectors/codeeditor/codeeditor.php';
+        if (is_readable($connector)) {
+            include_once $connector;
+            $init = $cf['filebrowser']['external'] . '_codeeditor_init';
+            if (function_exists($init)) {
+                $script = call_user_func($init);
+            }
+        }
     } else {
-	$_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
-	$url =  $pth['folder']['plugins']
-	    . 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
-	    . CMSIMPLE_BASE . '&base=./&type=';
-	$script = <<<EOS
+        $_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
+        $url =  $pth['folder']['plugins']
+            . 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
+            . CMSIMPLE_BASE . '&base=./&type=';
+        $script = <<<EOS
 /* <![CDATA[ */
 codeeditor.filebrowser = function(type) {
     window.open("$url" + type, "codeeditor_filebrowser",
-		"toolbar=no,location=no,status=no,menubar=no,"
-		+ "scrollbars=yes,resizable=yes,width=640,height=480");
+            "toolbar=no,location=no,status=no,menubar=no," +
+            "scrollbars=yes,resizable=yes,width=640,height=480");
 }
 /* ]]> */
 EOS;
@@ -135,17 +158,17 @@ EOS;
     return $script;
 }
 
-
 /**
  * Writes the basic JavaScript of the editor to the `head' element.
  * No editors are actually created. Multiple calls are allowed.
  * This is called from init_EDITOR() automatically, but not from EDITOR_replace().
  *
- * global string  (X)HTML to insert in the `head' element.
- * global array  The paths of system files and folders.
+ * @return void
+ *
+ * @global string (X)HTML to insert in the `head' element.
+ * @global array  The paths of system files and folders.
  * @global array  The configuration of the plugins.
  * @global array  The localization of the plugins.
- * @return void
  */
 function include_codeeditor()
 {
@@ -161,17 +184,21 @@ function include_codeeditor()
     $ptx = $plugin_tx['codeeditor'];
     $dir = $pth['folder']['plugins'] . 'codeeditor/';
 
-    $css = tag('link rel="stylesheet" type="text/css" href="' . $dir
-               . 'codemirror/lib/codemirror.css"') . "\n";
-    $css .= tag('link rel="stylesheet" type="text/css" href="' . $dir
-                . 'codemirror/lib/util/dialog.css"') . "\n";
+    $css = tag(
+        'link rel="stylesheet" type="text/css" href="' . $dir
+        . 'codemirror/lib/codemirror.css"'
+    );
+    $css .= tag(
+        'link rel="stylesheet" type="text/css" href="' . $dir
+        . 'codemirror/lib/util/dialog.css"'
+    );
     $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css';
     $css .= file_exists($fn)
-        ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"') . "\n"
+        ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
         : '';
     $text = array('confirm_leave' => $ptx['confirm_leave']);
     $text = json_encode($text);
-    $filebrowser = codeeditor_filebrowser();
+    $filebrowser = Codeeditor_filebrowser();
 
     $hjs .= <<<EOS
 $css
@@ -185,10 +212,8 @@ codeeditor.text = $text;
 /* ]]> */
 $filebrowser
 </script>
-
 EOS;
 }
-
 
 /**
  * Returns the JavaScript to actually instantiate a single editor a
@@ -199,26 +224,30 @@ EOS;
  * after the according `textarea' element,
  * or execute the return value by other means.
  *
- * @param   string $elementId  The id of the `textarea' element that should become an editor instance.
- * @param   string $config  The configuration string.
- * @return  string  The JavaScript to actually create the editor.
+ * @param string $elementId The id of the `textarea' element that should become
+ *                          an editor instance.
+ * @param string $config    The configuration string.
+ *
+ * @return string The JavaScript to actually create the editor.
  */
-function codeeditor_replace($elementId, $config = '')
+function Codeeditor_replace($elementId, $config = '')
 {
-    $config = codeeditor_config('htmlmixed', $config);
+    $config = Codeeditor_config('htmlmixed', $config);
     return "codeeditor.instantiate('$elementId', $config, true);";
 }
-
 
 /**
  * Instantiates the editor(s) on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * global string  (X)HTML to insert in the `head' element.
- * global string  (X)HTML to insert at the bottom of the `body' element.
- * @param string $classes  The classes of the textarea(s) that should become an editor instance.
+ * @param string $classes The classes of the textarea(s) that should become
+ *                        an editor instance.
  * @param string $config  The configuration string.
+ *
  * @return void
+ *
+ * global string (X)HTML to insert in the `head' element.
+ * global string (X)HTML to insert at the bottom of the `body' element.
  */
 function init_codeeditor($classes = array(), $config = false)
 {
@@ -229,7 +258,7 @@ function init_codeeditor($classes = array(), $config = false)
         $classes = array('xh-editor');
     }
     $classes = json_encode($classes);
-    $config = codeeditor_config('htmlmixed', $config);
+    $config = Codeeditor_config('htmlmixed', $config);
     $script = <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
@@ -241,12 +270,11 @@ codeeditor.addEventListener(window, "load", function() {
 
 EOS;
     if (isset($bjs)) {
-	$bjs .= $script;
+        $bjs .= $script;
     } else {
-	$hjs .= $script;
+        $hjs .= $script;
     }
 }
-
 
 /*
  * Include config and language file, if not yet done.
