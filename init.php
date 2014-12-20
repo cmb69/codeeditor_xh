@@ -39,8 +39,10 @@ if (!function_exists('json_encode')) {
      *
      * @todo Don't inject json_encode().
      */
+// @codingStandardsIgnoreStart
     function json_encode($value)
     {
+// @codingStandardsIgnoreEnd
         $json = CMB_JSON::instance();
         return $json->encode($value);
     }
@@ -53,8 +55,10 @@ if (!function_exists('json_encode')) {
      *
      * @todo Don't inject json_decode().
      */
+// @codingStandardsIgnoreStart
     function json_decode($string)
     {
+// @codingStandardsIgnoreEnd
         $json = CMB_JSON::instance();
         return $json->decode($string);
     }
@@ -170,8 +174,10 @@ EOS;
  * @global array  The configuration of the plugins.
  * @global array  The localization of the plugins.
  */
+// @codingStandardsIgnoreStart
 function include_codeeditor()
 {
+// @codingStandardsIgnoreEnd
     global $hjs, $pth, $plugin_cf, $plugin_tx;
     static $again = false;
 
@@ -249,8 +255,10 @@ function Codeeditor_replace($elementId, $config = '')
  * global string (X)HTML to insert in the `head' element.
  * global string (X)HTML to insert at the bottom of the `body' element.
  */
+// @codingStandardsIgnoreStart
 function init_codeeditor($classes = array(), $config = false)
 {
+// @codingStandardsIgnoreEnd
     global $hjs, $bjs;
 
     include_codeeditor();
