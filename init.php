@@ -28,6 +28,9 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
  */
 if (!function_exists('json_encode')) {
     if (!class_exists('CMB_JSON')) {
+        /**
+         * The JSON fallback.
+         */
         include_once $pth['folder']['plugins'] . 'codeditor/JSON.php';
     }
     /**
