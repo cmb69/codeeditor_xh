@@ -4,7 +4,7 @@
  * Handle encoding and decoding of JSON from resp. to native PHP data structures.
  *
  * @package   CMB
- * @copyright Copyright (c) 2012-2013 Christoph M. Becker <http://3-magi.net/>
+ * @copyright Copyright (c) 2012-2014 Christoph M. Becker <http://3-magi.net/>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @version   $Id: JSON.php 4 2013-01-10 20:14:56Z Chistoph Becker $
  */
