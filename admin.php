@@ -26,7 +26,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 /**
  * The version number.
  */
-define('CODEEDITOR_VERSION', '1rc1');
+define('CODEEDITOR_VERSION', '@CODEEDITOR_VERSION@');
 
 /**
  * Returns the plugin version information view.
