@@ -217,14 +217,13 @@ function Codeeditor_replace($elementId, $config = '')
  *
  * @return void
  *
- * global string (X)HTML to insert in the `head' element.
  * global string (X)HTML to insert at the bottom of the `body' element.
  */
 // @codingStandardsIgnoreStart
 function init_codeeditor($classes = array(), $config = false)
 {
 // @codingStandardsIgnoreEnd
-    global $hjs, $bjs;
+    global $bjs;
 
     include_codeeditor();
     if (empty($classes)) {
@@ -232,7 +231,7 @@ function init_codeeditor($classes = array(), $config = false)
     }
     $classes = json_encode($classes);
     $config = Codeeditor_config('htmlmixed', $config);
-    $script = <<<EOS
+    $bjs .= <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
 codeeditor.addEventListener(window, "load", function() {
@@ -242,11 +241,6 @@ codeeditor.addEventListener(window, "load", function() {
 </script>
 
 EOS;
-    if (isset($bjs)) {
-        $bjs .= $script;
-    } else {
-        $hjs .= $script;
-    }
 }
 
 /*

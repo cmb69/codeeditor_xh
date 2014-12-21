@@ -124,16 +124,14 @@ function Codeeditor_systemCheck()
  * @return void
  *
  * @global array  The paths of system files and folders.
- * @global string (X)HTML to be inserted in the `head' element.
  * @global string (X)HTML to be inserted at the bottom of the `body' element.
- * @global string The value of the `onload' attribute of the `body' element.
  * @global string The value of the `admin' parameter.
  * @global string The value of the `action' parameter.
  * @global string The value of the `file' parameter.
  */
 function codeeditor()
 {
-    global $pth, $hjs, $bjs, $onload, $admin, $action, $file;
+    global $pth, $bjs, $admin, $action, $file;
 
     // TODO: is this necessary? (it doesn't hurt though)
     initvar('admin');
@@ -160,7 +158,7 @@ function codeeditor()
         include_codeeditor();
         $config = Codeeditor_config($mode, '');
         $classes = json_encode(array($class));
-        $script = <<<EOS
+        $bjs .= <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
 codeeditor.addEventListener(window, "load", function() {
@@ -169,11 +167,6 @@ codeeditor.addEventListener(window, "load", function() {
 /* ]]> */
 </script>
 EOS;
-        if (isset($bjs)) {
-            $bjs .= $script;
-        } else {
-            $hjs .= $script;
-        }
     }
 }
 
