@@ -142,13 +142,12 @@ function codeeditor()
 
     if ($file == 'template' && ($action == 'edit' || $action == 'save')) {
         $mode = 'php';
-        $class = 'cmsimplecore_file_edit';
-    } elseif ($file == 'stylesheet' && ($action == 'edit' || $action == 'save')) {
+        $class = 'xh_file_edit';
+    } elseif ($file == 'stylesheet' && ($action == 'edit' || $action == 'save')
+        || $admin == 'plugin_stylesheet' && $action == 'plugin_text'
+    ) {
         $mode = 'css';
-        $class = 'cmsimplecore_file_edit';
-    } elseif ($admin == 'plugin_stylesheet' && $action == 'plugin_text') {
-        $mode = 'css';
-        $class = 'plugintextarea';
+        $class = 'xh_file_edit';
     } else {
         $mode = false;
     }
