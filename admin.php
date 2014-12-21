@@ -159,10 +159,6 @@ function codeeditor()
         include_once $pth['folder']['plugins'] . 'codeeditor/init.php';
         include_codeeditor();
         $config = Codeeditor_config($mode, '');
-        // TODO: should we always fix the missing class?
-        if (CMSIMPLE_XH_BUILD < '2010112201') {
-            $onload .= 'codeeditor.fixMissingClass();';
-        }
         $classes = json_encode(array($class));
         $script = <<<EOS
 <script type="text/javascript">

@@ -103,24 +103,6 @@ codeeditor.uniqueId = function() {
 
 
 /**
- * Sets the class of textarea[name=text] to cmsimplecore_file_edit
- * for compatibility with CMSimple_XH < 1.4(?)
- *
- * @returns {undefined}
- */
-codeeditor.fixMissingClass = function() {
-    var elements = document.getElementsByName('text'), i, length, element = null;
-
-    for (i = 0, length = elements.length; i < length; i++) {
-	element = elements[i];
-	if (element.nodeName == 'TEXTAREA' && element.className == '') {
-	    element.className = 'cmsimplecore_file_edit';
-	}
-    }
-}
-
-
-/**
  * Returns whether the `form' element has an element for submitting.
  *
  * @param {HTMLFormElement} form
