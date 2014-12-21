@@ -140,10 +140,12 @@ function codeeditor()
     initvar('action');
     initvar('file');
 
-    if ($file == 'template' && ($action == 'edit' || $action == 'save')) {
+    if ($file == 'template' && ($action == 'edit' || $action == '')
+        || $file == 'content' && ($action == 'edit' || $action == '')
+    ) {
         $mode = 'php';
         $class = 'xh_file_edit';
-    } elseif ($file == 'stylesheet' && ($action == 'edit' || $action == 'save')
+    } elseif ($file == 'stylesheet' && ($action == 'edit' || $action == '')
         || $admin == 'plugin_stylesheet' && $action == 'plugin_text'
     ) {
         $mode = 'css';
