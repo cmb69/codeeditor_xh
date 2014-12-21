@@ -62,7 +62,7 @@ function Codeeditor_config($mode, $config)
             : $config;
         $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
     }
-    $parsedConfig = XH_decodeJson($config, true);
+    $parsedConfig = json_decode($config, true);
     if (!is_array($parsedConfig)) {
         $e .= '<li><b>' . $ptx['error_json'] . '</b>' . tag('br')
             . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8'))
@@ -76,7 +76,7 @@ function Codeeditor_config($mode, $config)
     if (!isset($config['theme']) || $config['theme'] == '%THEME%') {
         $config['theme'] = $pcf['theme'];
     }
-    $config = XH_encodeJson($config);
+    $config = json_encode($config);
     return $config;
 }
 
@@ -168,7 +168,7 @@ function include_codeeditor()
         ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
         : '';
     $text = array('confirm_leave' => $ptx['confirm_leave']);
-    $text = XH_encodeJson($text);
+    $text = json_encode($text);
     $filebrowser = Codeeditor_filebrowser();
 
     $hjs .= <<<EOS
@@ -230,7 +230,7 @@ function init_codeeditor($classes = array(), $config = false)
     if (empty($classes)) {
         $classes = array('xh-editor');
     }
-    $classes = XH_encodeJson($classes);
+    $classes = json_encode($classes);
     $config = Codeeditor_config('htmlmixed', $config);
     $script = <<<EOS
 <script type="text/javascript">

@@ -162,7 +162,7 @@ function codeeditor()
         if (CMSIMPLE_XH_BUILD < '2010112201') {
             $onload .= 'codeeditor.fixMissingClass();';
         }
-        $classes = XH_encodeJson(array($class));
+        $classes = json_encode(array($class));
         $script = <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
