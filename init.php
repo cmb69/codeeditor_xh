@@ -29,50 +29,6 @@ EOT
     );
 }
 
-/*
- * Provide JSON handling, if not already there.
- */
-if (!function_exists('json_encode')) {
-    if (!class_exists('CMB_JSON')) {
-        /**
-         * The JSON fallback.
-         */
-        include_once $pth['folder']['plugins'] . 'codeditor/JSON.php';
-    }
-    /**
-     * Returns the JSON representation of a value.
-     *
-     * @param mixed $value A value.
-     *
-     * @return string
-     *
-     * @todo Don't inject json_encode().
-     */
-// @codingStandardsIgnoreStart
-    function json_encode($value)
-    {
-// @codingStandardsIgnoreEnd
-        $json = CMB_JSON::instance();
-        return $json->encode($value);
-    }
-    /**
-     * Decodes a JSON string.
-     *
-     * @param string $string A JSON string.
-     *
-     * @return mixed
-     *
-     * @todo Don't inject json_decode().
-     */
-// @codingStandardsIgnoreStart
-    function json_decode($string)
-    {
-// @codingStandardsIgnoreEnd
-        $json = CMB_JSON::instance();
-        return $json->decode($string);
-    }
-}
-
 /**
  * Returns the configuration in JSON format.
  *
@@ -106,7 +62,7 @@ function Codeeditor_config($mode, $config)
             : $config;
         $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
     }
-    $parsedConfig = json_decode($config, true);
+    $parsedConfig = XH_decodeJson($config, true);
     if (!is_array($parsedConfig)) {
         $e .= '<li><b>' . $ptx['error_json'] . '</b>' . tag('br')
             . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8'))
@@ -120,7 +76,7 @@ function Codeeditor_config($mode, $config)
     if (!isset($config['theme']) || $config['theme'] == '%THEME%') {
         $config['theme'] = $pcf['theme'];
     }
-    $config = json_encode($config);
+    $config = XH_encodeJson($config);
     return $config;
 }
 
@@ -212,7 +168,7 @@ function include_codeeditor()
         ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
         : '';
     $text = array('confirm_leave' => $ptx['confirm_leave']);
-    $text = json_encode($text);
+    $text = XH_encodeJson($text);
     $filebrowser = Codeeditor_filebrowser();
 
     $hjs .= <<<EOS
@@ -274,7 +230,7 @@ function init_codeeditor($classes = array(), $config = false)
     if (empty($classes)) {
         $classes = array('xh-editor');
     }
-    $classes = json_encode($classes);
+    $classes = XH_encodeJson($classes);
     $config = Codeeditor_config('htmlmixed', $config);
     $script = <<<EOS
 <script type="text/javascript">
