@@ -132,7 +132,7 @@ EOS;
         $o .= print_plugin_admin('off');
         switch ($admin) {
         case '':
-            $o .= self::version() . tag('hr') . self::systemCheck();
+            $o .= self::version() . self::systemCheck();
             break;
         default:
             $o .= plugin_admin_common($action, $admin, 'codeeditor');
@@ -145,16 +145,18 @@ EOS;
      * @return string The (X)HTML.
      *
      * @global array The paths of system files and folders.
+     * @global array The localization of the plugins.
      */
     protected static function version()
     {
-        global $pth;
+        global $pth, $plugin_tx;
 
-        return '<h1><a href="http://3-magi.net/?CMSimple_XH/Codeeditor_XH">'
-            . 'Codeeditor_XH</a></h1>'
+        $ptx = $plugin_tx['codeeditor'];
+        return '<h1>Codeeditor &ndash; '  . $ptx['label_info'] . '</h1>'
             . tag(
                 'img src="' . $pth['folder']['plugins']
-                . 'codeeditor/codeeditor.png" alt="Plugin Icon" style="float: left"'
+                . 'codeeditor/codeeditor.png" alt="' . $ptx['alt_logo']
+                . '" style="float: left"'
             )
             . '<p>Version: ' . CODEEDITOR_VERSION . '</p>'
             . '<p>Codeeditor_XH is powered by '
@@ -168,12 +170,12 @@ EOS;
             . ' the Free Software Foundation, either version 3 of the License, or'
             . ' (at your option) any later version.</p>'
             . '<p style="text-align:justify">This program is distributed in the hope'
-            . 'that it will be useful,'
-            . ' but WITHOUT ANY WARRANTY; without even the implied warranty of'
-            . ' MERCHAN&shy;TABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the'
-            . ' GNU General Public License for more details.</p>'
+            . ' that it will be useful,'
+            . ' but <em>without any warranty</em>; without even the implied warranty'
+            . ' of <em>merchantability</em> or <em>fitness for a particular purpose'
+            . '</em>.  See the GNU General Public License for more details.</p>'
             . '<p style="text-align:justify">You should have received a copy of the'
-            . 'GNU General Public License'
+            . ' GNU General Public License'
             . ' along with this program.  If not, see'
             . ' <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/'
             . '</a>.</p>';
@@ -192,7 +194,7 @@ EOS;
     {
         global $pth, $tx, $plugin_tx;
 
-        $phpVersion = '4.3.0';
+        $phpVersion = '5.2.0';
         $ptx = $plugin_tx['codeeditor'];
         $imgdir = $pth['folder']['plugins'] . 'codeeditor/images/';
         $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
@@ -202,16 +204,12 @@ EOS;
             . (version_compare(PHP_VERSION, $phpVersion) >= 0 ? $ok : $fail)
             . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_phpversion'], $phpVersion)
             . tag('br');
-        foreach (array('pcre') as $ext) {
+        foreach (array('json', 'pcre') as $ext) {
             $o .= (extension_loaded($ext) ? $ok : $fail)
                 . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_extension'], $ext)
                 . tag('br');
         }
-        $o .= (!get_magic_quotes_runtime() ? $ok : $warn)
-            . '&nbsp;&nbsp;' . $ptx['syscheck_magic_quotes']
-            . tag('br') . tag('br');
-        $o .= (strtoupper($tx['meta']['codepage']) == 'UTF-8' ? $ok : $warn)
-            . '&nbsp;&nbsp;' . $ptx['syscheck_encoding'] . tag('br');
+        $o .= tag('br');
         foreach (array('config/', 'css/', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'].'codeeditor/' . $folder;
         }
