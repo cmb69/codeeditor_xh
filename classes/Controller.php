@@ -348,11 +348,11 @@ EOS;
 
         $css = tag(
             'link rel="stylesheet" type="text/css" href="' . $dir
-            . 'codemirror/lib/codemirror.css"'
+            . 'codemirror/codemirror.css"'
         );
         $css .= tag(
             'link rel="stylesheet" type="text/css" href="' . $dir
-            . 'codemirror/lib/util/dialog.css"'
+            . 'codemirror/dialog.css"'
         );
         $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css';
         $css .= file_exists($fn)
@@ -364,9 +364,7 @@ EOS;
 
         $hjs .= <<<EOS
 $css
-<script type="text/javascript" src="{$dir}codemirror/lib/codemirror.min.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/mode/modes.min.js"></script>
-<script type="text/javascript" src="{$dir}codemirror/lib/utils.min.js"></script>
+<script type="text/javascript" src="{$dir}codemirror/codemirror-compressed.js"></script>
 <script type="text/javascript" src="{$dir}codeeditor.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
