@@ -3,7 +3,7 @@
 /**
  * Administration of Codeeditor_XH.
  *
- * PHP versions 4 and 5
+ * PHP version and 5
  *
  * @category  CMSimple_XH
  * @package   Codeeditor

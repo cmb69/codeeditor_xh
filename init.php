@@ -13,6 +13,9 @@
  * @link      http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
 
+/**
+ * The plugin controller.
+ */
 require_once $pth['folder']['plugin_classes'] . 'Controller.php';
 
 /**

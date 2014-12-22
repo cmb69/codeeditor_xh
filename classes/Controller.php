@@ -238,7 +238,7 @@ EOS;
      * @global array  The configuration of the plugins.
      * @global array  The localization of the plugins.
      */
-    static function config($mode, $config)
+    protected static function config($mode, $config)
     {
         global $pth, $e, $plugin_cf, $plugin_tx;
 
@@ -281,7 +281,7 @@ EOS;
      * @global array The paths of system files and folders.
      * @global array The configuration of the core.
      */
-    static function filebrowser()
+    protected static function filebrowser()
     {
         global $adm, $pth, $cf;
 
