@@ -360,7 +360,7 @@ EOS;
             : '';
         $text = array('confirm_leave' => $ptx['confirm_leave']);
         $text = json_encode($text);
-        $filebrowser = Codeeditor_Controller::filebrowser();
+        $filebrowser = self::filebrowser();
 
         $hjs .= <<<EOS
 $css
@@ -393,7 +393,7 @@ EOS;
      */
     static function replace($elementId, $config = '')
     {
-        $config = Codeeditor_Controller::config('htmlmixed', $config);
+        $config = self::config('htmlmixed', $config);
         return "codeeditor.instantiate('$elementId', $config, true);";
     }
 
@@ -415,12 +415,12 @@ EOS;
     // @codingStandardsIgnoreEnd
         global $bjs;
 
-        Codeeditor_Controller::doInclude();
+        self::doInclude();
         if (empty($classes)) {
             $classes = array('xh-editor');
         }
         $classes = json_encode($classes);
-        $config = Codeeditor_Controller::config('htmlmixed', $config);
+        $config = self::config('htmlmixed', $config);
         $bjs .= <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
