@@ -62,12 +62,6 @@ codeeditor.removeEventListener = function(target, type, listener) {
 
 
 /**
- * Toggles the folding of the code.
- */
-codeeditor.fold = CodeMirror.newFoldFunction(CodeMirror.tagRangeFinder);
-
-
-/**
  * Returns all `textarea' elements with a certain class.
  *
  * @returns {Array}
@@ -289,7 +283,7 @@ if (!cm.cmbMayPreview) {return}
  * @returns {undefined}
  */
 CodeMirror.commands.toggleFolding = function(cm) {
-    codeeditor.fold(cm, cm.getCursor().line);
+    cm.foldCode(cm.getCursor());
 }
 
 
