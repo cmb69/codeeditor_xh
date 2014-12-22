@@ -222,9 +222,7 @@ CodeMirror.commands.save = function(cm) {
     while (node.nodeName != 'FORM') {
 	node = node.parentNode;
     }
-    if (!codeeditor.hasSubmit(node)) {
-	node.submit();
-    }
+    node.submit();
 }
 
 
