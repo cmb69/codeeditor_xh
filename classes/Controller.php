@@ -431,6 +431,28 @@ codeeditor.addEventListener(window, "load", function() {
 EOS;
     }
 
+    /**
+     * Returns all available themes.
+     *
+     * @return array
+     *
+     * @global array The paths of system files and folders.
+     */
+    static function getThemes()
+    {
+        global $pth;
+
+        $themes = array();
+        $foldername = $pth['folder']['plugins'] . 'codeeditor/codemirror/theme';
+        if ($dir = opendir($foldername)) {
+            while (($entry = readdir($dir)) !== false) {
+                if (pathinfo($entry, PATHINFO_EXTENSION) == 'css') {
+                    $themes[] = basename($entry, '.css');
+                }
+            }
+        }
+        return $themes;
+    }
 }
 
 ?>

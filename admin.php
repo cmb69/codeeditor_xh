@@ -39,6 +39,16 @@ require_once $pth['folder']['plugin_classes'] . 'Controller.php';
  */
 define('CODEEDITOR_VERSION', '@CODEEDITOR_VERSION@');
 
+/**
+ * Returns all available themes.
+ *
+ * @return array
+ */
+function Codeeditor_getThemes()
+{
+    return Codeeditor_Controller::getThemes();
+}
+
 Codeeditor_Controller::dispatch();
 
 ?>
