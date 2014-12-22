@@ -36,6 +36,9 @@ class Codeeditor_Controller
         global $plugin_cf;
 
         if (XH_ADM) {
+            if (function_exists('XH_registerStandardPluginMenuItems')) {
+                XH_registerStandardPluginMenuItems(false);
+            }
             if ($plugin_cf['codeeditor']['enabled']) {
                 self::main();
             }
@@ -108,7 +111,9 @@ EOS;
     {
         global $codeeditor;
 
-        return isset($codeeditor) && $codeeditor == 'true';
+        return function_exists('XH_wantsPluginAdministration')
+            && XH_wantsPluginAdministration('codeeditor')
+            || isset($codeeditor) && $codeeditor == 'true';
     }
 
     /**
