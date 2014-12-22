@@ -187,7 +187,7 @@ codeeditor.instantiate = function(id, config, mayPreview) {
 
     cm.cmbMayPreview = mayPreview || false;
     cm.setSize(null, height);
-    cm.setOption("onFocus", function(editor) {
+    cm.on("focus", function(editor) {
 	codeeditor.current = editor;
     });
     cm.refresh();
