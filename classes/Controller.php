@@ -364,7 +364,8 @@ EOS;
 
         $hjs .= <<<EOS
 $css
-<script type="text/javascript" src="{$dir}codemirror/codemirror-compressed.js"></script>
+<script type="text/javascript" src="{$dir}codemirror/codemirror-compressed.js">
+</script>
 <script type="text/javascript" src="{$dir}codeeditor.js"></script>
 <script type="text/javascript">
 /* <![CDATA[ */
