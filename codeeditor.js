@@ -38,7 +38,6 @@ codeeditor.addEventListener = function(target, type, listener) {
     if (typeof target.addEventListener !== "undefined") {
         target.addEventListener(type, listener, false);
     } else if (typeof target.attachEvent !== "undefined") {
-        target.detachEvent("on" + type, listener);
         target.attachEvent("on" + type, listener);
     }
 }
