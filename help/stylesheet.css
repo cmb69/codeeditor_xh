@@ -29,6 +29,10 @@ body {
     padding-left: 1em;
 }
 
+table, td, th {
+    border: 1px solid gray;
+}
+
 .image-right {
     float:right;
     border: 1px solid black;
