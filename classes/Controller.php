@@ -83,9 +83,7 @@ class Codeeditor_Controller
         }
 
         if ($mode) {
-            $dir = $pth['folder']['plugins'] . 'codeeditor/';
-            include_once $pth['folder']['plugins'] . 'codeeditor/init.php';
-            include_codeeditor();
+            self::doInclude();
             $config = self::config($mode, '');
             $classes = json_encode(array($class));
             $bjs .= <<<EOS
