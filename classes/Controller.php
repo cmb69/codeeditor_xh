@@ -442,7 +442,7 @@ EOS;
     {
         global $pth;
 
-        $themes = array('default');
+        $themes = array('', 'default');
         $foldername = $pth['folder']['plugins'] . 'codeeditor/codemirror/theme';
         if ($dir = opendir($foldername)) {
             while (($entry = readdir($dir)) !== false) {
