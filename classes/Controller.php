@@ -356,7 +356,7 @@ EOS;
         $css .= file_exists($fn)
             ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
             : '';
-        $text = array('confirm_leave' => $ptx['confirm_leave']);
+        $text = array('confirmLeave' => $ptx['confirm_leave']);
         $text = json_encode($text);
         $filebrowser = self::filebrowser();
 
