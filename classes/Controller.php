@@ -344,20 +344,8 @@ EOS;
         $ptx = $plugin_tx['codeeditor'];
         $dir = $pth['folder']['plugins'] . 'codeeditor/';
 
-        $css = tag(
-            'link rel="stylesheet" type="text/css" href="' . $dir
-            . 'codemirror/codemirror.css"'
-        );
-        $css .= tag(
-            'link rel="stylesheet" type="text/css" href="' . $dir
-            . 'codemirror/dialog.css"'
-        );
-        $css .= tag(
-            'link rel="stylesheet" type="text/css" href="' . $dir
-            . 'codemirror/fullscreen.css"'
-        );
         $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css';
-        $css .= file_exists($fn)
+        $css = file_exists($fn)
             ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
             : '';
         $text = array('confirmLeave' => $ptx['confirm_leave']);
