@@ -225,17 +225,7 @@ CodeMirror.commands.save = function(cm) {
  * @returns {undefined}
  */
 CodeMirror.commands.toggleFullscreen = function(cm) {
-    var scroller = cm.getScrollerElement();
-    var body = document.body;
-    if (scroller.className.indexOf("codeeditor_fullscreen") < 0) {
-	scroller.className += " codeeditor_fullscreen";
-	cm.cmbOldOverflow = body.style.overflow;
-	body.style.overflow = "hidden";
-    } else {
-	scroller.className = scroller.className.replace(/codeeditor_fullscreen/, "");
-	body.style.overflow = cm.cmbOldOverflow;
-    }
-    cm.refresh();
+    cm.setOption("fullScreen", !cm.getOption("fullScreen"));
 }
 
 

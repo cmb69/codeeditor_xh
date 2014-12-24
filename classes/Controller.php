@@ -352,6 +352,10 @@ EOS;
             'link rel="stylesheet" type="text/css" href="' . $dir
             . 'codemirror/dialog.css"'
         );
+        $css .= tag(
+            'link rel="stylesheet" type="text/css" href="' . $dir
+            . 'codemirror/fullscreen.css"'
+        );
         $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css';
         $css .= file_exists($fn)
             ? tag('link rel="stylesheet" type="text/css" href="' . $fn . '"')
