@@ -162,7 +162,7 @@ codeeditor.instantiateByClasses = function(classes, config, mayPreview) {
     for (i = 0, classCount = classes.length; i < classCount; i++) {
 	textareas = codeeditor.getTextareasByClass(classes[i]);
 	for (j = 0, textareaCount = textareas.length; j < textareaCount; j++) {
-	    textarea = textareas[i];
+	    textarea = textareas[j];
 	    if (!textarea.id) {
 		textarea.id = codeeditor.uniqueId();
 	    }
