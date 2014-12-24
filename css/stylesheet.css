@@ -1,7 +1,7 @@
 /*
  * General style of all Codeeditor instances.
  */
-div.CodeMirror {
+.CodeMirror {
     background: #fff;
     border: 1px solid #999;
     font-size: 9pt;
@@ -13,7 +13,7 @@ div.CodeMirror {
  * Styling of the fullscreen mode.
  * Probably the only style that might need adjustment is background.
  */
-div.CodeMirror div.codeeditor_fullscreen {
+.CodeMirror .codeeditor_fullscreen {
     background: white !important;
     display: block !important;
     position: fixed !important;
@@ -26,4 +26,15 @@ div.CodeMirror div.codeeditor_fullscreen {
     padding: 0 !important;
     border: 0 !important;
     opacity: 1;
+}
+
+/*
+ * The preview.
+ */
+.codeeditor_preview {
+    margin: 1em 0;
+    border-top: 1px solid #888;
+    border-bottom: 1px solid #888;
+    border-radius: 1em;
+    padding: 1em 0;
 }
