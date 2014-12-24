@@ -25,5 +25,7 @@
     "matchBrackets": true,
     "workTime": 200,
     "workDelay": 300,
-    "undoDepth": 40
+    "undoDepth": 40,
+    "autoCloseTags": true,
+    "matchTags": true
 }
