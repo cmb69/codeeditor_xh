@@ -30,11 +30,6 @@ EOT
 }
 
 /**
- * The plugin controller.
- */
-require_once $pth['folder']['plugin_classes'] . 'Controller.php';
-
-/**
  * The version number.
  */
 define('CODEEDITOR_VERSION', '@CODEEDITOR_VERSION@');

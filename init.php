@@ -14,11 +14,6 @@
  */
 
 /**
- * The plugin controller.
- */
-require_once $pth['folder']['plugin_classes'] . 'Controller.php';
-
-/**
  * Writes the basic JavaScript of the editor to the `head' element.
  * No editors are actually created. Multiple calls are allowed.
  * This is called from init_EDITOR() automatically, but not from EDITOR_replace().
