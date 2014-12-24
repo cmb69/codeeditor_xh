@@ -3,7 +3,6 @@
  *
  * @copyright	Copyright (c) 2012-2014 Christoph M. Becker <http://3-magi.net/>
  * @license	http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @version     $Id$
  * @link	http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
 
@@ -125,11 +124,11 @@ codeeditor.beforeUnload = function(e) {
     var i, count;
 
     for (i = 0, count = codeeditor.instances.length; i < count; i++) {
-	if (codeeditor.instances[i].historySize().undo > 0) {
+	if (!codeeditor.instances[i].isClean()) {
 	    return e.returnValue = codeeditor.text.confirmLeave;
 	}
     }
-    return null;
+    return undefined;
 }
 
 
