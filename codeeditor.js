@@ -199,22 +199,15 @@ codeeditor.instantiate = function(id, config, mayPreview) {
 
 
 /**
- * Triggers the submission of the `form' which contains the CodeMirror instance.
+ * Prepares form submission.
  *
  * @param {CodeMirror} cm
  * @returns {undefined}
  */
 CodeMirror.commands.save = function(cm) {
-    var node;
-
     codeeditor.removeEventListener(window, "beforeunload",
 				   codeeditor.beforeUnload);
     cm.save();
-    node = cm.getWrapperElement();
-    while (node.nodeName != 'FORM') {
-	node = node.parentNode;
-    }
-    node.submit();
 }
 
 
