@@ -1,3 +1,16 @@
+Version 1rc3 - released 2014-12-25
+* fixed bug, where usage as external editor from other plugins might have failed
+  (reported by svasti)
+* fixed bug, where unmodified editors triggered leave confirmation in some
+  clients
+* fixed bug, where instantiation of multiple editors on the same page failed
+* fixed bug, where multiple codemirrors on a form could trigger multiple form
+  submission
+* updated to CodeMirror 4.29
+* merged stylesheets
+* added configurable matching and autoclosing of tags
+* added some styling for the preview (inspired by svasti)
+
 Version 1rc2 - released 2014-12-23
 * made compatible to CMSimple_XH >= 1.6 and dropped support for older versions
 * upgraded to CodeMirror 4.8
