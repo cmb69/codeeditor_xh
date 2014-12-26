@@ -191,12 +191,27 @@ codeeditor.instantiate = function(id, config, mayPreview) {
     cm.refresh();
     codeeditor.instances.push(cm);
     codeeditor.addEventListener(textarea.form, "submit", function() {
-	CodeMirror.commands.save(cm)
+	CodeMirror.commands.save(cm);
     });
+    codeeditor.increaseEditorCountOfForm(textarea.form, 1);
     codeeditor.addEventListener(window, "beforeunload",
 				codeeditor.beforeUnload);
 }
 
+
+/**
+ * Increases the editor count of a certain form and returns the new count.
+ *
+ * @param   {HTMLFormElement} form
+ * @param   {Number}	      increment
+ * @returns {Number}
+ */
+codeeditor.increaseEditorCountOfForm = function (form, increment) {
+    var count = +form.getAttribute("data-codeeditor_count") + increment;
+
+    form.setAttribute("data-codeeditor_count", count);
+    return count;
+}
 
 /**
  * Prepares form submission.
@@ -205,9 +220,14 @@ codeeditor.instantiate = function(id, config, mayPreview) {
  * @returns {undefined}
  */
 CodeMirror.commands.save = function(cm) {
+    var form = cm.getTextArea().form;
+
     codeeditor.removeEventListener(window, "beforeunload",
 				   codeeditor.beforeUnload);
     cm.save();
+    if (codeeditor.increaseEditorCountOfForm(form, -1) < 1) {
+	form.submit();
+    }
 }
 
 
