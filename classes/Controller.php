@@ -266,6 +266,10 @@ EOS;
         if (!isset($config['theme']) || $config['theme'] == '%THEME%') {
             $config['theme'] = $pcf['theme'];
         }
+        // We set the undocumented leaveSubmitMehtodAlone option; otherwise
+        // multiple editors on the same form might trigger form submission
+        // multiple times.
+        $config['leaveSubmitMethodAlone'] = true;
         $config = json_encode($config);
         return $config;
     }

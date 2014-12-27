@@ -178,41 +178,31 @@ codeeditor.instantiate = function(id, config, mayPreview) {
     });
     cm.refresh();
     codeeditor.instances.push(cm);
-    codeeditor.addEventListener(textarea.form, "submit", function() {
-        CodeMirror.commands.save(cm);
-    });
-    codeeditor.increaseEditorCountOfForm(textarea.form, 1);
     codeeditor.addEventListener(window, "beforeunload", codeeditor.beforeUnload);
+    codeeditor.addEventListener(textarea.form, "submit", function() {
+        codeeditor.removeEventListener(window, "beforeunload", codeeditor.beforeUnload);
+    });
 }
 
 /**
- * Increases the editor count of a certain form and returns the new count.
- *
- * @param   {HTMLFormElement} form
- * @param   {Number}          increment
- * @returns {Number}
- */
-codeeditor.increaseEditorCountOfForm = function (form, increment) {
-    var count = +form.getAttribute("data-codeeditor_count") + increment;
-
-    form.setAttribute("data-codeeditor_count", count);
-    return count;
-}
-
-/**
- * Prepares form submission.
+ * Save handler for keyboard shortcuts.
  *
  * @param   {CodeMirror} cm
  * @returns {undefined}
  */
 CodeMirror.commands.save = function(cm) {
-    var form = cm.getTextArea().form;
+    var form, submit;
 
-    codeeditor.removeEventListener(window, "beforeunload", codeeditor.beforeUnload);
-    cm.save();
-    if (codeeditor.increaseEditorCountOfForm(form, -1) < 1) {
-        form.submit();
-    }
+    // HACK: We can't call form.submit() directly, because that might skip the
+    // defined onsubmit handlers, and we don't know which form element to
+    // trigger, so we temporarily create a new submit input element and click
+    // this.
+    form = cm.getTextArea().form;
+    submit = document.createElement("input");
+    submit.setAttribute("type", "submit");
+    form.appendChild(submit);
+    submit.click();
+    form.removeChild(submit);
 }
 
 /**
