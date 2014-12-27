@@ -22,38 +22,6 @@ codeeditor.instances = [];
 codeeditor.current = null;
 
 /**
- * Register an event listener in a portable way.
- *
- * @param   {EventTarget} target
- * @param   {DOMString} type
- * @param   {EventListener} listener
- * @returns {void}
- */
-codeeditor.addEventListener = function(target, type, listener) {
-    if (typeof target.addEventListener !== "undefined") {
-        target.addEventListener(type, listener, false);
-    } else if (typeof target.attachEvent !== "undefined") {
-        target.attachEvent("on" + type, listener);
-    }
-}
-
-/**
- * Unregisters an event listener in a portable way.
- *
- * @param   {EventTarget} target
- * @param   {DOMString} type
- * @param   {EventListener} listener
- * @returns {void}
- */
-codeeditor.removeEventListener = function(target, type, listener) {
-    if (typeof target.removeEventListener !== "undefined") {
-        target.removeEventListener(type, listener, false);
-    } else if (typeof target.detachEvent !== "undefined") {
-        target.detachEvent("on" + type, listener);
-    }
-}
-
-/**
  * Returns all `textarea' elements with a certain class.
  *
  * @returns {Array}
@@ -178,9 +146,9 @@ codeeditor.instantiate = function(id, config, mayPreview) {
     });
     cm.refresh();
     codeeditor.instances.push(cm);
-    codeeditor.addEventListener(window, "beforeunload", codeeditor.beforeUnload);
-    codeeditor.addEventListener(textarea.form, "submit", function() {
-        codeeditor.removeEventListener(window, "beforeunload", codeeditor.beforeUnload);
+    CodeMirror.on(window, "beforeunload", codeeditor.beforeUnload);
+    CodeMirror.on(textarea.form, "submit", function() {
+        CodeMirror.off(window, "beforeunload", codeeditor.beforeUnload);
     });
 }
 

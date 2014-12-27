@@ -89,7 +89,7 @@ class Codeeditor_Controller
             $bjs .= <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
-codeeditor.addEventListener(window, "load", function() {
+CodeMirror.on(window, "load", function() {
     codeeditor.instantiateByClasses($classes, $config);
 })
 /* ]]> */
@@ -418,7 +418,7 @@ EOS;
         $bjs .= <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
-codeeditor.addEventListener(window, "load", function() {
+CodeMirror.on(window, "load", function() {
     codeeditor.instantiateByClasses($classes, $config, true);
 })
 /* ]]> */
