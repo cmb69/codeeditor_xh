@@ -58,14 +58,29 @@ function codeeditor_replace($elementId, $config = '')
  * @param string $config  The configuration string.
  *
  * @return void
- *
- * global string (X)HTML to insert at the bottom of the `body' element.
  */
 // @codingStandardsIgnoreStart
 function init_codeeditor($classes = array(), $config = false)
 {
 // @codingStandardsIgnoreEnd
     return Codeeditor_Controller::init($classes, $config);
+}
+
+/**
+ * Instantiates the editor(s) in CSS mode on the textarea(s) given by $classes.
+ * $config is exactly the same as for EDITOR_replace().
+ *
+ * @param string $classes The classes of the textarea(s) that should become
+ *                        an editor instance.
+ * @param string $config  The configuration string.
+ *
+ * @return void
+ */
+// @codingStandardsIgnoreStart
+function init_codeeditor_css($classes = array(), $config = false)
+{
+// @codingStandardsIgnoreEnd
+    return Codeeditor_Controller::init($classes, $config, 'css');
 }
 
 ?>

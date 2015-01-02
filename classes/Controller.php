@@ -398,12 +398,13 @@ EOS;
      * @param string $classes The classes of the textarea(s) that should become
      *                        an editor instance.
      * @param string $config  The configuration string.
+     * @param string $mode    The highlighting mode ('php' or 'css').
      *
      * @return void
      *
      * global string (X)HTML to insert at the bottom of the `body' element.
      */
-    static function init($classes = array(), $config = false)
+    static function init($classes = array(), $config = false, $mode = 'php')
     {
         global $bjs;
 
@@ -412,7 +413,7 @@ EOS;
             $classes = array('xh-editor');
         }
         $classes = json_encode($classes);
-        $config = self::config('php', $config);
+        $config = self::config($mode, $config);
         $bjs .= <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
