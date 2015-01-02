@@ -387,7 +387,7 @@ EOS;
      */
     static function replace($elementId, $config = '')
     {
-        $config = self::config('htmlmixed', $config);
+        $config = self::config('php', $config);
         return "codeeditor.instantiate('$elementId', $config, true);";
     }
 
@@ -412,7 +412,7 @@ EOS;
             $classes = array('xh-editor');
         }
         $classes = json_encode($classes);
-        $config = self::config('htmlmixed', $config);
+        $config = self::config('php', $config);
         $bjs .= <<<EOS
 <script type="text/javascript">
 /* <![CDATA[ */
