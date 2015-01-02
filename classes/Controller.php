@@ -8,7 +8,7 @@
  * @category  CMSimple_XH
  * @package   Codeeditor
  * @author    Christoph M. Becker <cmbecker69@gmx.de>
- * @copyright 2011-2014 Christoph M. Becker <http://3-magi.net/>
+ * @copyright 2011-2015 Christoph M. Becker <http://3-magi.net/>
  * @license   http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link      http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
@@ -160,7 +160,7 @@ EOS;
             . '<p>Codeeditor_XH is powered by '
             . '<a href="http://codemirror.net/" target="_blank">'
             . 'CodeMirror</a>.</p>'
-            . '<p>Copyright &copy; 2011-2014 <a href="http://3-magi.net">'
+            . '<p>Copyright &copy; 2011-2015 <a href="http://3-magi.net">'
             . 'Christoph M. Becker</a></p>'
             . '<p style="text-align:justify">This program is free software:'
             . 'you can redistribute it and/or modify'
