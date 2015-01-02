@@ -403,10 +403,8 @@ EOS;
      *
      * global string (X)HTML to insert at the bottom of the `body' element.
      */
-    // @codingStandardsIgnoreStart
     static function init($classes = array(), $config = false)
     {
-    // @codingStandardsIgnoreEnd
         global $bjs;
 
         self::doInclude();
