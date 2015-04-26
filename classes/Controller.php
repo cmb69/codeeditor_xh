@@ -53,7 +53,6 @@ class Codeeditor_Controller
      *
      * @return void
      *
-     * @global array  The paths of system files and folders.
      * @global string (X)HTML to be inserted at the bottom of the `body' element.
      * @global string The value of the `admin' parameter.
      * @global string The value of the `action' parameter.
@@ -61,7 +60,7 @@ class Codeeditor_Controller
      */
     static function main()
     {
-        global $pth, $bjs, $admin, $action, $file;
+        global $bjs, $admin, $action, $file;
 
         // TODO: is this necessary? (it doesn't hurt though)
         initvar('admin');
@@ -185,12 +184,11 @@ EOS;
      * @return string The (X)HTML.
      *
      * @global array The paths of systems files and folders.
-     * @global array The localization of the core.
      * @global array The localization of the plugins.
      */
     protected static function systemCheck()
     {
-        global $pth, $tx, $plugin_tx;
+        global $pth, $plugin_tx;
 
         $phpVersion = '5.2.0';
         $ptx = $plugin_tx['codeeditor'];
