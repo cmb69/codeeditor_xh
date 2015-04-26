@@ -3,6 +3,7 @@
  *
  * lib/codemirror.js
  * addon/dialog/dialog.css
+ * addon/display/fullscreen.css
  */
 /* BASICS */
 
@@ -361,4 +362,11 @@ span.CodeMirror-selectedtext { background: none; }
 
 .CodeMirror-dialog button {
   font-size: 70%;
+}
+
+.CodeMirror-fullscreen {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  height: auto;
+  z-index: 9;
 }
