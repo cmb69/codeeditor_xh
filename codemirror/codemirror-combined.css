@@ -1,9 +1,16 @@
+/**
+ * Combined stylesheet:
+ *
+ * lib/codemirror.js
+ * addon/dialog/dialog.css
+ */
 /* BASICS */
 
 .CodeMirror {
   /* Set height, width, borders, and global font properties here */
   font-family: monospace;
   height: 300px;
+  color: black;
 }
 
 /* PADDING */
@@ -32,8 +39,7 @@
   min-width: 20px;
   text-align: right;
   color: #999;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
+  white-space: nowrap;
 }
 
 .CodeMirror-guttermarker { color: black; }
@@ -126,6 +132,8 @@ div.CodeMirror-overwrite div.CodeMirror-cursor {}
 .cm-s-default .cm-error {color: #f00;}
 .cm-invalidchar {color: #f00;}
 
+.CodeMirror-composing { border-bottom: 2px solid; }
+
 /* Default styles for common addons */
 
 div.CodeMirror span.CodeMirror-matchingbracket {color: #0f0;}
@@ -139,11 +147,9 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
    the editor. You probably shouldn't touch them. */
 
 .CodeMirror {
-  line-height: 1;
   position: relative;
   overflow: hidden;
   background: white;
-  color: black;
 }
 
 .CodeMirror-scroll {
@@ -155,14 +161,10 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   height: 100%;
   outline: none; /* Prevent dragging from highlighting the element */
   position: relative;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 .CodeMirror-sizer {
   position: relative;
   border-right: 30px solid transparent;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
 }
 
 /* The fake, visible scrollbars. Used to force redraw during scrolling
@@ -197,8 +199,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 .CodeMirror-gutter {
   white-space: normal;
   height: 100%;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
   display: inline-block;
   margin-bottom: -30px;
   /* Hack to make IE7 behave */
@@ -214,6 +214,11 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   position: absolute;
   cursor: default;
   z-index: 4;
+}
+.CodeMirror-gutter-wrapper {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
 }
 
 .CodeMirror-lines {
@@ -235,6 +240,7 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
   z-index: 2;
   position: relative;
   overflow: visible;
+  -webkit-tap-highlight-color: transparent;
 }
 .CodeMirror-wrap pre {
   word-wrap: break-word;
@@ -255,6 +261,20 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {color: #f22;}
 }
 
 .CodeMirror-widget {}
+
+.CodeMirror-code {
+  outline: none;
+}
+
+/* Force content-box sizing for the elements where we expect it */
+.CodeMirror-scroll,
+.CodeMirror-sizer,
+.CodeMirror-gutter,
+.CodeMirror-gutters,
+.CodeMirror-linenumber {
+  -moz-box-sizing: content-box;
+  box-sizing: content-box;
+}
 
 .CodeMirror-measure {
   position: absolute;
@@ -283,6 +303,8 @@ div.CodeMirror-cursors {
 .CodeMirror-selected { background: #d9d9d9; }
 .CodeMirror-focused .CodeMirror-selected { background: #d7d4f0; }
 .CodeMirror-crosshair { cursor: crosshair; }
+.CodeMirror ::selection { background: #d7d4f0; }
+.CodeMirror ::-moz-selection { background: #d7d4f0; }
 
 .cm-searching {
   background: #ffa;
@@ -339,11 +361,4 @@ span.CodeMirror-selectedtext { background: none; }
 
 .CodeMirror-dialog button {
   font-size: 70%;
-}
-
-.CodeMirror-fullscreen {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  height: auto;
-  z-index: 9;
 }
