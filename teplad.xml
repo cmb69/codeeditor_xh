@@ -43,7 +43,7 @@
   <xml_url>https://raw.githubusercontent.com/cmb69/codeeditor_xh/master/teplad.xml</xml_url>
   <!-- Attribute type for Data type: plugin, template or addon -->
   <!-- the name of the Plugin -->
-  <name type="plugin">Coco_XH</name>
+  <name type="plugin">Codeeditor_XH</name>
   <!-- Date this xml-file was updated, yyyy.mm.dd -->
   <date_update>2021.01.23</date_update>
   <!-- version of Plugin -->
