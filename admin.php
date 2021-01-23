@@ -32,7 +32,7 @@ EOT
 /**
  * The version number.
  */
-define('CODEEDITOR_VERSION', '@CODEEDITOR_VERSION@');
+define('CODEEDITOR_VERSION', '1.2');
 
 /**
  * Returns all available themes.
