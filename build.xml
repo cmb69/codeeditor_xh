@@ -29,7 +29,7 @@
 
     <target name="mess" description="detects code flaws">
         <exec executable="phpmd" passthru="true" checkreturn="true">
-            <arg line="classes,admin.php,init.php ansi unusedcode"/>
+            <arg line="classes,admin.php,init.php ansi codesize,unusedcode"/>
         </exec>
     </target>
 
