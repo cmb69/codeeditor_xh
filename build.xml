@@ -2,16 +2,6 @@
 
 <project name="Codeeditor" default="help">
 
-    <fileset id="php-sources" dir=".">
-        <include name="admin.php"/>
-        <include name="init.php"/>
-        <include name="classes/*.php"/>
-    </fileset>
-
-    <fileset id="js-sources" dir=".">
-        <include name="codeeditor.js"/>
-    </fileset>
-
     <target name="help" description="lists available targets">
         <exec command="phing -l" outputProperty="help"/>
         <echo>${help}</echo>
