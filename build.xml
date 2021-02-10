@@ -28,9 +28,9 @@
     </target>
 
     <target name="mess" description="detects code flaws">
-        <phpmd rulesets="unusedcode">
-            <fileset refid="php-sources"/>
-         </phpmd>
+        <exec executable="phpmd" passthru="true" checkreturn="true">
+            <arg line="classes,admin.php,init.php ansi unusedcode"/>
+        </exec>
     </target>
 
     <target name="compat" description="checks PHP requirements">
