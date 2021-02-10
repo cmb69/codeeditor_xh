@@ -38,9 +38,7 @@ class Controller
         global $plugin_cf;
 
         if (XH_ADM) {
-            if (function_exists('XH_registerStandardPluginMenuItems')) {
-                XH_registerStandardPluginMenuItems(false);
-            }
+            XH_registerStandardPluginMenuItems(false);
             if ($plugin_cf['codeeditor']['enabled']) {
                 self::main();
             }
@@ -63,11 +61,6 @@ class Controller
     public static function main()
     {
         global $bjs, $admin, $action, $file;
-
-        // TODO: is this necessary? (it doesn't hurt though)
-        initvar('admin');
-        initvar('action');
-        initvar('file');
 
         if ($file == 'template' && ($action == 'edit' || $action == '')
             || $file == 'content' && ($action == 'edit' || $action == '')
@@ -108,11 +101,7 @@ EOS;
      */
     protected static function isAdministrationRequested()
     {
-        global $codeeditor;
-
-        return function_exists('XH_wantsPluginAdministration')
-            && XH_wantsPluginAdministration('codeeditor')
-            || isset($codeeditor) && $codeeditor == 'true';
+        return XH_wantsPluginAdministration('codeeditor');
     }
 
     /**
@@ -152,11 +141,9 @@ EOS;
 
         $ptx = $plugin_tx['codeeditor'];
         return '<h1>Codeeditor &ndash; '  . $ptx['label_info'] . '</h1>'
-            . tag(
-                'img src="' . $pth['folder']['plugins']
-                . 'codeeditor/codeeditor.png" alt="' . $ptx['alt_logo']
-                . '" style="float: left"'
-            )
+            . '<img src="' . $pth['folder']['plugins']
+            . 'codeeditor/codeeditor.png" alt="' . $ptx['alt_logo']
+            . '" style="float: left">'
             . '<p>Version: ' . CODEEDITOR_VERSION . '</p>'
             . '<p>Codeeditor_XH is powered by '
             . '<a href="http://codemirror.net/" target="_blank">'
@@ -195,26 +182,26 @@ EOS;
         $phpVersion = '5.4.0';
         $ptx = $plugin_tx['codeeditor'];
         $imgdir = $pth['folder']['plugins'] . 'codeeditor/images/';
-        $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
-        $warn = tag('img src="' . $imgdir . 'warn.png" alt="warning"');
-        $fail = tag('img src="' . $imgdir . 'fail.png" alt="failure"');
+        $ok = '<img src="' . $imgdir . 'ok.png" alt="ok">';
+        $warn = '<img src="' . $imgdir . 'warn.png" alt="warning">';
+        $fail = '<img src="' . $imgdir . 'fail.png" alt="failure">';
         $o = '<h4>' . $ptx['syscheck_title'] . '</h4>'
             . (version_compare(PHP_VERSION, $phpVersion) >= 0 ? $ok : $fail)
             . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_phpversion'], $phpVersion)
-            . tag('br');
+            . '<br>';
         foreach (array('json', 'pcre') as $ext) {
             $o .= (extension_loaded($ext) ? $ok : $fail)
                 . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_extension'], $ext)
-                . tag('br');
+                . '<br>';
         }
-        $o .= tag('br');
+        $o .= '<br>';
         foreach (array('config/', 'css/', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'].'codeeditor/' . $folder;
         }
         foreach ($folders as $folder) {
             $o .= (is_writable($folder) ? $ok : $warn)
                 . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_writable'], $folder)
-                . tag('br');
+                . '<br>';
         }
         return $o;
     }
@@ -252,7 +239,7 @@ EOS;
         }
         $parsedConfig = json_decode($config, true);
         if (!is_array($parsedConfig)) {
-            $e .= '<li><b>' . $ptx['error_json'] . '</b>' . tag('br')
+            $e .= '<li><b>' . $ptx['error_json'] . '</b>' . '<br>'
                 . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8'))
                 . '</li>';
             return null;
@@ -346,13 +333,11 @@ EOS;
         $ptx = $plugin_tx['codeeditor'];
         $dir = $pth['folder']['plugins'] . 'codeeditor/';
 
-        $css = tag(
-            'link rel="stylesheet" type="text/css" href="' . $dir
-            . 'codemirror/codemirror-combined.css"'
-        );
+        $css = '<link rel="stylesheet" type="text/css" href="' . $dir
+            . 'codemirror/codemirror-combined.css">';
         $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css';
         if (file_exists($fn)) {
-            $css .= tag('link rel="stylesheet" type="text/css" href="' . $fn . '"');
+            $css .= '<link rel="stylesheet" type="text/css" href="' . $fn . '">';
         }
         $text = array('confirmLeave' => $ptx['confirm_leave']);
         $text = json_encode($text);
