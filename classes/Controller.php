@@ -126,51 +126,11 @@ EOS;
         $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
-                $o .= self::version() . self::systemCheck();
+                $o .= '<h1>Codeeditor ' . CODEEDITOR_VERSION . '</h1>' . self::systemCheck();
                 break;
             default:
                 $o .= plugin_admin_common($action, $admin, 'codeeditor');
         }
-    }
-
-    /**
-     * Returns the plugin version information view.
-     *
-     * @return string The (X)HTML.
-     *
-     * @global array The paths of system files and folders.
-     * @global array The localization of the plugins.
-     */
-    protected static function version()
-    {
-        global $pth, $plugin_tx;
-
-        $ptx = $plugin_tx['codeeditor'];
-        return '<h1>Codeeditor &ndash; '  . $ptx['label_info'] . '</h1>'
-            . '<img src="' . $pth['folder']['plugins']
-            . 'codeeditor/codeeditor.png" alt="' . $ptx['alt_logo']
-            . '" style="float: left">'
-            . '<p>Version: ' . CODEEDITOR_VERSION . '</p>'
-            . '<p>Codeeditor_XH is powered by '
-            . '<a href="http://codemirror.net/" target="_blank">'
-            . 'CodeMirror</a>.</p>'
-            . '<p>Copyright &copy; 2011-2021 <a href="http://3-magi.net">'
-            . 'Christoph M. Becker</a></p>'
-            . '<p style="text-align:justify">This program is free software:'
-            . 'you can redistribute it and/or modify'
-            . ' it under the terms of the GNU General Public License as published by'
-            . ' the Free Software Foundation, either version 3 of the License, or'
-            . ' (at your option) any later version.</p>'
-            . '<p style="text-align:justify">This program is distributed in the hope'
-            . ' that it will be useful,'
-            . ' but <em>without any warranty</em>; without even the implied warranty'
-            . ' of <em>merchantability</em> or <em>fitness for a particular purpose'
-            . '</em>.  See the GNU General Public License for more details.</p>'
-            . '<p style="text-align:justify">You should have received a copy of the'
-            . ' GNU General Public License'
-            . ' along with this program.  If not, see'
-            . ' <a href="http://www.gnu.org/licenses/">http://www.gnu.org/licenses/'
-            . '</a>.</p>';
     }
 
     /**
