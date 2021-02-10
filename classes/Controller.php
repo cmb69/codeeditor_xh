@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright 2011-2017 Christoph M. Becker
+ * Copyright 2011-2021 Christoph M. Becker
  *
  * This file is part of Codeeditor_XH.
  *
@@ -154,7 +154,7 @@ EOS;
             . '<p>Codeeditor_XH is powered by '
             . '<a href="http://codemirror.net/" target="_blank">'
             . 'CodeMirror</a>.</p>'
-            . '<p>Copyright &copy; 2011-2017 <a href="http://3-magi.net">'
+            . '<p>Copyright &copy; 2011-2021 <a href="http://3-magi.net">'
             . 'Christoph M. Becker</a></p>'
             . '<p style="text-align:justify">This program is free software:'
             . 'you can redistribute it and/or modify'
