@@ -24,7 +24,7 @@
 function include_codeeditor()
 {
 // @codingStandardsIgnoreEnd
-    Codeeditor_Controller::doInclude();
+    Codeeditor\Controller::doInclude();
 }
 
 /**
@@ -46,7 +46,7 @@ function include_codeeditor()
 function codeeditor_replace($elementId, $config = '')
 {
 // @codingStandardsIgnoreEnd
-    return Codeeditor_Controller::replace($elementId, $config);
+    return Codeeditor\Controller::replace($elementId, $config);
 }
 
 /**
@@ -63,7 +63,7 @@ function codeeditor_replace($elementId, $config = '')
 function init_codeeditor($classes = array(), $config = false)
 {
 // @codingStandardsIgnoreEnd
-    return Codeeditor_Controller::init($classes, $config);
+    return Codeeditor\Controller::init($classes, $config);
 }
 
 /**
@@ -80,7 +80,7 @@ function init_codeeditor($classes = array(), $config = false)
 function init_codeeditor_css($classes = array(), $config = false)
 {
 // @codingStandardsIgnoreEnd
-    return Codeeditor_Controller::init($classes, $config, 'css');
+    return Codeeditor\Controller::init($classes, $config, 'css');
 }
 
 ?>

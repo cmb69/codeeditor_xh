@@ -13,6 +13,8 @@
  * @link      http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
 
+namespace Codeeditor;
+
 /**
  * The plugin controller.
  *
@@ -22,7 +24,7 @@
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
-class Codeeditor_Controller
+class Controller
 {
     /**
      * Dispatches on plugin related requests.

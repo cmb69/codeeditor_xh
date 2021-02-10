@@ -41,9 +41,7 @@ define('CODEEDITOR_VERSION', '1.2');
  */
 function Codeeditor_getThemes()
 {
-    return Codeeditor_Controller::getThemes();
+    return Codeeditor\Controller::getThemes();
 }
 
-Codeeditor_Controller::dispatch();
-
-?>
+Codeeditor\Controller::dispatch();
