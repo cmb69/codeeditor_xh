@@ -190,7 +190,7 @@ EOS;
     {
         global $pth, $plugin_tx;
 
-        $phpVersion = '5.2.0';
+        $phpVersion = '5.4.0';
         $ptx = $plugin_tx['codeeditor'];
         $imgdir = $pth['folder']['plugins'] . 'codeeditor/images/';
         $ok = tag('img src="' . $imgdir . 'ok.png" alt="ok"');
