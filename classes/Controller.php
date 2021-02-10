@@ -33,7 +33,7 @@ class Controller
      *
      * @global array The configuration of the plugins.
      */
-    static function dispatch()
+    public static function dispatch()
     {
         global $plugin_cf;
 
@@ -60,7 +60,7 @@ class Controller
      * @global string The value of the `action' parameter.
      * @global string The value of the `file' parameter.
      */
-    static function main()
+    public static function main()
     {
         global $bjs, $admin, $action, $file;
 
@@ -130,11 +130,11 @@ EOS;
 
         $o .= print_plugin_admin('off');
         switch ($admin) {
-        case '':
-            $o .= self::version() . self::systemCheck();
-            break;
-        default:
-            $o .= plugin_admin_common($action, $admin, 'codeeditor');
+            case '':
+                $o .= self::version() . self::systemCheck();
+                break;
+            default:
+                $o .= plugin_admin_common($action, $admin, 'codeeditor');
         }
     }
 
@@ -244,9 +244,7 @@ EOS;
         $ptx = $plugin_tx['codeeditor'];
         $config = trim($config);
         if (empty($config) || $config[0] != '{') {
-            $std = in_array(
-                $config, array('full', 'medium', 'minimal', 'sidebar', '')
-            );
+            $std = in_array($config, array('full', 'medium', 'minimal', 'sidebar', ''));
             $fn = $std
                 ? $pth['folder']['plugins'] . 'codeeditor/inits/init.json'
                 : $config;
@@ -334,7 +332,7 @@ EOS;
      * @global array  The configuration of the plugins.
      * @global array  The localization of the plugins.
      */
-    static function doInclude()
+    public static function doInclude()
     {
         global $hjs, $pth, $plugin_cf, $plugin_tx;
         static $again = false;
@@ -389,7 +387,7 @@ EOS;
      *
      * @return string The JavaScript to actually create the editor.
      */
-    static function replace($elementId, $config = '')
+    public static function replace($elementId, $config = '')
     {
         $config = self::config('php', $config);
         return "codeeditor.instantiate('$elementId', $config, true);";
@@ -408,7 +406,7 @@ EOS;
      *
      * global string (X)HTML to insert at the bottom of the `body' element.
      */
-    static function init($classes = array(), $config = false, $mode = 'php')
+    public static function init($classes = array(), $config = false, $mode = 'php')
     {
         global $bjs;
 
@@ -437,7 +435,7 @@ EOS;
      *
      * @global array The paths of system files and folders.
      */
-    static function getThemes()
+    public static function getThemes()
     {
         global $pth;
 
@@ -453,5 +451,3 @@ EOS;
         return $themes;
     }
 }
-
-?>

@@ -32,5 +32,3 @@ function Codeeditor_autoload($class)
 }
 
 spl_autoload_register('Codeeditor_autoload');
-
-?>

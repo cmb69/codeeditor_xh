@@ -82,5 +82,3 @@ function init_codeeditor_css($classes = array(), $config = false)
 // @codingStandardsIgnoreEnd
     return Codeeditor\Controller::init($classes, $config, 'css');
 }
-
-?>
