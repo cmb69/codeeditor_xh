@@ -147,21 +147,15 @@ EOS;
 
         $phpVersion = '5.4.0';
         $ptx = $plugin_tx['codeeditor'];
-        $imgdir = $pth['folder']['plugins'] . 'codeeditor/images/';
-        $ok = '<img src="' . $imgdir . 'ok.png" alt="ok">';
-        $warn = '<img src="' . $imgdir . 'warn.png" alt="warning">';
-        $fail = '<img src="' . $imgdir . 'fail.png" alt="failure">';
-        $o = '<h4>' . $ptx['syscheck_title'] . '</h4>'
-            . (version_compare(PHP_VERSION, $phpVersion) >= 0 ? $ok : $fail)
-            . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_phpversion'], $phpVersion)
-            . '<br>';
+        $o = '<h2>' . $ptx['syscheck_title'] . '</h2>';
+        $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
+        $o .= XH_message($result, $ptx['syscheck_phpversion'], $phpVersion);
         foreach (array('config/', 'css/', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'].'codeeditor/' . $folder;
         }
         foreach ($folders as $folder) {
-            $o .= (is_writable($folder) ? $ok : $warn)
-                . '&nbsp;&nbsp;' . sprintf($ptx['syscheck_writable'], $folder)
-                . '<br>';
+            $result = is_writable($folder) ? 'success' : 'warn';
+            $o .= XH_message($result, $ptx['syscheck_writable'], $folder);
         }
         return $o;
     }
