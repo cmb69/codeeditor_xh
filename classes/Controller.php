@@ -80,12 +80,10 @@ class Controller
             $config = self::config($mode, '');
             $classes = json_encode(array($class));
             $bjs .= <<<EOS
-<script type="text/javascript">
-/* <![CDATA[ */
+<script>
 CodeMirror.on(window, "load", function() {
     codeeditor.instantiateByClasses($classes, $config);
 })
-/* ]]> */
 </script>
 EOS;
         }
@@ -238,13 +236,11 @@ EOS;
                 . 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
                 . CMSIMPLE_BASE . '&base=./&type=';
             $script = <<<EOS
-/* <![CDATA[ */
 codeeditor.filebrowser = function(type) {
     window.open("$url" + type, "codeeditor_filebrowser",
             "toolbar=no,location=no,status=no,menubar=no," +
             "scrollbars=yes,resizable=yes,width=640,height=480");
 }
-/* ]]> */
 EOS;
         }
         return $script;
@@ -289,13 +285,11 @@ EOS;
 
         $hjs .= <<<EOS
 $css
-<script type="text/javascript" src="{$dir}codemirror/codemirror-compressed.js">
+<script src="{$dir}codemirror/codemirror-compressed.js">
 </script>
-<script type="text/javascript" src="{$dir}codeeditor.js"></script>
-<script type="text/javascript">
-/* <![CDATA[ */
+<script src="{$dir}codeeditor.js"></script>
+<script>
 codeeditor.text = $text;
-/* ]]> */
 $filebrowser
 </script>
 EOS;
@@ -346,12 +340,10 @@ EOS;
         $classes = json_encode($classes);
         $config = self::config($mode, $config);
         $bjs .= <<<EOS
-<script type="text/javascript">
-/* <![CDATA[ */
+<script>
 CodeMirror.on(window, "load", function() {
     codeeditor.instantiateByClasses($classes, $config, true);
 })
-/* ]]> */
 </script>
 
 EOS;
