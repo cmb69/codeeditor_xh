@@ -58,13 +58,9 @@ class Controller
      * Initializes CodeMirror for template and (plugin) stylesheets.
      *
      * @return void
-     *
-     * @global string (X)HTML to be inserted at the bottom of the `body' element.
      */
     public static function main()
     {
-        global $bjs;
-
         if (self::isEditingPhp()) {
             $mode = 'php';
             $class = 'xh_file_edit';
@@ -76,16 +72,7 @@ class Controller
         }
 
         if ($mode) {
-            self::doInclude();
-            $config = self::config($mode, '');
-            $classes = json_encode(array($class));
-            $bjs .= <<<EOS
-<script>
-CodeMirror.on(window, "load", function() {
-    codeeditor.instantiateByClasses($classes, $config);
-})
-</script>
-EOS;
+            self::init([$class], '', $mode);
         }
     }
 
