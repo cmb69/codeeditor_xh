@@ -68,12 +68,9 @@ class Controller
             $mode = 'css';
             $class = 'xh_file_edit';
         } else {
-            $mode = false;
+            return;
         }
-
-        if ($mode) {
-            self::init([$class], '', $mode);
-        }
+        self::init([$class], '', $mode);
     }
 
     /**
