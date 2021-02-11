@@ -26,10 +26,8 @@
  *
  * @return void
  */
-// @codingStandardsIgnoreStart
 function include_codeeditor()
 {
-// @codingStandardsIgnoreEnd
     Codeeditor\Controller::doInclude();
 }
 
@@ -48,10 +46,8 @@ function include_codeeditor()
  *
  * @return string The JavaScript to actually create the editor.
  */
-// @codingStandardsIgnoreStart
 function codeeditor_replace($elementId, $config = '')
 {
-// @codingStandardsIgnoreEnd
     return Codeeditor\Controller::replace($elementId, $config);
 }
 
@@ -65,10 +61,8 @@ function codeeditor_replace($elementId, $config = '')
  *
  * @return void
  */
-// @codingStandardsIgnoreStart
 function init_codeeditor($classes = array(), $config = false)
 {
-// @codingStandardsIgnoreEnd
     return Codeeditor\Controller::init($classes, $config);
 }
 
@@ -82,9 +76,7 @@ function init_codeeditor($classes = array(), $config = false)
  *
  * @return void
  */
-// @codingStandardsIgnoreStart
 function init_codeeditor_css($classes = array(), $config = false)
 {
-// @codingStandardsIgnoreEnd
     return Codeeditor\Controller::init($classes, $config, 'css');
 }
