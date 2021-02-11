@@ -126,38 +126,13 @@ EOS;
         $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
-                $o .= '<h1>Codeeditor ' . CODEEDITOR_VERSION . '</h1>' . self::systemCheck();
+                ob_start();
+                (new InfoCommand)();
+                $o .= ob_get_clean();
                 break;
             default:
                 $o .= plugin_admin_common($action, $admin, 'codeeditor');
         }
-    }
-
-    /**
-     * Returns requirements information view.
-     *
-     * @return string The (X)HTML.
-     *
-     * @global array The paths of systems files and folders.
-     * @global array The localization of the plugins.
-     */
-    protected static function systemCheck()
-    {
-        global $pth, $plugin_tx;
-
-        $phpVersion = '5.4.0';
-        $ptx = $plugin_tx['codeeditor'];
-        $o = '<h2>' . $ptx['syscheck_title'] . '</h2>';
-        $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
-        $o .= XH_message($result, $ptx['syscheck_phpversion'], $phpVersion);
-        foreach (array('config/', 'css/', 'languages/') as $folder) {
-            $folders[] = $pth['folder']['plugins'].'codeeditor/' . $folder;
-        }
-        foreach ($folders as $folder) {
-            $result = is_writable($folder) ? 'success' : 'warn';
-            $o .= XH_message($result, $ptx['syscheck_writable'], $folder);
-        }
-        return $o;
     }
 
     /**
