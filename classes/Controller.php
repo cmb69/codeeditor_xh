@@ -60,22 +60,15 @@ class Controller
      * @return void
      *
      * @global string (X)HTML to be inserted at the bottom of the `body' element.
-     * @global string The value of the `admin' parameter.
-     * @global string The value of the `action' parameter.
-     * @global string The value of the `file' parameter.
      */
     public static function main()
     {
-        global $bjs, $admin, $action, $file;
+        global $bjs;
 
-        if ($file == 'template' && ($action == 'edit' || $action == '')
-            || $file == 'content' && ($action == 'edit' || $action == '')
-        ) {
+        if (self::isEditingPhp()) {
             $mode = 'php';
             $class = 'xh_file_edit';
-        } elseif ($file == 'stylesheet' && ($action == 'edit' || $action == '')
-            || $admin == 'plugin_stylesheet' && $action == 'plugin_text'
-        ) {
+        } elseif (self::isEditingCss()) {
             $mode = 'css';
             $class = 'xh_file_edit';
         } else {
@@ -96,6 +89,28 @@ CodeMirror.on(window, "load", function() {
 </script>
 EOS;
         }
+    }
+
+    /**
+     * @return bool
+     */
+    private static function isEditingPhp()
+    {
+        global $action, $file;
+
+        return $file == 'template' && ($action == 'edit' || $action == '')
+            || $file == 'content' && ($action == 'edit' || $action == '');
+    }
+
+    /**
+     * @return bool
+     */
+    private static function isEditingCss()
+    {
+        global $admin, $action, $file;
+
+        return $file == 'stylesheet' && ($action == 'edit' || $action == '')
+            || $admin == 'plugin_stylesheet' && $action == 'plugin_text';
     }
 
     /**
