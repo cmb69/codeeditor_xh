@@ -196,7 +196,7 @@ class Controller
      */
     protected static function filebrowser()
     {
-        global $adm, $pth, $cf;
+        global $adm, $sn, $pth, $cf;
 
         // no filebrowser, if editor is called from front-end
         if (!$adm) {
@@ -216,8 +216,7 @@ class Controller
             }
         } else {
             $_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
-            $url =  $pth['folder']['plugins']
-                . 'filebrowser/editorbrowser.php?editor=codeeditor&prefix='
+            $url = $sn . '?filebrowser=editorbrowser&editor=codeeditor&prefix='
                 . CMSIMPLE_BASE . '&base=./&type=';
             $script = <<<EOS
 codeeditor.filebrowser = function(type) {
