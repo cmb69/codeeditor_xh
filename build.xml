@@ -62,8 +62,8 @@
             <arg value="--language_out"/>
             <arg value="ECMASCRIPT5"/>
             <arg value="--js_output_file"/>
-            <arg file="dist/codeeditor.js"/>
-            <arg file="export/codeeditor.js"/>
+            <arg file="dist/codeeditor.min.js"/>
+            <arg file="export/codeeditor.min.js"/>
         </exec>
         <move todir="dist">
             <fileset dir="export">
@@ -71,7 +71,7 @@
                 <exclude name="help/template.htm"/>
                 <exclude name="README*.md"/>
                 <exclude name="build.xml"/>
-                <exclude name="codeeditor.js"/>
+                <exclude name="codeeditor.min.js"/>
                 <exclude name="composer.*"/>
                 <exclude name="coverage.xml"/>
                 <exclude name="phpcompatinfo.*"/>

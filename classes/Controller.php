@@ -270,7 +270,7 @@ EOS;
 $css
 <script src="{$dir}codemirror/codemirror-compressed.js">
 </script>
-<script src="{$dir}codeeditor.js"></script>
+<script src="{$dir}codeeditor.min.js"></script>
 <script>
 codeeditor.text = $text;
 $filebrowser
