@@ -59,6 +59,42 @@
         </exec>
     </target>
 
+    <target name="update-codemirror" description="updates the bundled CodeMirror">
+        <fail unless="sourcedir" message="sourcedir is not defined!"/>
+        <delete dir="codemirror/theme"/>
+        <copy todir="codemirror/theme">
+            <fileset dir="${sourcedir}/theme"/>
+        </copy>
+        <copy file="${sourcedir}/lib/codemirror.css" tofile="codemirror/codemirror-combined.css" overwrite="true"/>
+        <append destFile="codemirror/codemirror-combined.css" file="${sourcedir}/addon/dialog/dialog.css"/>
+        <append destFile="codemirror/codemirror-combined.css" file="${sourcedir}/addon/display/fullscreen.css"/>
+        <exec executable="uglifyjs" passthru="true" checkreturn="true">
+            <arg file="${sourcedir}/lib/codemirror.js"/>
+            <arg file="${sourcedir}/mode/clike/clike.js"/>
+            <arg file="${sourcedir}/mode/css/css.js"/>
+            <arg file="${sourcedir}/mode/htmlmixed/htmlmixed.js"/>
+            <arg file="${sourcedir}/mode/javascript/javascript.js"/>
+            <arg file="${sourcedir}/mode/php/php.js"/>
+            <arg file="${sourcedir}/mode/xml/xml.js"/>
+            <arg file="${sourcedir}/addon/dialog/dialog.js"/>
+            <arg file="${sourcedir}/addon/display/fullscreen.js"/>
+            <arg file="${sourcedir}/addon/edit/closetag.js"/>
+            <arg file="${sourcedir}/addon/edit/matchbrackets.js"/>
+            <arg file="${sourcedir}/addon/edit/matchtags.js"/>
+            <arg file="${sourcedir}/addon/fold/brace-fold.js"/>
+            <arg file="${sourcedir}/addon/fold/foldcode.js"/>
+            <arg file="${sourcedir}/addon/fold/xml-fold.js"/>
+            <arg file="${sourcedir}/addon/search/search.js"/>
+            <arg file="${sourcedir}/addon/search/searchcursor.js"/>
+            <arg value="--compress"/>
+            <arg value="--mangle"/>
+            <arg value="--output"/>
+            <arg file="codemirror/codemirror-compressed.js"/>
+        </exec>
+        <copy file="${sourcedir}/LICENSE" todir="codemirror" overwrite="true"/>
+        <copy file="${sourcedir}/README.md" todir="codemirror" overwrite="true"/>
+    </target>
+
     <target name="build" description="builds a distributable ZIP archive">
         <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
         <unzip file="export.zip" todir="export"/>
