@@ -24,7 +24,7 @@ filebrowser integration and search and replace.</p>
 ## Requirements
 
 Codeeditor\_XH is a plugin for CMSimple\_XH ≥ 1.7.0.
-It requires PHP ≥ 5.4.0.
+It requires PHP ≥ 7.0.0.
 
 ## Download
 
