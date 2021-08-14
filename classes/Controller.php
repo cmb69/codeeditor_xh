@@ -45,6 +45,7 @@ class Controller
 
         if (XH_ADM) { // @phpstan-ignore-line
             XH_registerStandardPluginMenuItems(false);
+            XH_registerPluginType('editor', 'codeeditor');
             if ($plugin_cf['codeeditor']['enabled']) {
                 self::main();
             }
