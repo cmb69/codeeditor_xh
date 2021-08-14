@@ -43,7 +43,7 @@ define('CODEEDITOR_VERSION', '1.2');
 /**
  * Returns all available themes.
  *
- * @return array
+ * @return array<int,string>
  */
 function Codeeditor_getThemes()
 {

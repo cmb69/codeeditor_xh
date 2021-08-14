@@ -55,28 +55,30 @@ function codeeditor_replace($elementId, $config = '')
  * Instantiates the editor(s) on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param string $classes The classes of the textarea(s) that should become
- *                        an editor instance.
- * @param string $config  The configuration string.
+ * @param array<int,string> $classes The classes of the textarea(s) that should become
+ *                                   an editor instance.
+ * @param string|false $config       The configuration string.
  *
- * @return void
+ * @return bool
  */
 function init_codeeditor($classes = array(), $config = false)
 {
-    return Codeeditor\Controller::init($classes, $config);
+    Codeeditor\Controller::init($classes, $config);
+    return true;
 }
 
 /**
  * Instantiates the editor(s) in CSS mode on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param string $classes The classes of the textarea(s) that should become
- *                        an editor instance.
- * @param string $config  The configuration string.
+ * @param array<int,string> $classes The classes of the textarea(s) that should become
+ *                                   an editor instance.
+ * @param string|false $config       The configuration string.
  *
- * @return void
+ * @return bool
  */
 function init_codeeditor_css($classes = array(), $config = false)
 {
-    return Codeeditor\Controller::init($classes, $config, 'css');
+    Codeeditor\Controller::init($classes, $config, 'css');
+    return true;
 }

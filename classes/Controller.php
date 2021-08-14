@@ -43,7 +43,7 @@ class Controller
     {
         global $plugin_cf;
 
-        if (XH_ADM) {
+        if (XH_ADM) { // @phpstan-ignore-line
             XH_registerStandardPluginMenuItems(false);
             if ($plugin_cf['codeeditor']['enabled']) {
                 self::main();
@@ -118,7 +118,7 @@ class Controller
      */
     protected static function handleAdministration()
     {
-        global $admin, $action, $o;
+        global $admin, $o;
 
         $o .= print_plugin_admin('off');
         switch ($admin) {
@@ -128,7 +128,7 @@ class Controller
                 $o .= ob_get_clean();
                 break;
             default:
-                $o .= plugin_admin_common($action, $admin, 'codeeditor');
+                $o .= plugin_admin_common();
         }
     }
 
@@ -168,7 +168,7 @@ class Controller
             $e .= '<li><b>' . $ptx['error_json'] . '</b>' . '<br>'
                 . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8'))
                 . '</li>';
-            return null;
+            return "";
         }
         $config = $parsedConfig;
         if (!isset($config['mode']) || $config['mode'] == '%MODE%') {
@@ -181,14 +181,14 @@ class Controller
         // multiple editors on the same form might trigger form submission
         // multiple times.
         $config['leaveSubmitMethodAlone'] = true;
-        $config = json_encode($config);
+        $config = (string) json_encode($config);
         return $config;
     }
 
     /**
      * Returns the JavaScript to activate the configured filebrowser.
      *
-     * @return void
+     * @return string
      *
      * @global bool  Whether the user is logged in as admin.
      * @global array The paths of system files and folders.
@@ -210,8 +210,8 @@ class Controller
             if (is_readable($connector)) {
                 include_once $connector;
                 $init = $cf['filebrowser']['external'] . '_codeeditor_init';
-                if (function_exists($init)) {
-                    $script = call_user_func($init);
+                if (is_callable($init)) {
+                    $script = $init();
                 }
             }
         } else {
@@ -303,10 +303,10 @@ EOS;
      * Instantiates the editor(s) on the textarea(s) given by $classes.
      * $config is exactly the same as for EDITOR_replace().
      *
-     * @param string $classes The classes of the textarea(s) that should become
-     *                        an editor instance.
-     * @param string $config  The configuration string.
-     * @param string $mode    The highlighting mode ('php' or 'css').
+     * @param array<int,string> $classes The classes of the textarea(s) that should become
+     *                                   an editor instance.
+     * @param string|false $config       The configuration string.
+     * @param string $mode               The highlighting mode ('php' or 'css').
      *
      * @return void
      *
@@ -321,7 +321,7 @@ EOS;
             $classes = array('xh-editor');
         }
         $classes = json_encode($classes);
-        $config = self::config($mode, $config);
+        $config = self::config($mode, (string) $config);
         $bjs .= <<<EOS
 <script>
 CodeMirror.on(window, "load", function() {
@@ -335,7 +335,7 @@ EOS;
     /**
      * Returns all available themes.
      *
-     * @return array
+     * @return array<int,string>
      *
      * @global array The paths of system files and folders.
      */
