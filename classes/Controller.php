@@ -70,7 +70,7 @@ class Controller
         } else {
             return;
         }
-        self::init([$class], '', $mode);
+        self::init([$class], '', $mode, false);
     }
 
     /**
@@ -307,12 +307,13 @@ EOS;
      *                                   an editor instance.
      * @param string|false $config       The configuration string.
      * @param string $mode               The highlighting mode ('php' or 'css').
+     * @param bool $mayPreview
      *
      * @return void
      *
      * global string (X)HTML to insert at the bottom of the `body' element.
      */
-    public static function init($classes = array(), $config = false, $mode = 'php')
+    public static function init($classes = array(), $config = false, $mode = 'php', $mayPreview = true)
     {
         global $bjs;
 
@@ -322,10 +323,11 @@ EOS;
         }
         $classes = json_encode($classes);
         $config = self::config($mode, (string) $config);
+        $mayPreview = json_encode($mayPreview);
         $bjs .= <<<EOS
 <script>
 CodeMirror.on(window, "load", function() {
-    codeeditor.instantiateByClasses($classes, $config, true);
+    codeeditor.instantiateByClasses($classes, $config, $mayPreview);
 })
 </script>
 
