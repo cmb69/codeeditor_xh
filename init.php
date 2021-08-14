@@ -28,7 +28,7 @@
  */
 function include_codeeditor()
 {
-    Codeeditor\Controller::doInclude();
+    Codeeditor\Plugin::doInclude();
 }
 
 /**
@@ -48,7 +48,7 @@ function include_codeeditor()
  */
 function codeeditor_replace($elementId, $config = '')
 {
-    return Codeeditor\Controller::replace($elementId, $config);
+    return Codeeditor\Plugin::replace($elementId, $config);
 }
 
 /**
@@ -63,7 +63,7 @@ function codeeditor_replace($elementId, $config = '')
  */
 function init_codeeditor($classes = array(), $config = false)
 {
-    Codeeditor\Controller::init($classes, $config);
+    Codeeditor\Plugin::init($classes, $config);
     return true;
 }
 
@@ -79,6 +79,6 @@ function init_codeeditor($classes = array(), $config = false)
  */
 function init_codeeditor_css($classes = array(), $config = false)
 {
-    Codeeditor\Controller::init($classes, $config, 'css');
+    Codeeditor\Plugin::init($classes, $config, 'css');
     return true;
 }

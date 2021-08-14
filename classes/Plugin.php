@@ -30,7 +30,7 @@ namespace Codeeditor;
  * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
  * @link     http://3-magi.net/?CMSimple_XH/Codeeditor_XH
  */
-class Controller
+class Plugin
 {
     /**
      * Dispatches on plugin related requests.
