@@ -19,14 +19,9 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * The version number.
- */
 define('CODEEDITOR_VERSION', '1.2');
 
 /**
- * Returns all available themes.
- *
  * @return array<int,string>
  */
 function Codeeditor_getThemes()

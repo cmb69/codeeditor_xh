@@ -21,23 +21,10 @@
 
 namespace Codeeditor;
 
-/**
- * The plugin controller.
- *
- * @category CMSimple_XH
- * @package  Codeeditor
- * @author   Christoph M. Becker <cmbecker69@gmx.de>
- * @license  http://www.gnu.org/licenses/gpl-3.0.en.html GNU GPLv3
- * @link     http://3-magi.net/?CMSimple_XH/Codeeditor_XH
- */
 class Plugin
 {
     /**
-     * Dispatches on plugin related requests.
-     *
      * @return void
-     *
-     * @global array The configuration of the plugins.
      */
     public static function dispatch()
     {
@@ -56,8 +43,6 @@ class Plugin
     }
 
     /**
-     * Initializes CodeMirror for template and (plugin) stylesheets.
-     *
      * @return void
      */
     public static function main()
@@ -97,11 +82,7 @@ class Plugin
     }
 
     /**
-     * Returns whether the plugin administration has been requested.
-     *
      * @return bool
-     *
-     * @global string Whether the plugin administration has been requested.
      */
     protected static function isAdministrationRequested()
     {
@@ -109,13 +90,7 @@ class Plugin
     }
 
     /**
-     * Handles the plugin administration.
-     *
      * @return void
-     *
-     * @global string The value of the <var>admin</var> GP parameter.
-     * @global string The value of the <var>action</var> GP parameter.
-     * @global string The (X)HTML fragment to insert into the contents area.
      */
     protected static function handleAdministration()
     {
@@ -134,21 +109,9 @@ class Plugin
     }
 
     /**
-     * Returns the configuration in JSON format.
-     *
-     * The configuration string can be `full', `medium', `minimal', `sidebar'
-     * or `' (which will use the users default configuration).
-     * Other values are taken as file name or as JSON configuration object.
-     *
      * @param string $mode   The syntax mode.
      * @param string $config The configuration string.
-     *
      * @return string
-     *
-     * @global array  The paths of system files and folders.
-     * @global string Error messages as (X)HTML `li' elements.
-     * @global array  The configuration of the plugins.
-     * @global array  The localization of the plugins.
      */
     protected static function config($mode, $config)
     {
@@ -187,13 +150,7 @@ class Plugin
     }
 
     /**
-     * Returns the JavaScript to activate the configured filebrowser.
-     *
      * @return string
-     *
-     * @global bool  Whether the user is logged in as admin.
-     * @global array The paths of system files and folders.
-     * @global array The configuration of the core.
      */
     protected static function filebrowser()
     {
@@ -231,17 +188,7 @@ EOS;
     }
 
     /**
-     * Writes the basic JavaScript of the editor to the `head' element.
-     * No editors are actually created. Multiple calls are allowed.
-     * This is called from init_EDITOR() automatically, but not from
-     * EDITOR_replace().
-     *
      * @return void
-     *
-     * @global string (X)HTML to insert in the `head' element.
-     * @global array  The paths of system files and folders.
-     * @global array  The configuration of the plugins.
-     * @global array  The localization of the plugins.
      */
     public static function doInclude()
     {
@@ -280,19 +227,9 @@ EOS;
     }
 
     /**
-     * Returns the JavaScript to actually instantiate a single editor a
-     * `textarea' element.
-     *
-     * To actually create the editor, the caller has to write the the return value
-     * to the (X)HTML output, properly enclosed as `script' element,
-     * after the according `textarea' element,
-     * or execute the return value by other means.
-     *
-     * @param string $elementId The id of the `textarea' element that should become
-     *                          an editor instance.
-     * @param string $config    The configuration string.
-     *
-     * @return string The JavaScript to actually create the editor.
+     * @param string $elementId
+     * @param string $config
+     * @return string
      */
     public static function replace($elementId, $config = '')
     {
@@ -301,18 +238,11 @@ EOS;
     }
 
     /**
-     * Instantiates the editor(s) on the textarea(s) given by $classes.
-     * $config is exactly the same as for EDITOR_replace().
-     *
-     * @param array<int,string> $classes The classes of the textarea(s) that should become
-     *                                   an editor instance.
-     * @param string|false $config       The configuration string.
-     * @param string $mode               The highlighting mode ('php' or 'css').
+     * @param array<int,string> $classes
+     * @param string|false $config
+     * @param string $mode
      * @param bool $mayPreview
-     *
      * @return void
-     *
-     * global string (X)HTML to insert at the bottom of the `body' element.
      */
     public static function init($classes = array(), $config = false, $mode = 'php', $mayPreview = true)
     {
@@ -336,11 +266,7 @@ EOS;
     }
 
     /**
-     * Returns all available themes.
-     *
      * @return array<int,string>
-     *
-     * @global array The paths of system files and folders.
      */
     public static function getThemes()
     {

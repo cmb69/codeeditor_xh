@@ -40,11 +40,9 @@ function include_codeeditor()
  * after the according `textarea' element,
  * or execute the return value by other means.
  *
- * @param string $elementId The id of the `textarea' element that should become
- *                          an editor instance.
- * @param string $config    The configuration string.
- *
- * @return string The JavaScript to actually create the editor.
+ * @param string $elementId
+ * @param string $config
+ * @return string
  */
 function codeeditor_replace($elementId, $config = '')
 {
@@ -55,10 +53,8 @@ function codeeditor_replace($elementId, $config = '')
  * Instantiates the editor(s) on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param array<int,string> $classes The classes of the textarea(s) that should become
- *                                   an editor instance.
- * @param string|false $config       The configuration string.
- *
+ * @param array<int,string> $classes
+ * @param string|false $config
  * @return bool
  */
 function init_codeeditor($classes = array(), $config = false)
@@ -71,10 +67,8 @@ function init_codeeditor($classes = array(), $config = false)
  * Instantiates the editor(s) in CSS mode on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param array<int,string> $classes The classes of the textarea(s) that should become
- *                                   an editor instance.
- * @param string|false $config       The configuration string.
- *
+ * @param array<int,string> $classes
+ * @param string|false $config
  * @return bool
  */
 function init_codeeditor_css($classes = array(), $config = false)
