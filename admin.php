@@ -19,22 +19,6 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/*
- * Prevent direct access and usage from unsupported CMSimple_XH versions.
- */
-if (!defined('CMSIMPLE_XH_VERSION')
-    || strpos(CMSIMPLE_XH_VERSION, 'CMSimple_XH') !== 0
-    || version_compare(CMSIMPLE_XH_VERSION, 'CMSimple_XH 1.7.0', 'lt')
-) {
-    header('HTTP/1.1 403 Forbidden');
-    header('Content-Type: text/plain; charset=UTF-8');
-    die(<<<EOT
-Codeeditor_XH detected an unsupported CMSimple_XH version.
-Uninstall Codeeditor_XH or upgrade to a supported CMSimple_XH version!
-EOT
-    );
-}
-
 /**
  * The version number.
  */
