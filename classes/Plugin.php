@@ -23,7 +23,7 @@ namespace Codeeditor;
 
 class Plugin
 {
-    const VERSION = "1.2";
+    const VERSION = "2.0";
 
     /**
      * @return void
@@ -47,7 +47,7 @@ class Plugin
     /**
      * @return void
      */
-    public static function main()
+    private static function main()
     {
         if (self::isEditingPhp()) {
             $mode = 'php';
@@ -77,7 +77,7 @@ class Plugin
             || $admin == 'plugin_stylesheet' && $action == 'plugin_text';
     }
 
-    protected static function isAdministrationRequested(): bool
+    private static function isAdministrationRequested(): bool
     {
         return XH_wantsPluginAdministration('codeeditor');
     }
@@ -85,7 +85,7 @@ class Plugin
     /**
      * @return void
      */
-    protected static function handleAdministration()
+    private static function handleAdministration()
     {
         global $admin, $o;
 
@@ -101,7 +101,7 @@ class Plugin
         }
     }
 
-    protected static function config(string $mode, string $config): string
+    private static function config(string $mode, string $config): string
     {
         global $pth, $e, $plugin_cf, $plugin_tx;
 
@@ -137,7 +137,7 @@ class Plugin
         return $config;
     }
 
-    protected static function filebrowser(): string
+    private static function filebrowser(): string
     {
         global $adm, $sn, $pth, $cf;
 
