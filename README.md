@@ -9,7 +9,7 @@ Instead of being a WYSIWYG or WYSIWYM editor,
 it allows to edit the source code directly,
 and offers syntax highlighting, line numbering, code indenting
 and folding, bracket matching, optional line wrapping,
-filebrowser integration and search and replace.</p>
+filebrowser integration and search and replace.
 
 - [Requirements](#requirements)
 - [Download](#download)
