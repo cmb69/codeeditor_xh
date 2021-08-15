@@ -19,12 +19,5 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/**
- * @return array<int,string>
- */
-function Codeeditor_getThemes()
-{
-    return Codeeditor\Plugin::getThemes();
-}
 
 Codeeditor\Plugin::dispatch();

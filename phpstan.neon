@@ -3,7 +3,6 @@ parameters:
   paths:
     - classes/
     - admin.php
-    - init.php
   bootstrapFiles:
     - phpstan.php
   scanFiles:
