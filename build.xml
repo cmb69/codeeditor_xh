@@ -30,7 +30,7 @@
     </target>
 
     <target name="compat" description="checks PHP requirements">
-        <exec command="phpcompatinfo analyser:run --alias current" logoutput="true"/>
+        <exec command="phpcompatinfo analyser:run --ansi classes" logoutput="true"/>
     </target>
 
     <target name="gen-help" description="builds help.htm from README.md">
