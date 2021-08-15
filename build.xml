@@ -98,15 +98,6 @@
         <exec command="git archive -o export.zip HEAD" checkreturn="true"/>
         <unzip file="export.zip" todir="export"/>
         <delete file="export.zip"/>
-        <exec executable="closure-compiler" passthru="true">
-            <arg value="--language_in"/>
-            <arg value="ECMASCRIPT5"/>
-            <arg value="--language_out"/>
-            <arg value="ECMASCRIPT5"/>
-            <arg value="--js_output_file"/>
-            <arg file="dist/codeeditor.min.js"/>
-            <arg file="export/codeeditor.min.js"/>
-        </exec>
         <move todir="dist">
             <fileset dir="export">
                 <exclude name=".phive/**"/>
@@ -119,6 +110,13 @@
                 <exclude name="phpcompatinfo.*"/>
             </fileset>
         </move>
+        <exec executable="uglifyjs" passthru="true" checkreturn="true">
+            <arg file="export/codeeditor.min.js"/>
+            <arg value="--compress"/>
+            <arg value="--mangle"/>
+            <arg value="--output"/>
+            <arg file="dist/codeeditor.min.js"/>
+        </exec>
         <delete dir="export"/>
         <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
         <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
