@@ -19,8 +19,6 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-define('CODEEDITOR_VERSION', '1.2');
-
 /**
  * @return array<int,string>
  */

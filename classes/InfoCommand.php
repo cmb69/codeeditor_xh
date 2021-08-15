@@ -28,7 +28,7 @@ class InfoCommand
      */
     public function __invoke()
     {
-        echo '<h1>Codeeditor ' . CODEEDITOR_VERSION . '</h1>',
+        echo '<h1>Codeeditor ' . Plugin::VERSION . '</h1>',
             $this->systemCheck();
     }
 
