@@ -32,10 +32,7 @@ class InfoCommand
             $this->systemCheck();
     }
 
-    /**
-     * @return string
-     */
-    private function systemCheck()
+    private function systemCheck(): string
     {
         global $pth, $plugin_tx;
 

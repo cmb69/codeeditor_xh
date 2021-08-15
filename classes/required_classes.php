@@ -22,7 +22,7 @@
 /**
  * @return array<int,string>
  */
-function Codeeditor_getThemes()
+function Codeeditor_getThemes(): array
 {
     return Codeeditor\Plugin::getThemes();
 }
@@ -47,12 +47,8 @@ function include_codeeditor()
  * to the (X)HTML output, properly enclosed as `script' element,
  * after the according `textarea' element,
  * or execute the return value by other means.
- *
- * @param string $elementId
- * @param string $config
- * @return string
  */
-function codeeditor_replace($elementId, $config = '')
+function codeeditor_replace(string $elementId, string $config = ''): string
 {
     return Codeeditor\Plugin::replace($elementId, $config);
 }
@@ -63,9 +59,8 @@ function codeeditor_replace($elementId, $config = '')
  *
  * @param array<int,string> $classes
  * @param string|false $config
- * @return bool
  */
-function init_codeeditor($classes = array(), $config = false)
+function init_codeeditor(array $classes = [], $config = false): bool
 {
     Codeeditor\Plugin::init($classes, $config);
     return true;
@@ -77,9 +72,8 @@ function init_codeeditor($classes = array(), $config = false)
  *
  * @param array<int,string> $classes
  * @param string|false $config
- * @return bool
  */
-function init_codeeditor_css($classes = array(), $config = false)
+function init_codeeditor_css(array $classes = [], $config = false): bool
 {
     Codeeditor\Plugin::init($classes, $config, 'css');
     return true;

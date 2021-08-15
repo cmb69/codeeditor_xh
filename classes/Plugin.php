@@ -61,10 +61,7 @@ class Plugin
         self::init([$class], '', $mode, false);
     }
 
-    /**
-     * @return bool
-     */
-    private static function isEditingPhp()
+    private static function isEditingPhp(): bool
     {
         global $action, $file;
 
@@ -72,10 +69,7 @@ class Plugin
             || $file == 'content' && ($action == 'edit' || $action == '');
     }
 
-    /**
-     * @return bool
-     */
-    private static function isEditingCss()
+    private static function isEditingCss(): bool
     {
         global $admin, $action, $file;
 
@@ -83,10 +77,7 @@ class Plugin
             || $admin == 'plugin_stylesheet' && $action == 'plugin_text';
     }
 
-    /**
-     * @return bool
-     */
-    protected static function isAdministrationRequested()
+    protected static function isAdministrationRequested(): bool
     {
         return XH_wantsPluginAdministration('codeeditor');
     }
@@ -110,12 +101,7 @@ class Plugin
         }
     }
 
-    /**
-     * @param string $mode   The syntax mode.
-     * @param string $config The configuration string.
-     * @return string
-     */
-    protected static function config($mode, $config)
+    protected static function config(string $mode, string $config): string
     {
         global $pth, $e, $plugin_cf, $plugin_tx;
 
@@ -151,10 +137,7 @@ class Plugin
         return $config;
     }
 
-    /**
-     * @return string
-     */
-    protected static function filebrowser()
+    protected static function filebrowser(): string
     {
         global $adm, $sn, $pth, $cf;
 
@@ -228,12 +211,7 @@ $filebrowser
 EOS;
     }
 
-    /**
-     * @param string $elementId
-     * @param string $config
-     * @return string
-     */
-    public static function replace($elementId, $config = '')
+    public static function replace(string $elementId, string $config = ''): string
     {
         $config = self::config('php', $config);
         return "codeeditor.instantiate('$elementId', $config, true);";
@@ -242,11 +220,9 @@ EOS;
     /**
      * @param array<int,string> $classes
      * @param string|false $config
-     * @param string $mode
-     * @param bool $mayPreview
      * @return void
      */
-    public static function init($classes = array(), $config = false, $mode = 'php', $mayPreview = true)
+    public static function init(array $classes = [], $config = false, string $mode = 'php', bool $mayPreview = true)
     {
         global $bjs;
 
@@ -270,7 +246,7 @@ EOS;
     /**
      * @return array<int,string>
      */
-    public static function getThemes()
+    public static function getThemes(): array
     {
         global $pth;
 
