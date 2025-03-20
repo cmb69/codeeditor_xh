@@ -25,6 +25,7 @@ class EditorTest extends TestCase
         $hjs = $bjs = "";
         $sut = new Editor("../", "default", "", $this->view());
         $sut->init();
+        $this->assertStringContainsString("<script src=\"../codeeditor/codeeditor.min.js\"></script>", $hjs);
         Approvals::verifyHtml($bjs);
     }
 

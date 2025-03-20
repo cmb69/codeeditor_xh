@@ -26,16 +26,22 @@ use Plib\View;
 
 class Dic
 {
+    /** @var Editor */
+    private static $editor = null;
+
     public static function editor(): Editor
     {
         global $pth, $cf, $plugin_cf;
 
-        return new Editor(
-            $pth["folder"]["plugins"],
-            $plugin_cf["codeeditor"]["theme"],
-            $cf['filebrowser']['external'],
-            self::view()
-        );
+        if (self::$editor === null) {
+            self::$editor = new Editor(
+                $pth["folder"]["plugins"],
+                $plugin_cf["codeeditor"]["theme"],
+                $cf['filebrowser']['external'],
+                self::view()
+            );
+        }
+        return self::$editor;
     }
 
     public static function mainCommand(): MainCommand

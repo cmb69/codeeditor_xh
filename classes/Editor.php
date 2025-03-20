@@ -124,12 +124,6 @@ EOS;
     public function doInclude()
     {
         global $hjs;
-        static $again = false;
-
-        if ($again) {
-            return;
-        }
-        $again = true;
 
         $dir = $this->pluginsFolder . 'codeeditor/';
 
