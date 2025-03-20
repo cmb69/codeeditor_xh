@@ -18,29 +18,31 @@ class MainCommandTest extends TestCase
 
     public function testInitializesEditorForTemplate(): void
     {
+        $request = new FakeRequest(["url" => "http://example.com/?&file=template"]);
         $editor = $this->createMock(Editor::class);
         $editor->expects($this->once())->method("init")->with(
+            $request,
             ["xh_file_edit"],
             "",
             "php",
             false,
         );
         $sut = new MainCommand($editor);
-        $request = new FakeRequest(["url" => "http://example.com/?&file=template"]);
         $sut($request);
     }
 
     public function testInitializesEditorForStylesheet(): void
     {
+        $request = new FakeRequest(["url" => "http://example.com/?&file=stylesheet"]);
         $editor = $this->createMock(Editor::class);
         $editor->expects($this->once())->method("init")->with(
+            $request,
             ["xh_file_edit"],
             "",
             "css",
             false,
         );
         $sut = new MainCommand($editor);
-        $request = new FakeRequest(["url" => "http://example.com/?&file=stylesheet"]);
         $sut($request);
     }
 }

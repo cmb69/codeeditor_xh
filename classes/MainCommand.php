@@ -47,7 +47,7 @@ class MainCommand
         } else {
             return;
         }
-        $this->editor->init([$class], '', $mode, false);
+        $this->editor->init($request, [$class], '', $mode, false);
     }
 
     private function isEditingPhp(Request $request): bool

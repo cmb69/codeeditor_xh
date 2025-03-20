@@ -20,7 +20,7 @@
  */
 
 use Codeeditor\Dic;
-use Codeeditor\Editor;
+use Plib\Request;
 
 /**
  * @return array<int,string>
@@ -39,7 +39,7 @@ function Codeeditor_getThemes(): array
  */
 function include_codeeditor()
 {
-    Dic::editor()->doInclude();
+    Dic::editor()->doInclude(Request::current());
 }
 
 /**
@@ -65,7 +65,7 @@ function codeeditor_replace(string $elementId, string $config = ''): string
  */
 function init_codeeditor(array $classes = [], $config = false): bool
 {
-    Dic::editor()->init($classes, $config);
+    Dic::editor()->init(Request::current(), $classes, $config);
     return true;
 }
 
@@ -78,6 +78,6 @@ function init_codeeditor(array $classes = [], $config = false): bool
  */
 function init_codeeditor_css(array $classes = [], $config = false): bool
 {
-    Dic::editor()->init($classes, $config, 'css');
+    Dic::editor()->init(Request::current(), $classes, $config, 'css');
     return true;
 }

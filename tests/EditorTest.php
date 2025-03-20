@@ -4,6 +4,7 @@ namespace Codeeditor;
 
 use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
+use Plib\FakeRequest;
 use Plib\View;
 
 class EditorTest extends TestCase
@@ -14,7 +15,17 @@ class EditorTest extends TestCase
 
         $hjs = "";
         $sut = new Editor("../", "night", "", $this->view());
-        $sut->doInclude();
+        $sut->doInclude(new FakeRequest());
+        Approvals::verifyHtml($hjs);
+    }
+
+    public function testIncludesEditorWithFilebrowserWhenAdmin(): void
+    {
+        global $hjs;
+
+        $hjs = "";
+        $sut = new Editor("../", "night", "", $this->view());
+        $sut->doInclude(new FakeRequest(["admin" => true]));
         Approvals::verifyHtml($hjs);
     }
 
@@ -24,7 +35,7 @@ class EditorTest extends TestCase
 
         $hjs = $bjs = "";
         $sut = new Editor("../", "default", "", $this->view());
-        $sut->init();
+        $sut->init(new FakeRequest());
         $this->assertStringContainsString("<script src=\"../codeeditor/codeeditor.min.js\"></script>", $hjs);
         Approvals::verifyHtml($bjs);
     }

@@ -21,6 +21,7 @@
 
 namespace Codeeditor;
 
+use Plib\Request;
 use Plib\View;
 
 class Editor
@@ -83,12 +84,12 @@ class Editor
         return $config;
     }
 
-    private function filebrowser(): string
+    private function filebrowser(Request $request): string
     {
-        global $adm, $sn;
+        global $sn;
 
         // no filebrowser, if editor is called from front-end
-        if (!$adm) {
+        if (!$request->admin()) {
             return '';
         }
 
@@ -121,7 +122,7 @@ EOS;
     /**
      * @return void
      */
-    public function doInclude()
+    public function doInclude(Request $request)
     {
         global $hjs;
 
@@ -135,7 +136,7 @@ EOS;
         }
         $text = array('confirmLeave' => $this->view->text("confirm_leave"));
         $text = json_encode($text);
-        $filebrowser = $this->filebrowser();
+        $filebrowser = $this->filebrowser($request);
 
         $hjs .= <<<EOS
 $css
@@ -160,11 +161,16 @@ EOS;
      * @param string|false $config
      * @return void
      */
-    public function init(array $classes = [], $config = false, string $mode = 'php', bool $mayPreview = true)
-    {
+    public function init(
+        Request $request,
+        array $classes = [],
+        $config = false,
+        string $mode = 'php',
+        bool $mayPreview = true
+    ) {
         global $bjs;
 
-        $this->doInclude();
+        $this->doInclude($request);
         if (empty($classes)) {
             $classes = array('xh-editor');
         }
