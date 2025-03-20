@@ -23,16 +23,6 @@
         </exec>
     </target>
 
-    <target name="mess" description="detects code flaws">
-        <exec executable="phpmd" passthru="true" checkreturn="true">
-            <arg line="classes,admin.php ansi codesize,unusedcode"/>
-        </exec>
-    </target>
-
-    <target name="compat" description="checks PHP requirements">
-        <exec command="phpcompatinfo analyser:run --ansi classes" logoutput="true"/>
-    </target>
-
     <target name="gen-help" description="builds help.htm from README.md">
         <exec executable="pandoc" passthru="true" checkreturn="true">
             <arg value="-s"/>
