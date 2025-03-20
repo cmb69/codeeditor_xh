@@ -21,6 +21,8 @@
 
 namespace Codeeditor;
 
+use Plib\View;
+
 class Plugin
 {
     const VERSION = "2.0";
@@ -87,12 +89,12 @@ class Plugin
      */
     private static function handleAdministration()
     {
-        global $admin, $o;
+        global $admin, $o, $pth, $plugin_tx;
 
         $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
-                $o .= (new InfoCommand())();
+                $o .= (new InfoCommand(new View($pth["folder"]["plugins"] . "codeeditor/views/", $plugin_tx["codeeditor"])))();
                 break;
             default:
                 $o .= plugin_admin_common();

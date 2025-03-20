@@ -21,8 +21,18 @@
 
 namespace Codeeditor;
 
+use Plib\View;
+
 class InfoCommand
 {
+    /** @var View */
+    private $view;
+
+    public function __construct(View $view)
+    {
+        $this->view = $view;
+    }
+
     public function __invoke(): string
     {
         return '<h1>Codeeditor ' . Plugin::VERSION . '</h1>'
@@ -31,19 +41,18 @@ class InfoCommand
 
     private function systemCheck(): string
     {
-        global $pth, $plugin_tx;
+        global $pth;
 
         $phpVersion = '7.1.0';
-        $ptx = $plugin_tx['codeeditor'];
-        $o = '<h2>' . $ptx['syscheck_title'] . '</h2>';
+        $o = '<h2>' . $this->view->text("syscheck_title") . '</h2>';
         $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
-        $o .= XH_message($result, $ptx['syscheck_phpversion'], $phpVersion);
+        $o .= XH_message($result, $this->view->text("syscheck_phpversion"), $phpVersion);
         foreach (array('config/', 'css/', 'languages/') as $folder) {
             $folders[] = $pth['folder']['plugins'] . 'codeeditor/' . $folder;
         }
         foreach ($folders as $folder) {
             $result = is_writable($folder) ? 'success' : 'warn';
-            $o .= XH_message($result, $ptx['syscheck_writable'], $folder);
+            $o .= XH_message($result, $this->view->text("syscheck_writable"), $folder);
         }
         return $o;
     }
