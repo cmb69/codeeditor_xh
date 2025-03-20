@@ -90,18 +90,12 @@ class Plugin
      */
     private static function handleAdministration()
     {
-        global $admin, $o, $pth, $plugin_tx;
+        global $admin, $o;
 
         $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
-                $view = new View($pth["folder"]["plugins"] . "codeeditor/views/", $plugin_tx["codeeditor"]);
-                $command = new InfoCommand(
-                    $pth["folder"]["plugins"] . "codeeditor/",
-                    new SystemChecker(),
-                    $view
-                );
-                $o .= $command();
+                $o .= Dic::infoCommand()();
                 break;
             default:
                 $o .= plugin_admin_common();
