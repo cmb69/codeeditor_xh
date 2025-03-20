@@ -92,9 +92,7 @@ class Plugin
         $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
-                ob_start();
-                (new InfoCommand())();
-                $o .= ob_get_clean();
+                $o .= (new InfoCommand())();
                 break;
             default:
                 $o .= plugin_admin_common();

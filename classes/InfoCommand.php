@@ -23,13 +23,10 @@ namespace Codeeditor;
 
 class InfoCommand
 {
-    /**
-     * @return void
-     */
-    public function __invoke()
+    public function __invoke(): string
     {
-        echo '<h1>Codeeditor ' . Plugin::VERSION . '</h1>',
-            $this->systemCheck();
+        return '<h1>Codeeditor ' . Plugin::VERSION . '</h1>'
+            . $this->systemCheck();
     }
 
     private function systemCheck(): string
