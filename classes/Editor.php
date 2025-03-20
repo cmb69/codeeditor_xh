@@ -86,8 +86,6 @@ class Editor
 
     private function filebrowser(Request $request): string
     {
-        global $sn;
-
         // no filebrowser, if editor is called from front-end
         if (!$request->admin()) {
             return '';
@@ -106,11 +104,14 @@ class Editor
             }
         } else {
             $_SESSION['codeeditor_fb_callback'] = 'wrFilebrowser';
-            $url = $sn . '?filebrowser=editorbrowser&editor=codeeditor&prefix='
-                . CMSIMPLE_BASE . '&base=./&type=';
+            // we need to request the base, due to
+            // <https://cmsimpleforum.com/viewtopic.php?t=21543&p=91705#p91705>
+            $url = $request->url()->path(CMSIMPLE_BASE)->with("filebrowser", "editorbrowser")
+                ->with("editor", "codeeditor")->with("prefix", CMSIMPLE_BASE)
+                ->with("type", "")->relative();
             $script = <<<EOS
 codeeditor.filebrowser = function(type) {
-    window.open("$url" + type, "codeeditor_filebrowser",
+    window.open("$url=" + type, "codeeditor_filebrowser",
             "toolbar=no,location=no,status=no,menubar=no," +
             "scrollbars=yes,resizable=yes,width=640,height=480");
 }

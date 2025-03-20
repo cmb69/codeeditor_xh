@@ -25,7 +25,11 @@ class EditorTest extends TestCase
 
         $hjs = "";
         $sut = new Editor("../", "night", "", $this->view());
-        $sut->doInclude(new FakeRequest(["admin" => true]));
+        $request = new FakeRequest([
+            "url" => "http://example.com/de/",
+            "admin" => true,
+        ]);
+        $sut->doInclude($request);
         Approvals::verifyHtml($hjs);
     }
 
