@@ -2,142 +2,142 @@
 
 <project name="Codeeditor" default="help">
 
-    <target name="help" description="lists available targets">
-        <exec executable="phing" outputProperty="help">
-            <arg value="-l"/>
-        </exec>
-        <echo>${help}</echo>
-    </target>
+  <target name="help" description="lists available targets">
+    <exec executable="phing" outputProperty="help">
+      <arg value="-l"/>
+    </exec>
+    <echo>${help}</echo>
+  </target>
 
-    <target name="sniff" description="checks adherence to coding standard">
-        <exec executable="phpcs" passthru="true" checkreturn="true">
-            <arg value="--standard=PSR12"/>
-            <arg line="--runtime-set ignore_warnings_on_exit true"/>
-            <arg file="classes"/>
-            <arg file="admin.php"/>
-        </exec>
-    </target>
+  <target name="sniff" description="checks adherence to coding standard">
+    <exec executable="phpcs" passthru="true" checkreturn="true">
+      <arg value="--standard=PSR12"/>
+      <arg line="--runtime-set ignore_warnings_on_exit true"/>
+      <arg file="classes"/>
+      <arg file="admin.php"/>
+    </exec>
+  </target>
 
-    <target name="stan" description="run static analysis">
-        <exec executable="phpstan" passthru="true" checkreturn="true">
-            <arg value="--ansi"/>
-            <arg value="analyze"/>
-        </exec>
-    </target>
+  <target name="stan" description="run static analysis">
+    <exec executable="phpstan" passthru="true" checkreturn="true">
+      <arg value="--ansi"/>
+      <arg value="analyze"/>
+    </exec>
+  </target>
 
-    <target name="gen-help" description="builds help.htm from README.md">
-        <exec executable="pandoc" passthru="true" checkreturn="true">
-            <arg value="-s"/>
-            <arg value="--eol=lf"/>
-            <arg value="--template=help/template.htm"/>
-            <arg value="-Vlang=en"/>
-            <arg line="-Vpagetitle=&quot;User Manual&quot;"/>
-            <arg value="-o"/>
-            <arg file="help/help.htm"/>
-            <arg file="README.md"/>
-            <arg line="-t html"/>
-        </exec>
-        <exec executable="pandoc" passthru="true" checkreturn="true">
-            <arg value="-s"/>
-            <arg value="--eol=lf"/>
-            <arg value="--template=help/template.htm"/>
-            <arg value="-Vlang=de"/>
-            <arg line="-Vpagetitle=&quot;Benutzerhandbuch&quot;"/>
-            <arg value="-o"/>
-            <arg file="help/help_de.htm"/>
-            <arg file="README_DE.md"/>
-            <arg line="-t html"/>
-        </exec>
-    </target>
+  <target name="gen-help" description="builds help.htm from README.md">
+    <exec executable="pandoc" passthru="true" checkreturn="true">
+      <arg value="-s"/>
+      <arg value="--eol=lf"/>
+      <arg value="--template=help/template.htm"/>
+      <arg value="-Vlang=en"/>
+      <arg line="-Vpagetitle=&quot;User Manual&quot;"/>
+      <arg value="-o"/>
+      <arg file="help/help.htm"/>
+      <arg file="README.md"/>
+      <arg line="-t html"/>
+    </exec>
+    <exec executable="pandoc" passthru="true" checkreturn="true">
+      <arg value="-s"/>
+      <arg value="--eol=lf"/>
+      <arg value="--template=help/template.htm"/>
+      <arg value="-Vlang=de"/>
+      <arg line="-Vpagetitle=&quot;Benutzerhandbuch&quot;"/>
+      <arg value="-o"/>
+      <arg file="help/help_de.htm"/>
+      <arg file="README_DE.md"/>
+      <arg line="-t html"/>
+    </exec>
+  </target>
 
-    <target name="update-codemirror" description="updates the bundled CodeMirror">
-        <fail unless="sourcedir" message="sourcedir is not defined!"/>
-        <delete dir="codemirror/theme"/>
-        <copy todir="codemirror/theme">
-            <fileset dir="${sourcedir}/theme"/>
-        </copy>
-        <copy file="${sourcedir}/lib/codemirror.css" tofile="codemirror/codemirror-combined.css" overwrite="true"/>
-        <append destFile="codemirror/codemirror-combined.css" file="${sourcedir}/addon/dialog/dialog.css"/>
-        <append destFile="codemirror/codemirror-combined.css" file="${sourcedir}/addon/display/fullscreen.css"/>
-        <exec executable="uglifyjs" passthru="true" checkreturn="true">
-            <arg file="${sourcedir}/lib/codemirror.js"/>
-            <arg file="${sourcedir}/mode/clike/clike.js"/>
-            <arg file="${sourcedir}/mode/css/css.js"/>
-            <arg file="${sourcedir}/mode/htmlmixed/htmlmixed.js"/>
-            <arg file="${sourcedir}/mode/javascript/javascript.js"/>
-            <arg file="${sourcedir}/mode/php/php.js"/>
-            <arg file="${sourcedir}/mode/xml/xml.js"/>
-            <arg file="${sourcedir}/addon/dialog/dialog.js"/>
-            <arg file="${sourcedir}/addon/display/fullscreen.js"/>
-            <arg file="${sourcedir}/addon/edit/closetag.js"/>
-            <arg file="${sourcedir}/addon/edit/matchbrackets.js"/>
-            <arg file="${sourcedir}/addon/edit/matchtags.js"/>
-            <arg file="${sourcedir}/addon/fold/brace-fold.js"/>
-            <arg file="${sourcedir}/addon/fold/foldcode.js"/>
-            <arg file="${sourcedir}/addon/fold/xml-fold.js"/>
-            <arg file="${sourcedir}/addon/search/search.js"/>
-            <arg file="${sourcedir}/addon/search/searchcursor.js"/>
-            <arg value="--compress"/>
-            <arg value="--mangle"/>
-            <arg value="--output"/>
-            <arg file="codemirror/codemirror-compressed.js"/>
-        </exec>
-        <copy file="${sourcedir}/LICENSE" todir="codemirror" overwrite="true"/>
-        <copy file="${sourcedir}/README.md" todir="codemirror" overwrite="true"/>
-    </target>
+  <target name="update-codemirror" description="updates the bundled CodeMirror">
+    <fail unless="sourcedir" message="sourcedir is not defined!"/>
+    <delete dir="codemirror/theme"/>
+    <copy todir="codemirror/theme">
+      <fileset dir="${sourcedir}/theme"/>
+    </copy>
+    <copy file="${sourcedir}/lib/codemirror.css" tofile="codemirror/codemirror-combined.css" overwrite="true"/>
+    <append destFile="codemirror/codemirror-combined.css" file="${sourcedir}/addon/dialog/dialog.css"/>
+    <append destFile="codemirror/codemirror-combined.css" file="${sourcedir}/addon/display/fullscreen.css"/>
+    <exec executable="uglifyjs" passthru="true" checkreturn="true">
+      <arg file="${sourcedir}/lib/codemirror.js"/>
+      <arg file="${sourcedir}/mode/clike/clike.js"/>
+      <arg file="${sourcedir}/mode/css/css.js"/>
+      <arg file="${sourcedir}/mode/htmlmixed/htmlmixed.js"/>
+      <arg file="${sourcedir}/mode/javascript/javascript.js"/>
+      <arg file="${sourcedir}/mode/php/php.js"/>
+      <arg file="${sourcedir}/mode/xml/xml.js"/>
+      <arg file="${sourcedir}/addon/dialog/dialog.js"/>
+      <arg file="${sourcedir}/addon/display/fullscreen.js"/>
+      <arg file="${sourcedir}/addon/edit/closetag.js"/>
+      <arg file="${sourcedir}/addon/edit/matchbrackets.js"/>
+      <arg file="${sourcedir}/addon/edit/matchtags.js"/>
+      <arg file="${sourcedir}/addon/fold/brace-fold.js"/>
+      <arg file="${sourcedir}/addon/fold/foldcode.js"/>
+      <arg file="${sourcedir}/addon/fold/xml-fold.js"/>
+      <arg file="${sourcedir}/addon/search/search.js"/>
+      <arg file="${sourcedir}/addon/search/searchcursor.js"/>
+      <arg value="--compress"/>
+      <arg value="--mangle"/>
+      <arg value="--output"/>
+      <arg file="codemirror/codemirror-compressed.js"/>
+    </exec>
+    <copy file="${sourcedir}/LICENSE" todir="codemirror" overwrite="true"/>
+    <copy file="${sourcedir}/README.md" todir="codemirror" overwrite="true"/>
+  </target>
 
-    <target name="build" description="builds a distributable ZIP archive">
-        <exec executable="git" checkreturn="true">
-            <arg line="archive -o export.zip HEAD"/>
-        </exec>
-        <unzip file="export.zip" todir="export"/>
-        <delete file="export.zip"/>
-        <move todir="dist">
-            <fileset dir="export">
-                <exclude name=".phive/**"/>
-                <exclude name="help/template.htm"/>
-                <exclude name="README*.md"/>
-                <exclude name="build.xml"/>
-                <exclude name="codeeditor.min.js"/>
-                <exclude name="composer.*"/>
-                <exclude name="phpstan.*"/>
-            </fileset>
-        </move>
-        <exec executable="uglifyjs" passthru="true" checkreturn="true">
-            <arg file="export/codeeditor.min.js"/>
-            <arg value="--compress"/>
-            <arg value="--mangle"/>
-            <arg value="--output"/>
-            <arg file="dist/codeeditor.min.js"/>
-        </exec>
-        <delete dir="export"/>
-        <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
-        <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
-        <zip destfile="Codeeditor_XH-2.0.zip" basedir="dist" prefix="codeeditor/"/>
-        <delete dir="dist"/>
-    </target>
+  <target name="build" description="builds a distributable ZIP archive">
+    <exec executable="git" checkreturn="true">
+      <arg line="archive -o export.zip HEAD"/>
+    </exec>
+    <unzip file="export.zip" todir="export"/>
+    <delete file="export.zip"/>
+    <move todir="dist">
+      <fileset dir="export">
+        <exclude name=".phive/**"/>
+        <exclude name="help/template.htm"/>
+        <exclude name="README*.md"/>
+        <exclude name="build.xml"/>
+        <exclude name="codeeditor.min.js"/>
+        <exclude name="composer.*"/>
+        <exclude name="phpstan.*"/>
+      </fileset>
+    </move>
+    <exec executable="uglifyjs" passthru="true" checkreturn="true">
+      <arg file="export/codeeditor.min.js"/>
+      <arg value="--compress"/>
+      <arg value="--mangle"/>
+      <arg value="--output"/>
+      <arg file="dist/codeeditor.min.js"/>
+    </exec>
+    <delete dir="export"/>
+    <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
+    <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>
+    <zip destfile="Codeeditor_XH-2.0.zip" basedir="dist" prefix="codeeditor/"/>
+    <delete dir="dist"/>
+  </target>
 
-    <target name="build-patch" description="builds a distributable update package">
-        <fail unless="patchee" message="patchee is not defined!"/>
-        <unzip file="Codeeditor_XH-2.0.zip" todir="current"/>
-        <unzip file="${patchee}" todir="patchee"/>
-        <copy todir="dist">
-            <fileset dir="current">
-                <different targetdir="patchee" ignoreFileTimes="true"/>
-            </fileset>
-        </copy>
-        <delete>
-            <fileset dir="dist/codeeditor">
-                <include name="config/config.php"/>
-                <include name="languages/??.php"/>
-                <include name="css/stylesheet.css"/>
-            </fileset>
-        </delete>
-        <zip destfile="Codeeditor_XH-2.0-PATCH.zip" basedir="dist"
-             includeemptydirs="false"/>
-        <delete dir="patchee" quiet="true"/>
-        <delete dir="current" quiet="true"/>
-        <delete dir="dist" quiet="true"/>
-    </target>
+  <target name="build-patch" description="builds a distributable update package">
+    <fail unless="patchee" message="patchee is not defined!"/>
+    <unzip file="Codeeditor_XH-2.0.zip" todir="current"/>
+    <unzip file="${patchee}" todir="patchee"/>
+    <copy todir="dist">
+      <fileset dir="current">
+        <different targetdir="patchee" ignoreFileTimes="true"/>
+      </fileset>
+    </copy>
+    <delete>
+      <fileset dir="dist/codeeditor">
+        <include name="config/config.php"/>
+        <include name="languages/??.php"/>
+        <include name="css/stylesheet.css"/>
+      </fileset>
+    </delete>
+    <zip destfile="Codeeditor_XH-2.0-PATCH.zip" basedir="dist"
+       includeemptydirs="false"/>
+    <delete dir="patchee" quiet="true"/>
+    <delete dir="current" quiet="true"/>
+    <delete dir="dist" quiet="true"/>
+  </target>
 
 </project>
