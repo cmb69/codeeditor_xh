@@ -21,6 +21,7 @@
 
 namespace Codeeditor;
 
+use Plib\SystemChecker;
 use Plib\View;
 
 class Plugin
@@ -95,7 +96,12 @@ class Plugin
         switch ($admin) {
             case '':
                 $view = new View($pth["folder"]["plugins"] . "codeeditor/views/", $plugin_tx["codeeditor"]);
-                $o .= (new InfoCommand($pth["folder"]["plugins"] . "codeeditor/", $view))();
+                $command = new InfoCommand(
+                    $pth["folder"]["plugins"] . "codeeditor/",
+                    new SystemChecker(),
+                    $view
+                );
+                $o .= $command();
                 break;
             default:
                 $o .= plugin_admin_common();

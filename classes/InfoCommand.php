@@ -21,6 +21,7 @@
 
 namespace Codeeditor;
 
+use Plib\SystemChecker;
 use Plib\View;
 
 class InfoCommand
@@ -28,12 +29,16 @@ class InfoCommand
     /** @var string */
     private $pluginFolder;
 
+    /** @var SystemChecker */
+    private $systemChecker;
+
     /** @var View */
     private $view;
 
-    public function __construct(string $pluginFolder, View $view)
+    public function __construct(string $pluginFolder, SystemChecker $systemChecker, View $view)
     {
         $this->pluginFolder = $pluginFolder;
+        $this->systemChecker = $systemChecker;
         $this->view = $view;
     }
 
@@ -47,13 +52,13 @@ class InfoCommand
     {
         $phpVersion = '7.1.0';
         $o = '<h2>' . $this->view->text("syscheck_title") . '</h2>';
-        $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
+        $result = $this->systemChecker->checkVersion(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
         $o .= $this->view->message($result, "syscheck_phpversion", $phpVersion);
         foreach (array('config/', 'css/', 'languages/') as $folder) {
             $folders[] = $this->pluginFolder . $folder;
         }
         foreach ($folders as $folder) {
-            $result = is_writable($folder) ? 'success' : 'warn';
+            $result = $this->systemChecker->checkWritability($folder) ? 'success' : 'warn';
             $o .= $this->view->message($result, "syscheck_writable", $folder);
         }
         return $o;
