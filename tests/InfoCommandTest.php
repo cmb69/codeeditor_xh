@@ -13,6 +13,16 @@ class InfoCommandTest extends TestCase
     {
         $sut = new InfoCommand(
             "./plugins/codeeditor/",
+            new FakeSystemChecker(true),
+            new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["codeeditor"])
+        );
+        Approvals::verifyHtml($sut());
+    }
+
+    public function testRendersFailingSystemChecks(): void
+    {
+        $sut = new InfoCommand(
+            "./plugins/codeeditor/",
             new FakeSystemChecker(),
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["codeeditor"])
         );
