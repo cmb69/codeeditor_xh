@@ -48,13 +48,13 @@ class InfoCommand
         $phpVersion = '7.1.0';
         $o = '<h2>' . $this->view->text("syscheck_title") . '</h2>';
         $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
-        $o .= XH_message($result, $this->view->text("syscheck_phpversion", $phpVersion));
+        $o .= $this->view->message($result, "syscheck_phpversion", $phpVersion);
         foreach (array('config/', 'css/', 'languages/') as $folder) {
             $folders[] = $this->pluginFolder . $folder;
         }
         foreach ($folders as $folder) {
             $result = is_writable($folder) ? 'success' : 'warn';
-            $o .= XH_message($result, $this->view->text("syscheck_writable", $folder));
+            $o .= $this->view->message($result, "syscheck_writable", $folder);
         }
         return $o;
     }
