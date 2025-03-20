@@ -26,6 +26,11 @@ use Plib\View;
 
 class Dic
 {
+    public static function editor(): Editor
+    {
+        return new Editor();
+    }
+
     public static function infoCommand(): InfoCommand
     {
         global $pth;

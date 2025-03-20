@@ -19,6 +19,7 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Codeeditor\Dic;
 use Codeeditor\Editor;
 
 /**
@@ -26,7 +27,7 @@ use Codeeditor\Editor;
  */
 function Codeeditor_getThemes(): array
 {
-    return (new Editor())->getThemes();
+    return Dic::editor()->getThemes();
 }
 
 /**
@@ -38,7 +39,7 @@ function Codeeditor_getThemes(): array
  */
 function include_codeeditor()
 {
-    (new Editor())->doInclude();
+    Dic::editor()->doInclude();
 }
 
 /**
@@ -52,7 +53,7 @@ function include_codeeditor()
  */
 function codeeditor_replace(string $elementId, string $config = ''): string
 {
-    return (new Editor())->replace($elementId, $config);
+    return Dic::editor()->replace($elementId, $config);
 }
 
 /**
@@ -64,7 +65,7 @@ function codeeditor_replace(string $elementId, string $config = ''): string
  */
 function init_codeeditor(array $classes = [], $config = false): bool
 {
-    (new Editor())->init($classes, $config);
+    Dic::editor()->init($classes, $config);
     return true;
 }
 
@@ -77,6 +78,6 @@ function init_codeeditor(array $classes = [], $config = false): bool
  */
 function init_codeeditor_css(array $classes = [], $config = false): bool
 {
-    (new Editor())->init($classes, $config, 'css');
+    Dic::editor()->init($classes, $config, 'css');
     return true;
 }

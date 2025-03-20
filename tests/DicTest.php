@@ -14,6 +14,11 @@ class DicTest extends TestCase
         $plugin_tx = ["codeeditor" => []];
     }
 
+    public function testMakesEditor(): void
+    {
+        $this->assertInstanceOf(Editor::class, Dic::editor());
+    }
+
     public function testMakesInfoCommand(): void
     {
         $this->assertInstanceOf(InfoCommand::class, Dic::infoCommand());
