@@ -117,11 +117,11 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with Codeeditor\_XH.  If not, see <https://www.gnu.org/licenses/>.
 
-Copyright 2011-2021 Christoph M. Becker
+Copyright © Christoph M. Becker
 
-Czech translation © 2012 Josef Němec  
-Slovak translation © 2012 Dr. Martin Sereday  
-Russian translation © 2012 Lybomyr Kydray
+Czech translation © Josef Němec<br>
+Slovak translation © Dr. Martin Sereday<br>
+Russian translation © Lybomyr Kydray
 
 ## Credits
 

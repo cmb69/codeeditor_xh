@@ -123,11 +123,11 @@ Sie sollten ein Exemplar der GNU General Public License zusammen mit
 Codeeditor\_XH erhalten haben. Falls nicht, siehe
 <https://www.gnu.org/licenses/>.
 
-Copyright 2011-2021 Christoph M. Becker
+Copyright © Christoph M. Becker
 
-Tschechische Übersetzung © 2012 Josef Němec  
-Slovakische Übersetzung © 2012 Dr. Martin Sereday  
-Russische Übersetzung © 2012 Lybomyr Kydray
+Tschechische Übersetzung © Josef Němec<br>
+Slovakische Übersetzung © Dr. Martin Sereday<br>
+Russische Übersetzung © Lybomyr Kydray
 
 ## Danksagung
 
