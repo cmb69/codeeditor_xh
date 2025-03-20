@@ -37,7 +37,7 @@ function Codeeditor_getThemes(): array
  */
 function include_codeeditor(): void
 {
-    Dic::editor()->doInclude(Request::current());
+    Dic::editor()->doInclude(Request::current())();
 }
 
 /**
@@ -63,7 +63,7 @@ function codeeditor_replace(string $elementId, string $config = ''): string
  */
 function init_codeeditor(array $classes = [], $config = false): bool
 {
-    Dic::editor()->init(Request::current(), $classes, $config);
+    Dic::editor()->init(Request::current(), $classes, $config)();
     return true;
 }
 
@@ -76,6 +76,6 @@ function init_codeeditor(array $classes = [], $config = false): bool
  */
 function init_codeeditor_css(array $classes = [], $config = false): bool
 {
-    Dic::editor()->init(Request::current(), $classes, $config, 'css');
+    Dic::editor()->init(Request::current(), $classes, $config, 'css')();
     return true;
 }

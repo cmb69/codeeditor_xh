@@ -22,6 +22,7 @@
 namespace Codeeditor;
 
 use Plib\Request;
+use Plib\Response;
 use Plib\View;
 
 class Editor
@@ -60,43 +61,40 @@ class Editor
         $config = false,
         string $mode = 'php',
         bool $mayPreview = true
-    ): void {
-        global $bjs;
-
-        $this->doInclude($request);
+    ): Response {
+        $response = $this->doInclude($request);
         if (empty($classes)) {
             $classes = array('xh-editor');
         }
         $classes = json_encode($classes);
         $config = $this->config($mode, (string) $config);
         $mayPreview = json_encode($mayPreview);
-        $bjs .= <<<EOS
+        return $response->withBjs(<<<EOS
 <script>
 CodeMirror.on(window, "load", function() {
     codeeditor.instantiateByClasses($classes, $config, $mayPreview);
 })
 </script>
 
-EOS;
+EOS
+        );
     }
 
-    public function doInclude(Request $request): void
+    public function doInclude(Request $request): Response
     {
-        global $hjs;
-
         $dir = $this->pluginsFolder . 'codeeditor/';
         $stylesheets = [$dir . "codemirror/codemirror-combined.css"];
         $fn = $dir . 'codemirror/theme/' . $this->theme . '.css';
         if (file_exists($fn)) {
             $stylesheets[] = $fn;
         }
-        $hjs .= $this->view->render("editor", [
+        return Response::create()->withHjs($this->view->render("editor", [
             "stylesheets" => $stylesheets,
             "codemirror" => $dir . "codemirror/codemirror-compressed.js",
             "codeeditor" => $dir . "codeeditor.min.js",
             "text" => ["confirmLeave" => $this->view->plain("confirm_leave")],
             "filebrowser" => str_ireplace("</script", "<\\/script", $this->filebrowser($request)),
-        ]);
+        ]));
     }
 
     public function replace(string $elementId, string $config = ''): string

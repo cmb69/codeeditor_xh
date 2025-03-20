@@ -38,7 +38,7 @@ const CODEEDITOR_VERSION = "2.0";
 XH_registerStandardPluginMenuItems(false);
 XH_registerPluginType("editor", "codeeditor");
 if ($plugin_cf["codeeditor"]["enabled"]) {
-    Dic::mainCommand()(Request::current());
+    Dic::mainCommand()(Request::current())();
 }
 if (XH_wantsPluginAdministration("codeeditor")) {
     $o .= print_plugin_admin("off");

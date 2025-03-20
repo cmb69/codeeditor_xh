@@ -21,6 +21,7 @@
 
 namespace Codeeditor;
 
+use Plib\Response;
 use Plib\SystemChecker;
 use Plib\View;
 

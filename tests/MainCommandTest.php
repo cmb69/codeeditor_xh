@@ -2,47 +2,36 @@
 
 namespace Codeeditor;
 
+use ApprovalTests\Approvals;
 use PHPUnit\Framework\TestCase;
 use Plib\FakeRequest;
+use Plib\View;
 
 class MainCommandTest extends TestCase
 {
     public function testIgnoresUnrelatedRequests(): void
     {
-        $editor = $this->createMock(Editor::class);
-        $editor->expects($this->never())->method("init");
-        $sut = new MainCommand($editor);
+        $sut = new MainCommand(new Editor("../", "default", "", $this->view()));
         $request = new FakeRequest();
-        $sut($request);
+        $this->assertNull($sut($request)->bjs());
     }
 
     public function testInitializesEditorForTemplate(): void
     {
         $request = new FakeRequest(["url" => "http://example.com/?&file=template"]);
-        $editor = $this->createMock(Editor::class);
-        $editor->expects($this->once())->method("init")->with(
-            $request,
-            ["xh_file_edit"],
-            "",
-            "php",
-            false,
-        );
-        $sut = new MainCommand($editor);
-        $sut($request);
+        $sut = new MainCommand(new Editor("../", "default", "", $this->view()));
+        Approvals::verifyHtml($sut($request)->bjs());
     }
 
     public function testInitializesEditorForStylesheet(): void
     {
         $request = new FakeRequest(["url" => "http://example.com/?&file=stylesheet"]);
-        $editor = $this->createMock(Editor::class);
-        $editor->expects($this->once())->method("init")->with(
-            $request,
-            ["xh_file_edit"],
-            "",
-            "css",
-            false,
-        );
-        $sut = new MainCommand($editor);
-        $sut($request);
+        $sut = new MainCommand(new Editor("../", "default", "", $this->view()));
+        Approvals::verifyHtml($sut($request)->bjs());
+    }
+
+    private function view(): View
+    {
+        return new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["codeeditor"]);
     }
 }

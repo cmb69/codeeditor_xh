@@ -22,6 +22,7 @@
 namespace Codeeditor;
 
 use Plib\Request;
+use Plib\Response;
 
 class MainCommand
 {
@@ -33,7 +34,7 @@ class MainCommand
         $this->editor = $editor;
     }
 
-    public function __invoke(Request $request): void
+    public function __invoke(Request $request): Response
     {
         if ($this->isEditingPhp($request)) {
             $mode = 'php';
@@ -42,9 +43,9 @@ class MainCommand
             $mode = 'css';
             $class = 'xh_file_edit';
         } else {
-            return;
+            return Response::create();
         }
-        $this->editor->init($request, [$class], '', $mode, false);
+        return $this->editor->init($request, [$class], '', $mode, false);
     }
 
     private function isEditingPhp(Request $request): bool
