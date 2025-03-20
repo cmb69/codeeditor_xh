@@ -37,6 +37,15 @@
     </exec>
   </target>
 
+  <target name="js" description="run jshint and tsc">
+    <exec executable="jshint" passthru="true" checkreturn="true">
+      <arg line="codeeditor.min.js"/>
+    </exec>
+    <exec executable="tsc" passthru="true" checkreturn="true">
+      <arg line="--checkJs --lib ES6,DOM --noEmit codemirror.d.ts codeeditor.min.js"/>
+    </exec>
+  </target>
+
   <target name="gen-help" description="builds help.htm from README.md">
     <exec executable="pandoc" passthru="true" checkreturn="true">
       <arg value="-s"/>
@@ -122,6 +131,7 @@
         <exclude name="README*.md"/>
         <exclude name="build.xml"/>
         <exclude name="codeeditor.min.js"/>
+        <exclude name="codemirror.d.ts"/>
         <exclude name="composer.*"/>
         <exclude name="phpstan.*"/>
       </fileset>
