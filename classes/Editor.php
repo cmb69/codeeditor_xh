@@ -128,26 +128,20 @@ EOS;
 
         $dir = $this->pluginsFolder . 'codeeditor/';
 
-        $css = '<link rel="stylesheet" type="text/css" href="' . $dir
-            . 'codemirror/codemirror-combined.css">';
+        $stylesheets = [$dir . "codemirror/codemirror-combined.css"];
         $fn = $dir . 'codemirror/theme/' . $this->theme . '.css';
         if (file_exists($fn)) {
-            $css .= '<link rel="stylesheet" type="text/css" href="' . $fn . '">';
+            $stylesheets[] = $fn;
         }
         $text = array('confirmLeave' => $this->view->text("confirm_leave"));
         $text = json_encode($text);
-        $filebrowser = $this->filebrowser($request);
-
-        $hjs .= <<<EOS
-$css
-<script src="{$dir}codemirror/codemirror-compressed.js">
-</script>
-<script src="{$dir}codeeditor.min.js"></script>
-<script>
-codeeditor.text = $text;
-$filebrowser
-</script>
-EOS;
+        $hjs .= $this->view->render("editor", [
+            "stylesheets" => $stylesheets,
+            "codemirror" => $dir . "codemirror/codemirror-compressed.js",
+            "codeeditor" => $dir . "codeeditor.min.js",
+            "text" => $text,
+            "filebrowser" => $this->filebrowser($request),
+        ]);
     }
 
     public function replace(string $elementId, string $config = ''): string
