@@ -20,7 +20,7 @@
  */
 
 use Codeeditor\Dic;
-use Codeeditor\Plugin;
+use Codeeditor\MainCommand;
 
 if (!defined("CMSIMPLE_XH_VERSION")) {
     http_response_code(403);
@@ -36,7 +36,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
 XH_registerStandardPluginMenuItems(false);
 XH_registerPluginType("editor", "codeeditor");
 if ($plugin_cf["codeeditor"]["enabled"]) {
-    Plugin::main();
+    (new MainCommand())();
 }
 if (XH_wantsPluginAdministration("codeeditor")) {
     $o .= print_plugin_admin("off");

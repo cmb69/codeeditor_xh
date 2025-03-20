@@ -25,39 +25,6 @@ class Plugin
 {
     const VERSION = "2.0";
 
-    /**
-     * @return void
-     */
-    public static function main()
-    {
-        if (self::isEditingPhp()) {
-            $mode = 'php';
-            $class = 'xh_file_edit';
-        } elseif (self::isEditingCss()) {
-            $mode = 'css';
-            $class = 'xh_file_edit';
-        } else {
-            return;
-        }
-        self::init([$class], '', $mode, false);
-    }
-
-    private static function isEditingPhp(): bool
-    {
-        global $action, $file;
-
-        return $file == 'template' && ($action == 'edit' || $action == '')
-            || $file == 'content' && ($action == 'edit' || $action == '');
-    }
-
-    private static function isEditingCss(): bool
-    {
-        global $admin, $action, $file;
-
-        return $file == 'stylesheet' && ($action == 'edit' || $action == '')
-            || $admin == 'plugin_stylesheet' && $action == 'plugin_text';
-    }
-
     private static function config(string $mode, string $config): string
     {
         global $pth, $e, $plugin_cf, $plugin_tx;
