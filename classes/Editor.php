@@ -138,7 +138,7 @@ EOS;
             "codemirror" => $dir . "codemirror/codemirror-compressed.js",
             "codeeditor" => $dir . "codeeditor.min.js",
             "text" => ["confirmLeave" => $this->view->plain("confirm_leave")],
-            "filebrowser" => $this->filebrowser($request),
+            "filebrowser" => str_ireplace("</script", "<\\/script", $this->filebrowser($request)),
         ]);
     }
 

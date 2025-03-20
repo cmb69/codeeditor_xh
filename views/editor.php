@@ -21,5 +21,5 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
 <script src="<?=$this->esc($codemirror)?>"></script>
 <script src="<?=$this->esc($codeeditor)?>"></script>
 <script>
-<?=$this->esc($filebrowser)?>
+<?=$this->raw($filebrowser)?>
 </script>
