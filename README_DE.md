@@ -24,8 +24,8 @@ und Suchen und Ersetzen.
 
 ## Voraussetzungen
 
-Codeeditor\_XH ist ein Plugin für CMSimple\_XH ≥ 1.7.0.
-Es benötigt PHP ≥ 7.0.0.
+Codeeditor_XH ist ein Plugin für [CMSimple_XH](https://cmsimple-xh.org/de/).
+Es benötigt CMSimple_XH ≥ 1.7.0 und PHP ≥ 7.1.0.
 
 ## Download
 

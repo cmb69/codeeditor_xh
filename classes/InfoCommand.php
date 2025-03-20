@@ -36,7 +36,7 @@ class InfoCommand
     {
         global $pth, $plugin_tx;
 
-        $phpVersion = '7.0.0';
+        $phpVersion = '7.1.0';
         $ptx = $plugin_tx['codeeditor'];
         $o = '<h2>' . $ptx['syscheck_title'] . '</h2>';
         $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
