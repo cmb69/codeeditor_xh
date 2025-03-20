@@ -21,17 +21,19 @@
 
 namespace Codeeditor;
 
+use Plib\Request;
+
 class MainCommand
 {
     /**
      * @return void
      */
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        if ($this->isEditingPhp()) {
+        if ($this->isEditingPhp($request)) {
             $mode = 'php';
             $class = 'xh_file_edit';
-        } elseif ($this->isEditingCss()) {
+        } elseif ($this->isEditingCss($request)) {
             $mode = 'css';
             $class = 'xh_file_edit';
         } else {
@@ -40,18 +42,19 @@ class MainCommand
         Plugin::init([$class], '', $mode, false);
     }
 
-    private function isEditingPhp(): bool
+    private function isEditingPhp(Request $request): bool
     {
-        global $action, $file;
-
+        $action = $request->get("action") ?? "";
+        $file = $request->get("file");
         return $file == 'template' && ($action == 'edit' || $action == '')
             || $file == 'content' && ($action == 'edit' || $action == '');
     }
 
-    private function isEditingCss(): bool
+    private function isEditingCss(Request $request): bool
     {
-        global $admin, $action, $file;
-
+        $action = $request->get("action") ?? "";
+        $admin = $request->get("admin");
+        $file = $request->get("file");
         return $file == 'stylesheet' && ($action == 'edit' || $action == '')
             || $admin == 'plugin_stylesheet' && $action == 'plugin_text';
     }
