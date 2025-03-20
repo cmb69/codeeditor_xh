@@ -23,9 +23,17 @@ namespace Codeeditor;
 
 class Editor
 {
+    /** @var string */
+    private $pluginsFolder;
+
+    public function __construct(string $pluginsFolder)
+    {
+        $this->pluginsFolder = $pluginsFolder;
+    }
+
     private function config(string $mode, string $config): string
     {
-        global $pth, $e, $plugin_cf, $plugin_tx;
+        global $e, $plugin_cf, $plugin_tx;
 
         $pcf = $plugin_cf['codeeditor'];
         $ptx = $plugin_tx['codeeditor'];
@@ -33,7 +41,7 @@ class Editor
         if (empty($config) || $config[0] != '{') {
             $std = in_array($config, array('full', 'medium', 'minimal', 'sidebar', ''));
             $fn = $std
-                ? $pth['folder']['plugins'] . 'codeeditor/inits/init.json'
+                ? $this->pluginsFolder . 'codeeditor/inits/init.json'
                 : $config;
             $config = ($config = file_get_contents($fn)) !== false ? $config : '{}';
         }
@@ -61,7 +69,7 @@ class Editor
 
     private function filebrowser(): string
     {
-        global $adm, $sn, $pth, $cf;
+        global $adm, $sn, $cf;
 
         // no filebrowser, if editor is called from front-end
         if (!$adm) {
@@ -70,7 +78,7 @@ class Editor
 
         $script = '';
         if (!empty($cf['filebrowser']['external'])) {
-            $connector = $pth['folder']['plugins'] . $cf['filebrowser']['external']
+            $connector = $this->pluginsFolder . $cf['filebrowser']['external']
                 . '/connectors/codeeditor/codeeditor.php';
             if (is_readable($connector)) {
                 include_once $connector;
@@ -99,7 +107,7 @@ EOS;
      */
     public function doInclude()
     {
-        global $hjs, $pth, $plugin_cf, $plugin_tx;
+        global $hjs, $plugin_cf, $plugin_tx;
         static $again = false;
 
         if ($again) {
@@ -109,7 +117,7 @@ EOS;
 
         $pcf = $plugin_cf['codeeditor'];
         $ptx = $plugin_tx['codeeditor'];
-        $dir = $pth['folder']['plugins'] . 'codeeditor/';
+        $dir = $this->pluginsFolder . 'codeeditor/';
 
         $css = '<link rel="stylesheet" type="text/css" href="' . $dir
             . 'codemirror/codemirror-combined.css">';
@@ -170,10 +178,8 @@ EOS;
      */
     public function getThemes(): array
     {
-        global $pth;
-
         $themes = array('', 'default');
-        $foldername = $pth['folder']['plugins'] . 'codeeditor/codemirror/theme';
+        $foldername = $this->pluginsFolder . 'codeeditor/codemirror/theme';
         if ($dir = opendir($foldername)) {
             while (($entry = readdir($dir)) !== false) {
                 if (pathinfo($entry, PATHINFO_EXTENSION) == 'css') {

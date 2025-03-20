@@ -28,7 +28,9 @@ class Dic
 {
     public static function editor(): Editor
     {
-        return new Editor();
+        global $pth;
+
+        return new Editor($pth["folder"]["plugins"]);
     }
 
     public static function mainCommand(): MainCommand
