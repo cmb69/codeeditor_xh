@@ -19,5 +19,4 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 Codeeditor\Plugin::dispatch();

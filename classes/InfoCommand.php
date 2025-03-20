@@ -42,7 +42,7 @@ class InfoCommand
         $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
         $o .= XH_message($result, $ptx['syscheck_phpversion'], $phpVersion);
         foreach (array('config/', 'css/', 'languages/') as $folder) {
-            $folders[] = $pth['folder']['plugins'].'codeeditor/' . $folder;
+            $folders[] = $pth['folder']['plugins'] . 'codeeditor/' . $folder;
         }
         foreach ($folders as $folder) {
             $result = is_writable($folder) ? 'success' : 'warn';

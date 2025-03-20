@@ -93,7 +93,7 @@ class Plugin
         switch ($admin) {
             case '':
                 ob_start();
-                (new InfoCommand)();
+                (new InfoCommand())();
                 $o .= ob_get_clean();
                 break;
             default:
