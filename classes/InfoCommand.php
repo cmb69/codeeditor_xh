@@ -25,11 +25,15 @@ use Plib\View;
 
 class InfoCommand
 {
+    /** @var string */
+    private $pluginFolder;
+
     /** @var View */
     private $view;
 
-    public function __construct(View $view)
+    public function __construct(string $pluginFolder, View $view)
     {
+        $this->pluginFolder = $pluginFolder;
         $this->view = $view;
     }
 
@@ -41,18 +45,16 @@ class InfoCommand
 
     private function systemCheck(): string
     {
-        global $pth;
-
         $phpVersion = '7.1.0';
         $o = '<h2>' . $this->view->text("syscheck_title") . '</h2>';
         $result = version_compare(PHP_VERSION, $phpVersion) >= 0 ? 'success' : 'fail';
-        $o .= XH_message($result, $this->view->text("syscheck_phpversion"), $phpVersion);
+        $o .= XH_message($result, $this->view->text("syscheck_phpversion", $phpVersion));
         foreach (array('config/', 'css/', 'languages/') as $folder) {
-            $folders[] = $pth['folder']['plugins'] . 'codeeditor/' . $folder;
+            $folders[] = $this->pluginFolder . $folder;
         }
         foreach ($folders as $folder) {
             $result = is_writable($folder) ? 'success' : 'warn';
-            $o .= XH_message($result, $this->view->text("syscheck_writable"), $folder);
+            $o .= XH_message($result, $this->view->text("syscheck_writable", $folder));
         }
         return $o;
     }

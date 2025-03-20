@@ -94,7 +94,8 @@ class Plugin
         $o .= print_plugin_admin('off');
         switch ($admin) {
             case '':
-                $o .= (new InfoCommand(new View($pth["folder"]["plugins"] . "codeeditor/views/", $plugin_tx["codeeditor"])))();
+                $view = new View($pth["folder"]["plugins"] . "codeeditor/views/", $plugin_tx["codeeditor"]);
+                $o .= (new InfoCommand($pth["folder"]["plugins"] . "codeeditor/", $view))();
                 break;
             default:
                 $o .= plugin_admin_common();
