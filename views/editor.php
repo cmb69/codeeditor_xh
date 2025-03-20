@@ -14,12 +14,12 @@ if (!defined("CMSIMPLE_XH_VERSION")) {http_response_code(403); exit;}
  */
 ?>
 
+<meta name="xh-codeeditor" content='<?=$this->json($text)?>'>
 <?foreach ($stylesheets as $stylesheet):?>
 <link rel="stylesheet" type="text/css" href="<?=$this->esc($stylesheet)?>">
 <?endforeach?>
 <script src="<?=$this->esc($codemirror)?>"></script>
 <script src="<?=$this->esc($codeeditor)?>"></script>
 <script>
-codeeditor.text = <?=$this->esc($text)?>;
 <?=$this->esc($filebrowser)?>
 </script>

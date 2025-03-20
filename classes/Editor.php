@@ -133,13 +133,11 @@ EOS;
         if (file_exists($fn)) {
             $stylesheets[] = $fn;
         }
-        $text = array('confirmLeave' => $this->view->text("confirm_leave"));
-        $text = json_encode($text);
         $hjs .= $this->view->render("editor", [
             "stylesheets" => $stylesheets,
             "codemirror" => $dir . "codemirror/codemirror-compressed.js",
             "codeeditor" => $dir . "codeeditor.min.js",
-            "text" => $text,
+            "text" => ["confirmLeave" => $this->view->plain("confirm_leave")],
             "filebrowser" => $this->filebrowser($request),
         ]);
     }
