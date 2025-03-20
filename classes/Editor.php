@@ -64,10 +64,10 @@ class Editor
         }
         $parsedConfig = json_decode($config, true);
         if (!is_array($parsedConfig)) {
-            $e .= '<li><b>' . $this->view->text("error_json") . '</b>' . '<br>'
-                . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8'))
-                . '</li>';
-            return "";
+            $e .= "<li><b>" . $this->view->text("error_json") . "</b><br>"
+                . (isset($fn) ? $this->view->esc($fn) : $this->view->esc($config))
+                . "</li>";
+            return "{}";
         }
         $config = $parsedConfig;
         if (!isset($config['mode']) || $config['mode'] == '%MODE%') {

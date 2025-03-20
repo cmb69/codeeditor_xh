@@ -50,6 +50,19 @@ class EditorTest extends TestCase
         Approvals::verifyHtml($sut->replace("my_textarea", ""));
     }
 
+    public function testWarnsAboutInvalidConfig(): void
+    {
+        global $e;
+
+        $e = "";
+        $sut = new Editor("../", "default", "", $this->view());
+        $this->assertSame(
+            "codeeditor.instantiate('my_textarea', {}, true);",
+            $sut->replace("my_textarea", "{invalid}")
+        );
+        $this->assertStringContainsString("Invalid Codeeditor_XH configuration:", $e);
+    }
+
     public function testFindsCodeMirrorThemes(): void
     {
         $sut = new Editor("../", "default", "", $this->view());
