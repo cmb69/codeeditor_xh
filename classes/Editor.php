@@ -50,6 +50,61 @@ class Editor
         $this->view = $view;
     }
 
+    /**
+     * @param list<string> $classes
+     * @param string|false $config
+     */
+    public function init(
+        Request $request,
+        array $classes = [],
+        $config = false,
+        string $mode = 'php',
+        bool $mayPreview = true
+    ): void {
+        global $bjs;
+
+        $this->doInclude($request);
+        if (empty($classes)) {
+            $classes = array('xh-editor');
+        }
+        $classes = json_encode($classes);
+        $config = $this->config($mode, (string) $config);
+        $mayPreview = json_encode($mayPreview);
+        $bjs .= <<<EOS
+<script>
+CodeMirror.on(window, "load", function() {
+    codeeditor.instantiateByClasses($classes, $config, $mayPreview);
+})
+</script>
+
+EOS;
+    }
+
+    public function doInclude(Request $request): void
+    {
+        global $hjs;
+
+        $dir = $this->pluginsFolder . 'codeeditor/';
+        $stylesheets = [$dir . "codemirror/codemirror-combined.css"];
+        $fn = $dir . 'codemirror/theme/' . $this->theme . '.css';
+        if (file_exists($fn)) {
+            $stylesheets[] = $fn;
+        }
+        $hjs .= $this->view->render("editor", [
+            "stylesheets" => $stylesheets,
+            "codemirror" => $dir . "codemirror/codemirror-compressed.js",
+            "codeeditor" => $dir . "codeeditor.min.js",
+            "text" => ["confirmLeave" => $this->view->plain("confirm_leave")],
+            "filebrowser" => str_ireplace("</script", "<\\/script", $this->filebrowser($request)),
+        ]);
+    }
+
+    public function replace(string $elementId, string $config = ''): string
+    {
+        $config = $this->config('php', $config);
+        return "codeeditor.instantiate('$elementId', $config, true);";
+    }
+
     private function config(string $mode, string $config): string
     {
         global $e;
@@ -90,11 +145,9 @@ class Editor
         if (!$request->admin()) {
             return '';
         }
-
         $script = '';
         if ($this->filebrowser !== "") {
-            $connector = $this->pluginsFolder . $this->filebrowser
-                . '/connectors/codeeditor/codeeditor.php';
+            $connector = $this->pluginsFolder . $this->filebrowser . '/connectors/codeeditor/codeeditor.php';
             if (is_readable($connector)) {
                 include_once $connector;
                 $init = $this->filebrowser . '_codeeditor_init';
@@ -118,62 +171,6 @@ codeeditor.filebrowser = function(type) {
 EOS;
         }
         return $script;
-    }
-
-    public function doInclude(Request $request): void
-    {
-        global $hjs;
-
-        $dir = $this->pluginsFolder . 'codeeditor/';
-
-        $stylesheets = [$dir . "codemirror/codemirror-combined.css"];
-        $fn = $dir . 'codemirror/theme/' . $this->theme . '.css';
-        if (file_exists($fn)) {
-            $stylesheets[] = $fn;
-        }
-        $hjs .= $this->view->render("editor", [
-            "stylesheets" => $stylesheets,
-            "codemirror" => $dir . "codemirror/codemirror-compressed.js",
-            "codeeditor" => $dir . "codeeditor.min.js",
-            "text" => ["confirmLeave" => $this->view->plain("confirm_leave")],
-            "filebrowser" => str_ireplace("</script", "<\\/script", $this->filebrowser($request)),
-        ]);
-    }
-
-    public function replace(string $elementId, string $config = ''): string
-    {
-        $config = $this->config('php', $config);
-        return "codeeditor.instantiate('$elementId', $config, true);";
-    }
-
-    /**
-     * @param list<string> $classes
-     * @param string|false $config
-     */
-    public function init(
-        Request $request,
-        array $classes = [],
-        $config = false,
-        string $mode = 'php',
-        bool $mayPreview = true
-    ): void {
-        global $bjs;
-
-        $this->doInclude($request);
-        if (empty($classes)) {
-            $classes = array('xh-editor');
-        }
-        $classes = json_encode($classes);
-        $config = $this->config($mode, (string) $config);
-        $mayPreview = json_encode($mayPreview);
-        $bjs .= <<<EOS
-<script>
-CodeMirror.on(window, "load", function() {
-    codeeditor.instantiateByClasses($classes, $config, $mayPreview);
-})
-</script>
-
-EOS;
     }
 
     /** @return list<string> */
