@@ -28,6 +28,8 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
     exit;
 }
 
+const CODEEDITOR_VERSION = "2.0";
+
 /**
  * @var string $admin
  * @var string $o

@@ -23,8 +23,6 @@ namespace Codeeditor;
 
 class Plugin
 {
-    const VERSION = "2.0";
-
     private static function config(string $mode, string $config): string
     {
         global $pth, $e, $plugin_cf, $plugin_tx;
