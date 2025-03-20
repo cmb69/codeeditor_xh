@@ -25,6 +25,14 @@ use Plib\Request;
 
 class MainCommand
 {
+    /** @var Editor */
+    private $editor;
+
+    public function __construct(Editor $editor)
+    {
+        $this->editor = $editor;
+    }
+
     /**
      * @return void
      */
@@ -39,7 +47,7 @@ class MainCommand
         } else {
             return;
         }
-        (new Editor())->init([$class], '', $mode, false);
+        $this->editor->init([$class], '', $mode, false);
     }
 
     private function isEditingPhp(Request $request): bool

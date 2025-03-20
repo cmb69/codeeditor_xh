@@ -31,6 +31,11 @@ class Dic
         return new Editor();
     }
 
+    public static function mainCommand(): MainCommand
+    {
+        return new MainCommand(self::editor());
+    }
+
     public static function infoCommand(): InfoCommand
     {
         global $pth;

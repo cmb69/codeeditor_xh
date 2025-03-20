@@ -19,6 +19,11 @@ class DicTest extends TestCase
         $this->assertInstanceOf(Editor::class, Dic::editor());
     }
 
+    public function testMakesMainCommand(): void
+    {
+        $this->assertInstanceOf(MainCommand::class, Dic::mainCommand());
+    }
+
     public function testMakesInfoCommand(): void
     {
         $this->assertInstanceOf(InfoCommand::class, Dic::infoCommand());
