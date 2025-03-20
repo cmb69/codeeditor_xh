@@ -56,17 +56,23 @@ class InfoCommand
         $checks = [];
         $phpVersion = "7.1.0";
         $checks[] = (object) [
-            "class" => $this->systemChecker->checkVersion(PHP_VERSION, $phpVersion) ? "xh_success" : "xh_fail",
+            "class" => $this->systemChecker->checkVersion(PHP_VERSION, $phpVersion)
+                ? "xh_success"
+                : "xh_fail",
             "message" => $this->view->plain("syscheck_phpversion", $phpVersion),
         ];
         $xhVersion = "1.7.0";
         $checks[] = (object) [
-            "class" => $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $xhVersion") ? "xh_success" : "xh_fail",
+            "class" => $this->systemChecker->checkVersion(CMSIMPLE_XH_VERSION, "CMSimple_XH $xhVersion")
+                ? "xh_success"
+                : "xh_fail",
             "message" => $this->view->plain("syscheck_xhversion", $xhVersion),
         ];
         $plibVersion = "1.2";
         $checks[] = (object) [
-            "class" => $this->systemChecker->checkPlugin("plib", $plibVersion) ? "xh_success" : "xh_fail",
+            "class" => $this->systemChecker->checkPlugin("plib", $plibVersion)
+                ? "xh_success"
+                : "xh_fail",
             "message" => $this->view->plain("syscheck_plibversion", $plibVersion),
         ];
         foreach (array("config/", "css/", "languages/") as $folder) {
@@ -74,7 +80,9 @@ class InfoCommand
         }
         foreach ($folders as $folder) {
             $checks[] = (object) [
-                "class" =>  $this->systemChecker->checkWritability($folder) ? "xh_success" : "xh_warning",
+                "class" =>  $this->systemChecker->checkWritability($folder)
+                    ? "xh_success"
+                    : "xh_warning",
                 "message" => $this->view->plain("syscheck_writable", $folder),
             ];
         }
