@@ -33,10 +33,7 @@ class MainCommand
         $this->editor = $editor;
     }
 
-    /**
-     * @return void
-     */
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): void
     {
         if ($this->isEditingPhp($request)) {
             $mode = 'php';

@@ -34,10 +34,8 @@ function Codeeditor_getThemes(): array
  * Writes the basic JavaScript of the editor to the `head' element.
  * No editors are actually created. Multiple calls are allowed.
  * This is called from init_EDITOR() automatically, but not from EDITOR_replace().
- *
- * @return void
  */
-function include_codeeditor()
+function include_codeeditor(): void
 {
     Dic::editor()->doInclude(Request::current());
 }
@@ -60,7 +58,7 @@ function codeeditor_replace(string $elementId, string $config = ''): string
  * Instantiates the editor(s) on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param array<int,string> $classes
+ * @param list<string> $classes
  * @param string|false $config
  */
 function init_codeeditor(array $classes = [], $config = false): bool
@@ -73,7 +71,7 @@ function init_codeeditor(array $classes = [], $config = false): bool
  * Instantiates the editor(s) in CSS mode on the textarea(s) given by $classes.
  * $config is exactly the same as for EDITOR_replace().
  *
- * @param array<int,string> $classes
+ * @param list<string> $classes
  * @param string|false $config
  */
 function init_codeeditor_css(array $classes = [], $config = false): bool

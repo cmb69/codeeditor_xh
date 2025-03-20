@@ -120,10 +120,7 @@ EOS;
         return $script;
     }
 
-    /**
-     * @return void
-     */
-    public function doInclude(Request $request)
+    public function doInclude(Request $request): void
     {
         global $hjs;
 
@@ -150,9 +147,8 @@ EOS;
     }
 
     /**
-     * @param array<int,string> $classes
+     * @param list<string> $classes
      * @param string|false $config
-     * @return void
      */
     public function init(
         Request $request,
@@ -160,7 +156,7 @@ EOS;
         $config = false,
         string $mode = 'php',
         bool $mayPreview = true
-    ) {
+    ): void {
         global $bjs;
 
         $this->doInclude($request);
@@ -180,9 +176,7 @@ CodeMirror.on(window, "load", function() {
 EOS;
     }
 
-    /**
-     * @return array<int,string>
-     */
+    /** @return list<string> */
     public function getThemes(): array
     {
         $themes = array('', 'default');
