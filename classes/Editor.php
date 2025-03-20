@@ -26,16 +26,19 @@ class Editor
     /** @var string */
     private $pluginsFolder;
 
-    public function __construct(string $pluginsFolder)
+    /** @var string */
+    private $theme;
+
+    public function __construct(string $pluginsFolder, string $theme)
     {
         $this->pluginsFolder = $pluginsFolder;
+        $this->theme = $theme;
     }
 
     private function config(string $mode, string $config): string
     {
-        global $e, $plugin_cf, $plugin_tx;
+        global $e, $plugin_tx;
 
-        $pcf = $plugin_cf['codeeditor'];
         $ptx = $plugin_tx['codeeditor'];
         $config = trim($config);
         if (empty($config) || $config[0] != '{') {
@@ -57,7 +60,7 @@ class Editor
             $config['mode'] = $mode;
         }
         if (!isset($config['theme']) || $config['theme'] == '%THEME%') {
-            $config['theme'] = $pcf['theme'];
+            $config['theme'] = $this->theme;
         }
         // We set the undocumented leaveSubmitMehtodAlone option; otherwise
         // multiple editors on the same form might trigger form submission
@@ -107,7 +110,7 @@ EOS;
      */
     public function doInclude()
     {
-        global $hjs, $plugin_cf, $plugin_tx;
+        global $hjs, $plugin_tx;
         static $again = false;
 
         if ($again) {
@@ -115,13 +118,12 @@ EOS;
         }
         $again = true;
 
-        $pcf = $plugin_cf['codeeditor'];
         $ptx = $plugin_tx['codeeditor'];
         $dir = $this->pluginsFolder . 'codeeditor/';
 
         $css = '<link rel="stylesheet" type="text/css" href="' . $dir
             . 'codemirror/codemirror-combined.css">';
-        $fn = $dir . 'codemirror/theme/' . $pcf['theme'] . '.css';
+        $fn = $dir . 'codemirror/theme/' . $this->theme . '.css';
         if (file_exists($fn)) {
             $css .= '<link rel="stylesheet" type="text/css" href="' . $fn . '">';
         }

@@ -28,9 +28,12 @@ class Dic
 {
     public static function editor(): Editor
     {
-        global $pth;
+        global $pth, $plugin_cf;
 
-        return new Editor($pth["folder"]["plugins"]);
+        return new Editor(
+            $pth["folder"]["plugins"],
+            $plugin_cf["codeeditor"]["theme"]
+        );
     }
 
     public static function mainCommand(): MainCommand
