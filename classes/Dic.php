@@ -33,7 +33,8 @@ class Dic
         return new Editor(
             $pth["folder"]["plugins"],
             $plugin_cf["codeeditor"]["theme"],
-            $cf['filebrowser']['external']
+            $cf['filebrowser']['external'],
+            self::view()
         );
     }
 

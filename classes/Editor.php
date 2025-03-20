@@ -21,6 +21,8 @@
 
 namespace Codeeditor;
 
+use Plib\View;
+
 class Editor
 {
     /** @var string */
@@ -32,18 +34,25 @@ class Editor
     /** @var string */
     private $filebrowser;
 
-    public function __construct(string $pluginsFolder, string $theme, string $filebrowser)
-    {
+    /** @var View */
+    private $view;
+
+    public function __construct(
+        string $pluginsFolder,
+        string $theme,
+        string $filebrowser,
+        View $view
+    ) {
         $this->pluginsFolder = $pluginsFolder;
         $this->theme = $theme;
         $this->filebrowser = $filebrowser;
+        $this->view = $view;
     }
 
     private function config(string $mode, string $config): string
     {
-        global $e, $plugin_tx;
+        global $e;
 
-        $ptx = $plugin_tx['codeeditor'];
         $config = trim($config);
         if (empty($config) || $config[0] != '{') {
             $std = in_array($config, array('full', 'medium', 'minimal', 'sidebar', ''));
@@ -54,7 +63,7 @@ class Editor
         }
         $parsedConfig = json_decode($config, true);
         if (!is_array($parsedConfig)) {
-            $e .= '<li><b>' . $ptx['error_json'] . '</b>' . '<br>'
+            $e .= '<li><b>' . $this->view->text("error_json") . '</b>' . '<br>'
                 . (isset($fn) ? $fn : htmlspecialchars($config, ENT_QUOTES, 'UTF-8'))
                 . '</li>';
             return "";
@@ -114,7 +123,7 @@ EOS;
      */
     public function doInclude()
     {
-        global $hjs, $plugin_tx;
+        global $hjs;
         static $again = false;
 
         if ($again) {
@@ -122,7 +131,6 @@ EOS;
         }
         $again = true;
 
-        $ptx = $plugin_tx['codeeditor'];
         $dir = $this->pluginsFolder . 'codeeditor/';
 
         $css = '<link rel="stylesheet" type="text/css" href="' . $dir
@@ -131,7 +139,7 @@ EOS;
         if (file_exists($fn)) {
             $css .= '<link rel="stylesheet" type="text/css" href="' . $fn . '">';
         }
-        $text = array('confirmLeave' => $ptx['confirm_leave']);
+        $text = array('confirmLeave' => $this->view->text("confirm_leave"));
         $text = json_encode($text);
         $filebrowser = $this->filebrowser();
 
