@@ -19,12 +19,14 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+use Codeeditor\Editor;
+
 /**
  * @return array<int,string>
  */
 function Codeeditor_getThemes(): array
 {
-    return Codeeditor\Plugin::getThemes();
+    return (new Editor())->getThemes();
 }
 
 /**
@@ -36,7 +38,7 @@ function Codeeditor_getThemes(): array
  */
 function include_codeeditor()
 {
-    Codeeditor\Plugin::doInclude();
+    (new Editor())->doInclude();
 }
 
 /**
@@ -50,7 +52,7 @@ function include_codeeditor()
  */
 function codeeditor_replace(string $elementId, string $config = ''): string
 {
-    return Codeeditor\Plugin::replace($elementId, $config);
+    return (new Editor())->replace($elementId, $config);
 }
 
 /**
@@ -62,7 +64,7 @@ function codeeditor_replace(string $elementId, string $config = ''): string
  */
 function init_codeeditor(array $classes = [], $config = false): bool
 {
-    Codeeditor\Plugin::init($classes, $config);
+    (new Editor())->init($classes, $config);
     return true;
 }
 
@@ -75,6 +77,6 @@ function init_codeeditor(array $classes = [], $config = false): bool
  */
 function init_codeeditor_css(array $classes = [], $config = false): bool
 {
-    Codeeditor\Plugin::init($classes, $config, 'css');
+    (new Editor())->init($classes, $config, 'css');
     return true;
 }

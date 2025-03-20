@@ -9,7 +9,7 @@ require_once "../plib/classes/View.php";
 require_once "../plib/classes/FakeSystemChecker.php";
 
 require_once "./classes/Dic.php";
+require_once "./classes/Editor.php";
 require_once "./classes/InfoCommand.php";
-require_once "./classes/Plugin.php";
 
 const CODEEDITOR_VERSION = "2.0";

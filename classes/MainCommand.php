@@ -39,7 +39,7 @@ class MainCommand
         } else {
             return;
         }
-        Plugin::init([$class], '', $mode, false);
+        (new Editor())->init([$class], '', $mode, false);
     }
 
     private function isEditingPhp(Request $request): bool

@@ -21,9 +21,9 @@
 
 namespace Codeeditor;
 
-class Plugin
+class Editor
 {
-    private static function config(string $mode, string $config): string
+    private function config(string $mode, string $config): string
     {
         global $pth, $e, $plugin_cf, $plugin_tx;
 
@@ -59,7 +59,7 @@ class Plugin
         return $config;
     }
 
-    private static function filebrowser(): string
+    private function filebrowser(): string
     {
         global $adm, $sn, $pth, $cf;
 
@@ -97,7 +97,7 @@ EOS;
     /**
      * @return void
      */
-    public static function doInclude()
+    public function doInclude()
     {
         global $hjs, $pth, $plugin_cf, $plugin_tx;
         static $again = false;
@@ -119,7 +119,7 @@ EOS;
         }
         $text = array('confirmLeave' => $ptx['confirm_leave']);
         $text = json_encode($text);
-        $filebrowser = self::filebrowser();
+        $filebrowser = $this->filebrowser();
 
         $hjs .= <<<EOS
 $css
@@ -133,9 +133,9 @@ $filebrowser
 EOS;
     }
 
-    public static function replace(string $elementId, string $config = ''): string
+    public function replace(string $elementId, string $config = ''): string
     {
-        $config = self::config('php', $config);
+        $config = $this->config('php', $config);
         return "codeeditor.instantiate('$elementId', $config, true);";
     }
 
@@ -144,16 +144,16 @@ EOS;
      * @param string|false $config
      * @return void
      */
-    public static function init(array $classes = [], $config = false, string $mode = 'php', bool $mayPreview = true)
+    public function init(array $classes = [], $config = false, string $mode = 'php', bool $mayPreview = true)
     {
         global $bjs;
 
-        self::doInclude();
+        $this->doInclude();
         if (empty($classes)) {
             $classes = array('xh-editor');
         }
         $classes = json_encode($classes);
-        $config = self::config($mode, (string) $config);
+        $config = $this->config($mode, (string) $config);
         $mayPreview = json_encode($mayPreview);
         $bjs .= <<<EOS
 <script>
@@ -168,7 +168,7 @@ EOS;
     /**
      * @return array<int,string>
      */
-    public static function getThemes(): array
+    public function getThemes(): array
     {
         global $pth;
 
