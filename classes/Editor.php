@@ -29,10 +29,14 @@ class Editor
     /** @var string */
     private $theme;
 
-    public function __construct(string $pluginsFolder, string $theme)
+    /** @var string */
+    private $filebrowser;
+
+    public function __construct(string $pluginsFolder, string $theme, string $filebrowser)
     {
         $this->pluginsFolder = $pluginsFolder;
         $this->theme = $theme;
+        $this->filebrowser = $filebrowser;
     }
 
     private function config(string $mode, string $config): string
@@ -72,7 +76,7 @@ class Editor
 
     private function filebrowser(): string
     {
-        global $adm, $sn, $cf;
+        global $adm, $sn;
 
         // no filebrowser, if editor is called from front-end
         if (!$adm) {
@@ -80,12 +84,12 @@ class Editor
         }
 
         $script = '';
-        if (!empty($cf['filebrowser']['external'])) {
-            $connector = $this->pluginsFolder . $cf['filebrowser']['external']
+        if ($this->filebrowser !== "") {
+            $connector = $this->pluginsFolder . $this->filebrowser
                 . '/connectors/codeeditor/codeeditor.php';
             if (is_readable($connector)) {
                 include_once $connector;
-                $init = $cf['filebrowser']['external'] . '_codeeditor_init';
+                $init = $this->filebrowser . '_codeeditor_init';
                 if (is_callable($init)) {
                     $script = $init();
                 }

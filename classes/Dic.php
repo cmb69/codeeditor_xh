@@ -28,11 +28,12 @@ class Dic
 {
     public static function editor(): Editor
     {
-        global $pth, $plugin_cf;
+        global $pth, $cf, $plugin_cf;
 
         return new Editor(
             $pth["folder"]["plugins"],
-            $plugin_cf["codeeditor"]["theme"]
+            $plugin_cf["codeeditor"]["theme"],
+            $cf['filebrowser']['external']
         );
     }
 
