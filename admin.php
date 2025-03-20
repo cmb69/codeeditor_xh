@@ -19,4 +19,32 @@
  * along with Codeeditor_XH.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-Codeeditor\Plugin::dispatch();
+use Codeeditor\Dic;
+use Codeeditor\Plugin;
+
+if (!defined("CMSIMPLE_XH_VERSION")) {
+    http_response_code(403);
+    exit;
+}
+
+/**
+ * @var string $admin
+ * @var string $o
+ * @var array<string,array<string,string>> $plugin_cf
+ */
+
+XH_registerStandardPluginMenuItems(false);
+XH_registerPluginType("editor", "codeeditor");
+if ($plugin_cf["codeeditor"]["enabled"]) {
+    Plugin::main();
+}
+if (XH_wantsPluginAdministration("codeeditor")) {
+    $o .= print_plugin_admin("off");
+    switch ($admin) {
+        case "":
+            $o .= Dic::infoCommand()();
+            break;
+        default:
+            $o .= plugin_admin_common();
+    }
+}

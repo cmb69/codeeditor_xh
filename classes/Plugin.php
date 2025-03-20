@@ -21,9 +21,6 @@
 
 namespace Codeeditor;
 
-use Plib\SystemChecker;
-use Plib\View;
-
 class Plugin
 {
     const VERSION = "2.0";
@@ -31,26 +28,7 @@ class Plugin
     /**
      * @return void
      */
-    public static function dispatch()
-    {
-        global $plugin_cf;
-
-        if (XH_ADM) { // @phpstan-ignore-line
-            XH_registerStandardPluginMenuItems(false);
-            XH_registerPluginType('editor', 'codeeditor');
-            if ($plugin_cf['codeeditor']['enabled']) {
-                self::main();
-            }
-            if (self::isAdministrationRequested()) {
-                self::handleAdministration();
-            }
-        }
-    }
-
-    /**
-     * @return void
-     */
-    private static function main()
+    public static function main()
     {
         if (self::isEditingPhp()) {
             $mode = 'php';
@@ -78,28 +56,6 @@ class Plugin
 
         return $file == 'stylesheet' && ($action == 'edit' || $action == '')
             || $admin == 'plugin_stylesheet' && $action == 'plugin_text';
-    }
-
-    private static function isAdministrationRequested(): bool
-    {
-        return XH_wantsPluginAdministration('codeeditor');
-    }
-
-    /**
-     * @return void
-     */
-    private static function handleAdministration()
-    {
-        global $admin, $o;
-
-        $o .= print_plugin_admin('off');
-        switch ($admin) {
-            case '':
-                $o .= Dic::infoCommand()();
-                break;
-            default:
-                $o .= plugin_admin_common();
-        }
     }
 
     private static function config(string $mode, string $config): string
