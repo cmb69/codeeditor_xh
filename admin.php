@@ -29,6 +29,12 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
 
 const CODEEDITOR_VERSION = "2.0";
 
+/** @return list<string> */
+function codeeditor_getThemes(): array
+{
+    return Dic::editor()->getThemes();
+}
+
 /**
  * @var string $admin
  * @var string $o
