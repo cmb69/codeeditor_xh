@@ -128,13 +128,17 @@
       <fileset dir="export">
         <exclude name=".github/**"/>
         <exclude name=".phive/**"/>
+        <exclude name="tests/**"/>
         <exclude name="help/template.htm"/>
+        <exclude name=".jshintrc"/>
         <exclude name="README*.md"/>
         <exclude name="build.xml"/>
         <exclude name="codeeditor.min.js"/>
         <exclude name="codemirror.d.ts"/>
         <exclude name="composer.*"/>
         <exclude name="phpstan.*"/>
+        <exclude name="phpunit.xml"/>
+        <exclude name="teplad.xml"/>
       </fileset>
     </move>
     <exec executable="uglifyjs" passthru="true" checkreturn="true">
