@@ -72,6 +72,7 @@
   </target>
 
   <target name="update-codemirror" description="updates the bundled CodeMirror">
+    <!-- sourcedir expects an unpacked GH source archive, where `npm install` has already been executed -->
     <fail unless="sourcedir" message="sourcedir is not defined!"/>
     <delete dir="codemirror/theme"/>
     <copy todir="codemirror/theme">
