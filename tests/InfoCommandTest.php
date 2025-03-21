@@ -16,7 +16,9 @@ class InfoCommandTest extends TestCase
             new FakeSystemChecker(true),
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["codeeditor"])
         );
-        Approvals::verifyHtml($sut());
+        $response = $sut();
+        $this->assertSame("Codeeditor 2.0", $response->title());
+        Approvals::verifyHtml($response->output());
     }
 
     public function testRendersFailingSystemChecks(): void
@@ -26,6 +28,6 @@ class InfoCommandTest extends TestCase
             new FakeSystemChecker(),
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["codeeditor"])
         );
-        Approvals::verifyHtml($sut());
+        Approvals::verifyHtml($sut()->output());
     }
 }

@@ -43,12 +43,12 @@ class InfoCommand
         $this->view = $view;
     }
 
-    public function __invoke(): string
+    public function __invoke(): Response
     {
-        return $this->view->render("info", [
+        return Response::create($this->view->render("info", [
             "version" => CODEEDITOR_VERSION,
             "checks" => $this->systemChecks(),
-        ]);
+        ]))->withTitle($this->view->esc("Codeeditor " . CODEEDITOR_VERSION));
     }
 
     /** @return list<object{class:string,message:string}> */

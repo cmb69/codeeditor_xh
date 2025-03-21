@@ -44,7 +44,7 @@ if (XH_wantsPluginAdministration("codeeditor")) {
     $o .= print_plugin_admin("off");
     switch ($admin) {
         case "":
-            $o .= Dic::infoCommand()();
+            $o .= Dic::infoCommand()()();
             break;
         default:
             $o .= plugin_admin_common();
