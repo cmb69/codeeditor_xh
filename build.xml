@@ -2,6 +2,8 @@
 
 <project name="Codeeditor" default="help">
 
+  <property name="dir" value="${project.basedir}"/>
+
   <target name="help" description="lists available targets">
     <exec executable="phing" outputProperty="help">
       <arg value="-l"/>
@@ -43,6 +45,12 @@
     </exec>
     <exec executable="tsc" passthru="true" checkreturn="true">
       <arg line="--checkJs --strictNullChecks --lib ES6,DOM --noEmit codemirror.d.ts codeeditor.min.js"/>
+    </exec>
+  </target>
+
+  <target name="minify" description="minifies JS">
+    <exec executable="uglifyjs" checkreturn="true" dir="${dir}">
+      <arg line="codeeditor.js --compress --mangle --output codeeditor.min.js"/>
     </exec>
   </target>
 
@@ -114,6 +122,9 @@
     </exec>
     <unzip file="export.zip" todir="export"/>
     <delete file="export.zip"/>
+    <phingcall target="minify">
+      <property name="dir" value="export/"/>
+    </phingcall>
     <move todir="dist">
       <fileset dir="export">
         <include name="views/*.php"/>
@@ -133,7 +144,6 @@
         <exclude name=".jshintrc"/>
         <exclude name="README*.md"/>
         <exclude name="build.xml"/>
-        <exclude name="codeeditor.min.js"/>
         <exclude name="codemirror.d.ts"/>
         <exclude name="composer.*"/>
         <exclude name="phpstan.*"/>
@@ -141,13 +151,6 @@
         <exclude name="teplad.xml"/>
       </fileset>
     </move>
-    <exec executable="uglifyjs" passthru="true" checkreturn="true">
-      <arg file="export/codeeditor.min.js"/>
-      <arg value="--compress"/>
-      <arg value="--mangle"/>
-      <arg value="--output"/>
-      <arg file="dist/codeeditor.min.js"/>
-    </exec>
     <delete dir="export"/>
     <copy file="dist/config/config.php" tofile="dist/config/defaultconfig.php"/>
     <copy file="dist/languages/en.php" tofile="dist/languages/default.php"/>

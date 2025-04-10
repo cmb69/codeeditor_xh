@@ -32,7 +32,7 @@ class EditorTest extends TestCase
         $sut = new Editor("../", "default", "", $this->view());
         $response = $sut->init(new FakeRequest());
         $this->assertStringContainsString(
-            "<script src=\"../codeeditor/codeeditor.min.js\"></script>",
+            "<script src=\"../codeeditor/codeeditor.js\"></script>",
             $response->hjs()
         );
         Approvals::verifyHtml($response->bjs());

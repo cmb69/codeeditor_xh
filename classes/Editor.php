@@ -88,10 +88,14 @@ EOS
         if (file_exists($fn)) {
             $stylesheets[] = $fn;
         }
+        $js = $dir . "codeeditor.min.js";
+        if (!file_exists($js)) {
+            $js = $dir . "codeeditor.js";
+        }
         return Response::create()->withHjs($this->view->render("editor", [
             "stylesheets" => $stylesheets,
             "codemirror" => $dir . "codemirror/codemirror-compressed.js",
-            "codeeditor" => $dir . "codeeditor.min.js",
+            "codeeditor" => $js,
             "text" => ["confirmLeave" => $this->view->plain("confirm_leave")],
             "filebrowser" => str_ireplace("</script", "<\\/script", $this->filebrowser($request)),
         ]));
