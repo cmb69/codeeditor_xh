@@ -42,7 +42,7 @@
       <arg line="codeeditor.min.js"/>
     </exec>
     <exec executable="tsc" passthru="true" checkreturn="true">
-      <arg line="--checkJs --lib ES6,DOM --noEmit codemirror.d.ts codeeditor.min.js"/>
+      <arg line="--checkJs --strictNullChecks --lib ES6,DOM --noEmit codemirror.d.ts codeeditor.min.js"/>
     </exec>
   </target>
 
