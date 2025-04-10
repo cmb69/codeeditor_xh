@@ -27,7 +27,7 @@ if (!defined("CMSIMPLE_XH_VERSION")) {
     exit;
 }
 
-const CODEEDITOR_VERSION = "2.2-dev";
+const CODEEDITOR_VERSION = "2.2";
 
 /** @return list<string> */
 function codeeditor_getThemes(): array

@@ -19,4 +19,4 @@ require_once "./classes/MainCommand.php";
 
 const CMSIMPLE_XH_VERSION = "CMSimple_XH 1.8";
 const CMSIMPLE_BASE = "../";
-const CODEEDITOR_VERSION = "2.2-dev";
+const CODEEDITOR_VERSION = "2.2";
