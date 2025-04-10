@@ -95,7 +95,7 @@ EOS
         return Response::create()->withHjs($this->view->render("editor", [
             "stylesheets" => $stylesheets,
             "codemirror" => $dir . "codemirror/codemirror-compressed.js",
-            "codeeditor" => $js,
+            "codeeditor" => $request->url()->path($js)->with("v", CODEEDITOR_VERSION)->relative(),
             "text" => ["confirmLeave" => $this->view->plain("confirm_leave")],
             "filebrowser" => str_ireplace("</script", "<\\/script", $this->filebrowser($request)),
         ]));
