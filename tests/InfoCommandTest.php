@@ -17,7 +17,7 @@ class InfoCommandTest extends TestCase
             new View("./views/", XH_includeVar("./languages/en.php", "plugin_tx")["codeeditor"])
         );
         $response = $sut();
-        $this->assertSame("Codeeditor 2.3", $response->title());
+        $this->assertSame("Codeeditor 2.4-dev", $response->title());
         Approvals::verifyHtml($response->output());
     }
 

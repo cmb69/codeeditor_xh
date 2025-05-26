@@ -22,7 +22,7 @@
 use Codeeditor\Dic;
 use Plib\Request;
 
-const CODEEDITOR_VERSION = "2.3";
+const CODEEDITOR_VERSION = "2.4-dev";
 
 // the 4 editor functions are public API; don't (re)move
 
